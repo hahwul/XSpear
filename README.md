@@ -23,6 +23,33 @@ Or install it yourself as:
 ## Usage
 
 ```
+Usage: xspear -u [target] -[options] [value]
+[ e.g ]
+$ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
+
+[ Options ]
+    -u, --url=target_URL             [required] Target Url
+    -d, --data=POST Body             [optional] POST Method Body data
+        --headers=HEADERS            [optional] Add HTTP Headers
+        --cookie=COOKIE              [optional] Add Cookie
+    -l, --level=1~3                  [optional] Custom scan level
+                                      + Default value: 3
+                                      + Level3
+                                      + Level2
+                                      + Level1: 
+    -t, --threads=NUMBER             [optional] thread , default: 10
+    -o, --output=FILENAME            [optional] Save JSON Result
+    -v, --verbose=1~3                [optional] Show log depth
+                                      + Default value: 2
+                                      + v=1 : quite mode
+                                      + v=2 : show scanning log
+                                      + v=3 : show detail log(req/res)
+    -h, --help                       Prints this help
+        --update                     Update with online
+
+```
+
+```
 $ ruby -Ilib exe/XSpear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
 [*] creating a test query.
 [*] test query generation is complete. [50 query]
