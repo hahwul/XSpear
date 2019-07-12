@@ -1,3 +1,78 @@
 #!/usr/bin/env ruby
 
 require "XSpear"
+Options = Struct.new(:url, :data, :headers, :level, :thread, :verbose, :output)
+class Parser
+  def self.parse(options)
+    args = Options.new('xspear')
+    if options.empty?
+      puts 'please ' + "'-h'".yellow + ' option'
+      exit
+    end
+    opt_parser = OptionParser.new do |opts|
+      opts.banner = "Usage: xspear -u [target] -[options] [value]\n[ e.g ]\n$ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'\n\n[ Options ]"
+
+      opts.on('-u', '--url=target_URL', '[required] Target Url') do |n|
+        args.url = n
+      end
+
+      opts.on('-d', '--data=POST Body', '[optional] POST Method Body data') do |n|
+        args.data = n
+      end
+
+      opts.on('--headers=HEADERS', '[optional] Add HTTP Headers') do |n|
+        args.headers = n
+      end
+
+      opts.on('--cookie=COOKIE', '[optional] Add Cookie') do |n|
+        args.headers = 'Cookie: ' + n
+      end
+
+      opts.on('-l', '--level=1~3', '[optional] Custom scan level',
+              ' + Default value: 3',
+              ' + Level3',
+              ' + Level2',
+              ' + Level1: ') do |n|
+        args.level = n
+      end
+
+      opts.on('-t', '--threads=NUMBER', '[optional] thread , default: 10') do |n|
+        args.thread = n
+      end
+
+      opts.on('-o', '--output=FILENAME', '[optional] Save JSON Result') do |n|
+        args.output = n
+      end
+
+      opts.on('-v', '--verbose=1~3', '[optional] Show log depth',
+              ' + Default value: 2',
+              ' + v=1 : quite mode',
+              ' + v=2 : show scanning log',
+              ' + v=3 : show detail log(req/res)') do |n|
+        args.verbose = n
+      end
+
+      opts.on('-h', '--help', 'Prints this help') do
+        puts opts
+        exit
+      end
+
+      opts.on('--update', 'Update with online') do
+        puts opts
+        exit
+      end
+    end
+
+    opt_parser.parse!(options)
+    args
+  end
+end
+options = Parser.parse ARGV
+
+exit unless options.url
+options.level = 3 unless options.level
+options.thread = 10 unless options.thread
+options.verbose = 2 unless options.verbose
+
+s = XspearScan.new options.url, options.data, options.headers, options.level, options.thread.to_i, options.output, options.verbose
+s.run
