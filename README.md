@@ -1,8 +1,5 @@
 # XSpear
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/XSpear`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+XSpear is XSS Scanner on ruby gems
 
 ## Installation
 
@@ -19,6 +16,11 @@ And then execute:
 Or install it yourself as:
 
     $ gem install XSpear
+
+Or install it yourself as (local file):
+
+    $ gem install XSpear-0.1.0.gem
+
 
 ## Usage
 
@@ -137,6 +139,48 @@ $ ruby -Ilib exe/XSpear -u "http://testphp.vulnweb.com/search.php?test=query" -d
 
 ```
 
+## Add Scanning Module
+**1) Add `makeQueryPattern`**
+```ruby
+makeQueryPattern('type', 'query,', 'pattern', 'category', "description", "callback funcion")
+# type: f(ilterd?) r(eflected?) x(ss?)
+# category i(nfo) v(uln) l(ow) m(edium) h(igh) 
+
+# e.g 
+# makeQueryPattern('f', 'XsPeaR,', 'XsPeaR,', 'i', "not filtered "+",".blue, CallbackStringMatch)
+```
+
+**2) if other callback, write callback class override `ScanCallbackFunc`**
+e.g
+```ruby
+  class CallbackStringMatch < ScanCallbackFunc
+    def run
+      if @response.body.include? @query
+        [true, "reflected #{@query}"]
+      else
+        [false, "not reflected #{@query}"]
+      end
+    end
+  end
+```
+
+Parent class(ScanCallbackFunc)
+```ruby
+class ScanCallbackFunc()
+    def initialize(url, method, query, response)
+      @url = url
+      @method = method
+      @query = query
+      @response = response
+      # self.run
+    end
+    
+    def run
+      # override
+    end
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -154,4 +198,3 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the XSpear project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/XSpear/blob/master/CODE_OF_CONDUCT.md).
-# XSpear
