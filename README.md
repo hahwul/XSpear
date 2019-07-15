@@ -139,7 +139,7 @@ $ ruby -Ilib exe/XSpear -u "http://testphp.vulnweb.com/search.php?test=query" -d
 
 ```
 
-## Import XSpear Gem
+## load XSpear Gem on ruby code
 ```ruby
 require 'XSPear'
 
