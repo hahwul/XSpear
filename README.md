@@ -139,6 +139,15 @@ $ ruby -Ilib exe/XSpear -u "http://testphp.vulnweb.com/search.php?test=query" -d
 
 ```
 
+## Import XSpear Gem
+```ruby
+require 'XSPear'
+
+s = XspearScan.new "https://www.hahwul.com?target_url", "post_body=thisisbodydata", "CustomHeader: wow", 3, 10, "result.json", "3"
+# s = XspearScan.new options.url, options.data, options.headers, options.level, options.thread.to_i, options.output, options.verbose
+s.run
+```
+
 ## Add Scanning Module
 **1) Add `makeQueryPattern`**
 ```ruby
