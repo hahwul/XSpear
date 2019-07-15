@@ -27,7 +27,7 @@ Or install it yourself as (local file):
 ```
 Usage: xspear -u [target] -[options] [value]
 [ e.g ]
-$ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
+$ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
 
 [ Options ]
     -u, --url=target_URL             [required] Target Url
@@ -52,7 +52,7 @@ $ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
 ```
 
 ```
-$ ruby -Ilib exe/XSpear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
 [*] creating a test query.
 [*] test query generation is complete. [50 query]
 [*] starting test and analysis. [10 threads]
