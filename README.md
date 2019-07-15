@@ -22,7 +22,7 @@ Or install it yourself as (local file):
     $ gem install XSpear-0.1.0.gem
 
 
-## Usage
+## Usage on cli
 
 ```
 Usage: xspear -u [target] -[options] [value]
@@ -139,7 +139,7 @@ $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
 
 ```
 
-## load XSpear Gem on ruby code
+## Usage on ruby code (gem library)
 ```ruby
 require 'XSPear'
 
@@ -207,3 +207,6 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the XSpear project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/XSpear/blob/master/CODE_OF_CONDUCT.md).
+
+## ScreenShot
+to be cont...
