@@ -9,16 +9,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ["hahwul"]
   spec.email         = ["hahwul@gmail.com"]
 
-  spec.summary       = "XSS"
-  spec.description   = "xXSS"
+  spec.summary       = "Powerfull XSS Scanning and Parameter Analysis tool&gem"
+  spec.description   = "XSS Scanner"
   spec.homepage      = "https://github.com/hahwul/XSpear"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-
     spec.metadata["homepage_uri"] = spec.homepage
     spec.metadata["source_code_uri"] = "https://github.com/hahwul/XSpear"
     spec.metadata["changelog_uri"] = "https://github.com/hahwul/XSpear"
@@ -36,6 +34,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_runtime_dependency "colorize", "0.8.1"
+  spec.add_runtime_dependency "selenium-webdriver", "~>3.141.0"
+
+  spec.add_development_dependency "colorize", "0.8.1"
+  spec.add_development_dependency "selenium-webdriver", "~>3.141.0"
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
