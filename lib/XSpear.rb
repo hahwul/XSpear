@@ -22,7 +22,7 @@ class XspearScan
     @thread = thread
     @output = output
     @verbose = verbose
-    @report = XspearRepoter.new @url
+    @report = XspearRepoter.new @url, Time.now
   end
 
   class ScanCallbackFunc
@@ -137,8 +137,13 @@ class XspearScan
         end
       end.each(&:join)
     end
-    log('s', 'finish scan. the report is being generated..')
-    @report.to_cli
+    @report.set_endtime
+    log('s', "finish scan. the report is being generated..")
+    if @output == 'json'
+      puts @report.to_json
+    else
+      @report.to_cli
+    end
   end
 
   def makeQueryPattern(type, payload, pattern, category, desc, callback)

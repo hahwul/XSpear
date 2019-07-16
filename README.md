@@ -1,6 +1,14 @@
 # XSpear
 XSpear is XSS Scanner on ruby gems
 
+## Key features
+- Pattern matching based XSS scanning
+- Dynamic test based XSS scanning (with Selenium)
+- Testing request/response for XSS protection bypass and reflected params
+- Enable XSpear in code with Gem library load
+- Support output format `cli` `json`
+- Support custom callback code to any test various attack vectors
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -51,92 +59,79 @@ $ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
 
 ```
 
+### Case by Case
+**Scanning XSS**
+```
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
+```
+
+**json output**
+```
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy" -o json -v 1
+```
+
+**detail log**
+```
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy" -v 3
+```
+
+etc...
+
+### Sample log
+**Scanning XSS**
 ```
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
 [*] creating a test query.
 [*] test query generation is complete. [50 query]
 [*] starting test and analysis. [10 threads]
-[-] [00:37:28] not reflected XsPeaR>
-[-] [00:37:28] not reflected <XsPeaR
-[I] [00:37:28] reflected <XsPeaR[param: searchFor][not filtered <]
-[-] [00:37:28] not reflected XsPeaR'
-[I] [00:37:28] reflected XsPeaR>[param: searchFor][not filtered >]
-[I] [00:37:28] reflected rEfe6[param: searchFor][reflected parameter]
-[-] [00:37:28] not reflected rEfe6
-[-] [00:37:28] not reflected XsPeaR"
-[I] [00:37:28] reflected XsPeaR"[param: searchFor][not filtered "]
-[I] [00:37:28] reflected XsPeaR'[param: searchFor][not filtered ']
-[I] [00:37:29] reflected XsPeaR|[param: searchFor][not filtered |]
-[-] [00:37:29] not reflected XsPeaR|
-[-] [00:37:29] not reflected XsPeaR)
-[-] [00:37:29] not reflected XsPeaR;
-[I] [00:37:29] reflected XsPeaR;[param: searchFor][not filtered ;]
-[I] [00:37:29] reflected XsPeaR([param: searchFor][not filtered (]
-[I] [00:37:29] reflected XsPeaR)[param: searchFor][not filtered )]
-[-] [00:37:29] not reflected XsPeaR(
-[I] [00:37:29] reflected XsPeaR`[param: searchFor][not filtered `]
-[-] [00:37:29] not reflected XsPeaR`
-[-] [00:37:30] not reflected XsPeaR:
-[I] [00:37:30] reflected XsPeaR[[param: searchFor][not filtered []
-[I] [00:37:30] reflected XsPeaR{[param: searchFor][not filtered {]
-[I] [00:37:30] reflected XsPeaR}[param: searchFor][not filtered }]
-[I] [00:37:30] reflected XsPeaR][param: searchFor][not filtered ]]
-[-] [00:37:30] not reflected XsPeaR{
-[I] [00:37:30] reflected XsPeaR:[param: searchFor][not filtered :]
-[-] [00:37:30] not reflected XsPeaR]
-[-] [00:37:30] not reflected XsPeaR}
-[-] [00:37:30] not reflected XsPeaR[
-[I] [00:37:30] reflected XsPeaR.[param: searchFor][not filtered .]
-[-] [00:37:30] not reflected XsPeaR=
-[-] [00:37:30] not reflected XsPeaR,
-[I] [00:37:30] reflected XsPeaR,[param: searchFor][not filtered ,]
-[-] [00:37:30] not reflected XsPeaR-
-[I] [00:37:30] reflected XsPeaR-[param: searchFor][not filtered -]
-[-] [00:37:30] not reflected XsPeaR+
-[I] [00:37:30] reflected XsPeaR=[param: searchFor][not filtered =]
-[I] [00:37:30] reflected XsPeaR+[param: searchFor][not filtered +]
-[-] [00:37:30] not reflected XsPeaR.
-[-] [00:37:31] not reflected <svg/onload=alert(45)>
-[H] [00:37:31] reflected <svg/onload=alert(45)>[param: searchFor][reflected XSS Code]
-[I] [00:37:31] reflected XsPeaR$[param: searchFor][not filtered $]
-[H] [00:37:31] reflected <script>alert(45)</script>[param: searchFor][reflected XSS Code]
-[-] [00:37:31] not reflected <script>alert(45)</script>
-[H] [00:37:31] reflected <img/src onerror=alert(45)>[param: searchFor][reflected XSS Code]
-[-] [00:37:31] not reflected <img/src onerror=alert(45)>
-[-] [00:37:31] not reflected XsPeaR$
+[I] [00:57:24] reflected XsPeaR>[param: searchFor][not filtered >]
+[-] [00:57:24] not reflected XsPeaR>
+[-] [00:57:24] not reflected <XsPeaR
+[-] [00:57:24] not reflected XsPeaR"
+[-] [00:57:24] not reflected rEfe6
+...snip...
+[-] [00:57:27] not reflected <script>alert(45)</script>
+[H] [00:57:27] reflected <svg/onload=alert(45)>[param: searchFor][reflected XSS Code]
+[-] [00:57:27] not reflected <svg/onload=alert(45)>
 [*] finish scan. the report is being generated..
 +----+------+-------------+------------------------------------------------------------+---------------------+
-|                                               XSpear report                                                |
+|                                             [ XSpear report ]                                              |
+|                 2019-07-17 00:57:23 +0900 ~ 2019-07-17 00:58:08 +0900 || Found 24 issues.                  |
 |                              http://testphp.vulnweb.com/search.php?test=query                              |
 +----+------+-------------+------------------------------------------------------------+---------------------+
 | NO | TYPE | ISSUE       | PAYLOAD                                                    | DESCRIPTION         |
 +----+------+-------------+------------------------------------------------------------+---------------------+
-| 0  | INFO | FILERD RULE | searchFor=yy%3CXsPeaR                                      | not filtered <      |
-| 1  | INFO | FILERD RULE | searchFor=yyXsPeaR%3E                                      | not filtered >      |
-| 2  | INFO | REFLECTED   | searchFor=yyrEfe6                                          | reflected parameter |
-| 3  | INFO | FILERD RULE | searchFor=yyXsPeaR%22                                      | not filtered "      |
-| 4  | INFO | FILERD RULE | searchFor=yyXsPeaR%27                                      | not filtered '      |
-| 5  | INFO | FILERD RULE | searchFor=yyXsPeaR%7C                                      | not filtered |      |
-| 6  | INFO | FILERD RULE | searchFor=yyXsPeaR%3B                                      | not filtered ;      |
-| 7  | INFO | FILERD RULE | searchFor=yyXsPeaR%28                                      | not filtered (      |
+| 0  | INFO | FILERD RULE | searchFor=yyXsPeaR%3E                                      | not filtered >      |
+| 1  | INFO | FILERD RULE | searchFor=yy%3CXsPeaR                                      | not filtered <      |
+| 2  | INFO | FILERD RULE | searchFor=yyXsPeaR%22                                      | not filtered "      |
+| 3  | INFO | FILERD RULE | searchFor=yyXsPeaR%27                                      | not filtered '      |
+| 4  | INFO | REFLECTED   | searchFor=yyrEfe6                                          | reflected parameter |
+| 5  | INFO | FILERD RULE | searchFor=yyXsPeaR%28                                      | not filtered (      |
+| 6  | INFO | FILERD RULE | searchFor=yyXsPeaR%7C                                      | not filtered |      |
+| 7  | INFO | FILERD RULE | searchFor=yyXsPeaR%3B                                      | not filtered ;      |
 | 8  | INFO | FILERD RULE | searchFor=yyXsPeaR%29                                      | not filtered )      |
 | 9  | INFO | FILERD RULE | searchFor=yyXsPeaR%60                                      | not filtered `      |
 | 10 | INFO | FILERD RULE | searchFor=yyXsPeaR%5B                                      | not filtered [      |
 | 11 | INFO | FILERD RULE | searchFor=yyXsPeaR%7B                                      | not filtered {      |
-| 12 | INFO | FILERD RULE | searchFor=yyXsPeaR%7D                                      | not filtered }      |
-| 13 | INFO | FILERD RULE | searchFor=yyXsPeaR%5D                                      | not filtered ]      |
+| 12 | INFO | FILERD RULE | searchFor=yyXsPeaR%5D                                      | not filtered ]      |
+| 13 | INFO | FILERD RULE | searchFor=yyXsPeaR%7D                                      | not filtered }      |
 | 14 | INFO | FILERD RULE | searchFor=yyXsPeaR%3A                                      | not filtered :      |
 | 15 | INFO | FILERD RULE | searchFor=yyXsPeaR.                                        | not filtered .      |
-| 16 | INFO | FILERD RULE | searchFor=yyXsPeaR%2C                                      | not filtered ,      |
-| 17 | INFO | FILERD RULE | searchFor=yyXsPeaR-                                        | not filtered -      |
+| 16 | INFO | FILERD RULE | searchFor=yyXsPeaR%2B                                      | not filtered +      |
+| 17 | INFO | FILERD RULE | searchFor=yyXsPeaR%2C                                      | not filtered ,      |
 | 18 | INFO | FILERD RULE | searchFor=yyXsPeaR%3D                                      | not filtered =      |
-| 19 | INFO | FILERD RULE | searchFor=yyXsPeaR%2B                                      | not filtered +      |
-| 20 | HIGH | XSS         | searchFor=yy%3Csvg%2Fonload%3Dalert%2845%29%3E             | reflected XSS Code  |
+| 19 | INFO | FILERD RULE | searchFor=yyXsPeaR-                                        | not filtered -      |
+| 20 | HIGH | XSS         | searchFor=yy%3Cimg%2Fsrc+onerror%3Dalert%2845%29%3E        | reflected XSS Code  |
 | 21 | INFO | FILERD RULE | searchFor=yyXsPeaR%24                                      | not filtered $      |
 | 22 | HIGH | XSS         | searchFor=yy%22%3E%3Cscript%3Ealert%2845%29%3C%2Fscript%3E | reflected XSS Code  |
-| 23 | HIGH | XSS         | searchFor=yy%3Cimg%2Fsrc+onerror%3Dalert%2845%29%3E        | reflected XSS Code  |
+| 23 | HIGH | XSS         | searchFor=yy%3Csvg%2Fonload%3Dalert%2845%29%3E             | reflected XSS Code  |
 +----+------+-------------+------------------------------------------------------------+---------------------+
+```            
 
+**to JSON**
+```
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy" -o json -v 1
+{"starttime":"2019-07-17 01:02:13 +0900","endtime":"2019-07-17 01:02:59 +0900","issue_count":24,"issue_list":[{"id":0,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yy%3CXsPeaR","description":"not filtered \u001b[0;34;49m<\u001b[0m"},{"id":1,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%27","description":"not filtered \u001b[0;34;49m'\u001b[0m"},{"id":2,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%3E","description":"not filtered \u001b[0;34;49m>\u001b[0m"},{"id":3,"type":"INFO","issue":"REFLECTED","payload":"searchFor=yyrEfe6","description":"reflected parameter"},{"id":4,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%22","description":"not filtered \u001b[0;34;49m\"\u001b[0m"},{"id":5,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%60","description":"not filtered \u001b[0;34;49m`\u001b[0m"},{"id":6,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%3B","description":"not filtered \u001b[0;34;49m;\u001b[0m"},{"id":7,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%28","description":"not filtered \u001b[0;34;49m(\u001b[0m"},{"id":8,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%7C","description":"not filtered \u001b[0;34;49m|\u001b[0m"},{"id":9,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%29","description":"not filtered \u001b[0;34;49m)\u001b[0m"},{"id":10,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%7B","description":"not filtered \u001b[0;34;49m{\u001b[0m"},{"id":11,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%5B","description":"not filtered \u001b[0;34;49m[\u001b[0m"},{"id":12,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%5D","description":"not filtered \u001b[0;34;49m]\u001b[0m"},{"id":13,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%7D","description":"not filtered \u001b[0;34;49m}\u001b[0m"},{"id":14,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%3A","description":"not filtered \u001b[0;34;49m:\u001b[0m"},{"id":15,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%2B","description":"not filtered \u001b[0;34;49m+\u001b[0m"},{"id":16,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR.","description":"not filtered \u001b[0;34;49m.\u001b[0m"},{"id":17,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR-","description":"not filtered \u001b[0;34;49m-\u001b[0m"},{"id":18,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%2C","description":"not filtered \u001b[0;34;49m,\u001b[0m"},{"id":19,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%3D","description":"not filtered \u001b[0;34;49m=\u001b[0m"},{"id":20,"type":"HIGH","issue":"XSS","payload":"searchFor=yy%3Cimg%2Fsrc+onerror%3Dalert%2845%29%3E","description":"reflected \u001b[0;31;49mXSS Code\u001b[0m"},{"id":21,"type":"HIGH","issue":"XSS","payload":"searchFor=yy%3Csvg%2Fonload%3Dalert%2845%29%3E","description":"reflected \u001b[0;31;49mXSS Code\u001b[0m"},{"id":22,"type":"HIGH","issue":"XSS","payload":"searchFor=yy%22%3E%3Cscript%3Ealert%2845%29%3C%2Fscript%3E","description":"reflected \u001b[0;31;49mXSS Code\u001b[0m"},{"id":23,"type":"INFO","issue":"FILERD RULE","payload":"searchFor=yyXsPeaR%24","description":"not filtered \u001b[0;34;49m$\u001b[0m"}]}
 ```
 
 ## Usage on ruby code (gem library)
