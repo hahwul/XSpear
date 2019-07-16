@@ -29,6 +29,14 @@ Or install it yourself as (local file):
 
     $ gem install XSpear-0.1.0.gem
 
+### Dependency gems
+`colorize` `selenium-webdriver`<br>
+If you configured it to install automatically in the Gem library, but it behaves abnormally, install it with the following command.
+
+```
+$ gem install colorize
+$ gem install selenium-webdriver
+```
 
 ## Usage on cli
 
