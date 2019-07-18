@@ -1,6 +1,12 @@
 # XSpear
 XSpear is XSS Scanner on ruby gems
 
+<img src="https://img.shields.io/static/v1.svg?label=lang&message=ruby&color=RED">
+<img src="https://img.shields.io/github/languages/top/hahwul/XSpear.svg">
+<img src="https://img.shields.io/static/v1.svg?label=version&message=1.0&color=purple">
+<img src="https://img.shields.io/github/license/hahwul/XSpear.svg">
+<a href="https://twitter.com/intent/follow?screen_name=hahwul"><img src="https://img.shields.io/static/v1.svg?label=follow&message=hahwul&color=black"></a>
+
 ## Key features
 - Pattern matching based XSS scanning
 - Dynamic test based XSS scanning (with Selenium)
@@ -88,7 +94,7 @@ etc...
 ### Sample log
 **Scanning XSS**
 ```
-$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
+$ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=1"
 [*] creating a test query.
 [*] test query generation is complete. [50 query]
 [*] starting test and analysis. [10 threads]
