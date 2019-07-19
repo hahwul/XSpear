@@ -5,10 +5,14 @@ XSpear is XSS Scanner on ruby gems
 
 ## Key features
 - Pattern matching based XSS scanning
-- Dynamic test based XSS scanning (with Selenium)
+- Detect `alert` `confirm` `prompt` event on headless browser (with Selenium)
 - Testing request/response for XSS protection bypass and reflected params
-- Enable XSpear in code with Gem library load
+- XSpear running on ruby code(with Gem library)
+- Dynamic/Static Analysis(Find SQL Error, etc..)
+- Show table base report and testing raw query(url)
+- Testing at selected parameters
 - Support output format `cli` `json`
+- Support Verbose level (quit / nomal / raw data)
 - Support custom callback code to any test various attack vectors
 
 ## Installation
@@ -85,57 +89,75 @@ $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy" -v 3
 ```
 
+**testing at selected parameters**
+```
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query&cat=123&ppl=1fhhahwul" -p cat,test
+```
+
 etc...
 
 ### Sample log
 **Scanning XSS**
 ```
 $ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=1"
+    )  (
+ ( /(  )\ )
+ )\())(()/(          (     )  (
+((_)\  /(_))`  )    ))\ ( /(  )(
+__((_)(_))  /(/(   /((_))(_))(()\
+\ \/ // __|((_)_\ (_)) ((_)_  ((_)
+ >  < \__ \| '_ \)/ -_)/ _` || '_|
+/_/\_\|___/| .__/ \___|\__,_||_|    />
+           |_|                   \ /<
+{\\\\\\\\\\\\\BYHAHWUL\\\\\\\\\\\(0):::<======================-
+                                 / \<
+                                    \>
 [*] creating a test query.
-[*] test query generation is complete. [50 query]
+[*] test query generation is complete. [30 query]
 [*] starting test and analysis. [10 threads]
-[I] [00:57:24] reflected XsPeaR>[param: searchFor][not filtered >]
-[-] [00:57:24] not reflected XsPeaR>
-[-] [00:57:24] not reflected <XsPeaR
-[-] [00:57:24] not reflected XsPeaR"
-[-] [00:57:24] not reflected rEfe6
-...snip...
-[-] [00:57:27] not reflected <script>alert(45)</script>
-[H] [00:57:27] reflected <svg/onload=alert(45)>[param: searchFor][reflected XSS Code]
-[-] [00:57:27] not reflected <svg/onload=alert(45)>
+[-] [01:24:38] not reflected XsPeaR`
+[-] [01:24:38] not reflected XsPeaR>
+[I] [01:24:38] reflected rEfe6[param: cat][reflected parameter]
+[-] [01:24:38] not reflected XsPeaR|
+[-] [01:24:38] not reflected XsPeaR'
+[I] [01:24:38] [param: cat][Found SQL Error Pattern]
+[-] [01:24:38] not reflected XsPeaR(
+[-] [01:24:38] not reflected <XsPeaR
+[-] [01:24:38] not reflected XsPeaR"
+[-] [01:24:38] not reflected XsPeaR;
+[-] [01:24:39] not reflected XsPeaR:
+[-] [01:24:39] not reflected XsPeaR[
+[-] [01:24:39] not reflected XsPeaR]
+[-] [01:24:39] not reflected XsPeaR}
+[-] [01:24:39] not reflected XsPeaR)
+[-] [01:24:39] not reflected XsPeaR{
+[-] [01:24:39] not reflected XsPeaR.
+[-] [01:24:39] not reflected XsPeaR-
+[-] [01:24:39] not reflected XsPeaR+
+[-] [01:24:39] not reflected XsPeaR,
+[I] [01:24:40] reflected XsPeaR$[param: cat][not filtered $]
+[-] [01:24:40] not reflected <svg/onload=alert(45)>
+[H] [01:24:40] reflected <script>alert(45)</script>[param: cat][reflected XSS Code]
+[-] [01:24:40] not reflected XsPeaR=
+[-] [01:24:40] not reflected <img/src onerror=alert(45)>
 [*] finish scan. the report is being generated..
-+----+------+-------------+------------------------------------------------------------+---------------------+
-|                                             [ XSpear report ]                                              |
-|                 2019-07-17 00:57:23 +0900 ~ 2019-07-17 00:58:08 +0900 || Found 24 issues.                  |
-|                              http://testphp.vulnweb.com/search.php?test=query                              |
-+----+------+-------------+------------------------------------------------------------+---------------------+
-| NO | TYPE | ISSUE       | PAYLOAD                                                    | DESCRIPTION         |
-+----+------+-------------+------------------------------------------------------------+---------------------+
-| 0  | INFO | FILERD RULE | searchFor=yyXsPeaR%3E                                      | not filtered >      |
-| 1  | INFO | FILERD RULE | searchFor=yy%3CXsPeaR                                      | not filtered <      |
-| 2  | INFO | FILERD RULE | searchFor=yyXsPeaR%22                                      | not filtered "      |
-| 3  | INFO | FILERD RULE | searchFor=yyXsPeaR%27                                      | not filtered '      |
-| 4  | INFO | REFLECTED   | searchFor=yyrEfe6                                          | reflected parameter |
-| 5  | INFO | FILERD RULE | searchFor=yyXsPeaR%28                                      | not filtered (      |
-| 6  | INFO | FILERD RULE | searchFor=yyXsPeaR%7C                                      | not filtered |      |
-| 7  | INFO | FILERD RULE | searchFor=yyXsPeaR%3B                                      | not filtered ;      |
-| 8  | INFO | FILERD RULE | searchFor=yyXsPeaR%29                                      | not filtered )      |
-| 9  | INFO | FILERD RULE | searchFor=yyXsPeaR%60                                      | not filtered `      |
-| 10 | INFO | FILERD RULE | searchFor=yyXsPeaR%5B                                      | not filtered [      |
-| 11 | INFO | FILERD RULE | searchFor=yyXsPeaR%7B                                      | not filtered {      |
-| 12 | INFO | FILERD RULE | searchFor=yyXsPeaR%5D                                      | not filtered ]      |
-| 13 | INFO | FILERD RULE | searchFor=yyXsPeaR%7D                                      | not filtered }      |
-| 14 | INFO | FILERD RULE | searchFor=yyXsPeaR%3A                                      | not filtered :      |
-| 15 | INFO | FILERD RULE | searchFor=yyXsPeaR.                                        | not filtered .      |
-| 16 | INFO | FILERD RULE | searchFor=yyXsPeaR%2B                                      | not filtered +      |
-| 17 | INFO | FILERD RULE | searchFor=yyXsPeaR%2C                                      | not filtered ,      |
-| 18 | INFO | FILERD RULE | searchFor=yyXsPeaR%3D                                      | not filtered =      |
-| 19 | INFO | FILERD RULE | searchFor=yyXsPeaR-                                        | not filtered -      |
-| 20 | HIGH | XSS         | searchFor=yy%3Cimg%2Fsrc+onerror%3Dalert%2845%29%3E        | reflected XSS Code  |
-| 21 | INFO | FILERD RULE | searchFor=yyXsPeaR%24                                      | not filtered $      |
-| 22 | HIGH | XSS         | searchFor=yy%22%3E%3Cscript%3Ealert%2845%29%3C%2Fscript%3E | reflected XSS Code  |
-| 23 | HIGH | XSS         | searchFor=yy%3Csvg%2Fonload%3Dalert%2845%29%3E             | reflected XSS Code  |
-+----+------+-------------+------------------------------------------------------------+---------------------+
++----+------+------------------+-------+----------------------------+-------------------------+
+|                                      [ XSpear report ]                                      |
+|                      http://testphp.vulnweb.com/listproducts.php?cat=1                      |
+|            2019-07-20 01:24:38 +0900 ~ 2019-07-20 01:25:41 +0900 Found 4 issues.            |
++----+------+------------------+-------+----------------------------+-------------------------+
+| NO | TYPE | ISSUE            | PARAM | PAYLOAD                    | DESCRIPTION             |
++----+------+------------------+-------+----------------------------+-------------------------+
+| 0  | INFO | REFLECTED        | cat   | rEfe6                      | reflected parameter     |
+| 1  | INFO | DYNAMIC ANALYSIS | cat   | XsPeaR"                    | Found SQL Error Pattern |
+| 2  | INFO | FILERD RULE      | cat   | XsPeaR$                    | not filtered $          |
+| 3  | HIGH | XSS              | cat   | <script>alert(45)</script> | reflected XSS Code      |
++----+------+------------------+-------+----------------------------+-------------------------+
+< Raw Query >
+[0] http://testphp.vulnweb.com/listproducts.php?cat=1?cat=1rEfe6
+[1] http://testphp.vulnweb.com/listproducts.php?cat=1?cat=1XsPeaR%22
+[2] http://testphp.vulnweb.com/listproducts.php?cat=1?cat=1XsPeaR%24
+[3] http://testphp.vulnweb.com/listproducts.php?cat=1?cat=1%22%3E%3Cscript%3Ealert%2845%29%3C%2Fscript%3E
 ```            
 
 **to JSON**
