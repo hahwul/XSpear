@@ -10,15 +10,18 @@ require "selenium-webdriver"
 
 module XSpear
   class Error < StandardError; end
-  # Your code goes here...
 end
 
 class XspearScan
-  def initialize(url, data, headers, level, thread, output, verbose)
+  def initialize(url, data, headers, params, thread, output, verbose)
     @url = url
     @data = data
     @headers = headers
-    @level = level
+    if params.nil?
+      @params = params
+    else
+      @params = params.split(",")
+    end
     @thread = thread
     @output = output
     @verbose = verbose
@@ -56,6 +59,42 @@ class XspearScan
     end
   end
 
+  class CallbackErrorPatternMatch < ScanCallbackFunc
+    def run
+      info = "Found"
+      if @response.body.to_s.match(/(SQL syntax.*MySQL|Warning.*mysql_.*|MySqlException \(0x|valid MySQL result|check the manual that corresponds to your (MySQL|MariaDB) server version|MySqlClient\.|com\.mysql\.jdbc\.exceptions)/i)
+        info = info + "MYSQL "
+      end
+      if @response.body.to_s.match(/(Driver.* SQL[\-\_\ ]*Server|OLE DB.* SQL Server|\bSQL Server.*Driver|Warning.*mssql_.*|\bSQL Server.*[0-9a-fA-F]{8}|[\s\S]Exception.*\WSystem\.Data\.SqlClient\.|[\s\S]Exception.*\WRoadhouse\.Cms\.|Microsoft SQL Native Client.*[0-9a-fA-F]{8})/i)
+        info = info + "MSSQL "
+      end
+      if @response.body.to_s.match(/(\bORA-\d{5}|Oracle error|Oracle.*Driver|Warning.*\Woci_.*|Warning.*\Wora_.*)/i)
+        info = info + "Oracle "
+      end
+      if @response.body.to_s.match(/(PostgreSQL.*ERROR|Warning.*\Wpg_.*|valid PostgreSQL result|Npgsql\.|PG::SyntaxError:|org\.postgresql\.util\.PSQLException|ERROR:\s\ssyntax error at or near)/i)
+        info = info + "Postgres "
+      end
+      if @response.body.to_s.match(/(Microsoft Access (\d+ )?Driver|JET Database Engine|Access Database Engine|ODBC Microsoft Access)/i)
+        info = info + "MSAccess "
+      end
+      if @response.body.to_s.match(/(SQLite\/JDBCDriver|SQLite.Exception|System.Data.SQLite.SQLiteException|Warning.*sqlite_.*|Warning.*SQLite3::|\[SQLITE_ERROR\])/i)
+        info = info + "SQLite "
+      end
+      if @response.body.to_s.match(/(Warning.*sybase.*|Sybase message|Sybase.*Server message.*|SybSQLException|com\.sybase\.jdbc)/i)
+        info = info + "SyBase "
+      end
+      if @response.body.to_s.match(/(Warning.*ingres_|Ingres SQLSTATE|Ingres\W.*Driver)/i)
+        info = info + "Ingress "
+      end
+
+      if info.length > 5
+        [true, "#{@info}"]
+      else
+        [false, "#{@info}"]
+      end
+    end
+  end
+
   class CallbackXSSSelenium < ScanCallbackFunc
     def run
       begin
@@ -76,13 +115,12 @@ class XspearScan
           driver.quit
           return [true, "found alert/prompt/confirm error base in selenium #{@query}\n               =>"]
         rescue => e
-          p e
           driver.quit
           return [false, "not found alert/prompt/confirm event #{@query}\n               =>"]
         end
       end
     rescue => e
-      puts e
+      log('s', "Error Selenium : #{e}")
     end
     end
   end
@@ -91,6 +129,7 @@ class XspearScan
   def run
     r = []
     log('s', 'creating a test query.')
+    r.push makeQueryPattern('d', 'XsPeaR"', 'XsPeaR"', 'i', "Found SQL Error Pattern", CallbackErrorPatternMatch)
     r.push makeQueryPattern('r', 'rEfe6', 'rEfe6', 'i', 'reflected parameter', CallbackStringMatch)
     r.push makeQueryPattern('f', 'XsPeaR>', 'XsPeaR>', 'i', "not filtered "+">".blue, CallbackStringMatch)
     r.push makeQueryPattern('f', '<XsPeaR', '<XsPeaR', 'i', "not filtered "+"<".blue, CallbackStringMatch)
@@ -137,7 +176,7 @@ class XspearScan
           end
           if result[0]
             log(node[:category], (result[1]).to_s.yellow+"[param: #{node[:param]}][#{node[:desc]}]")
-            @report.add_issue(node[:category],node[:type],node[:query],node[:desc])
+            @report.add_issue(node[:category],node[:type],node[:param],node[:query],node[:pattern],node[:desc])
           else
             log('d', (result[1]).to_s)
           end
@@ -159,70 +198,92 @@ class XspearScan
     # type: [r]eflected param
     #       [f]ilted rule
     #       [x]ss
+    #       [s]tatic
+    #       [d]ynamic
+
     result = []
-    uri = URI.parse(@url)
-    begin
-      params = URI.decode_www_form(uri.query)
-      params.each do |p|
-        dparams = params
-        dparams.each do |d|
-          d[1] = p[1] + payload if p[0] == d[0]
-        end
-        result.push("inject": 'url',"param":p[0] ,"type": type, "query": URI.encode_www_form(dparams), "pattern": pattern, "desc": desc, "category": category, "callback": callback)
-      end
+    if type == 's'
+      result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": @url, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
       unless @data.nil?
-        params = URI.decode_www_form(@data)
-        params.each do |p|
-          dparams = params
-          dparams.each do |d|
-            d[1] = p[1] + payload if p[0] == d[0]
-          end
-          result.push("inject": 'body', "param":p[0], "type": type, "query": URI.encode_www_form(dparams), "pattern": pattern, "desc": desc, "category": category, "callback": callback)
-        end
+        result.push("inject": 'body',"param":"STATIC" ,"type": type, "query": @url, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
       end
-    rescue StandardError
-      result.push("inject": 'url',"param":"error", "type": type, "query": '', "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+      p result
+    else
+      uri = URI.parse(@url)
+      begin
+        params = URI.decode_www_form(uri.query)
+        params.each do |p|
+          if @params.nil? || (@params.include? p[0] if !@params.nil?)
+            dparams = params
+            dparams.each do |d|
+              d[1] = p[1] + payload if p[0] == d[0]
+            end
+            result.push("inject": 'url',"param":p[0] ,"type": type, "query": URI.encode_www_form(dparams), "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+          end
+        end
+        unless @data.nil?
+          params = URI.decode_www_form(@data)
+          params.each do |p|
+            if @params.nil? || (@params.include? p[0] if !@params.nil?)
+              dparams = params
+              dparams.each do |d|
+                d[1] = p[1] + payload if p[0] == d[0]
+              end
+              result.push("inject": 'body', "param":p[0], "type": type, "query": URI.encode_www_form(dparams), "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+            end
+          end
+        end
+      rescue StandardError
+        result.push("inject": 'url',"param":"error", "type": type, "query": '', "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+      end
+      result
     end
-    result
   end
 
+
   def task(query, injected, pattern, callback)
-    uri = URI.parse(@url)
-    request = nil
-    method = "GET"
-    uri.query = query if injected == 'url'
+    begin
+      uri = URI.parse(@url)
+      request = nil
+      method = "GET"
+      uri.query = query if injected == 'url'
 
-    if @data.nil?
-      # GET
-      request = Net::HTTP::Get.new(uri.request_uri)
-    else
-      # POST
-      request = Net::HTTP::Post.new(uri.request_uri)
-      request.body = query if injected == 'body'
-      method = "POST"
-    end
 
-    Net::HTTP.start(uri.host, uri.port,
-                    use_ssl: uri.scheme == 'https') do |http|
+      if @data.nil?
+        # GET
+        request = Net::HTTP::Get.new(uri.request_uri)
+      else
+        # POST
+        request = Net::HTTP::Post.new(uri.request_uri)
+        request.body = query if injected == 'body'
+        method = "POST"
+      end
 
-      request['Accept'] = '*/*'
-      request['Connection'] = 'keep-alive'
-      request['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0'
-      unless @headers.nil?
-        @headers.split(';').each do |header|
-          begin
-            c = header.split(': ')
-            request[c[0]] = c[1] unless c.nil?
-          rescue StandardError
-            # pass
+
+      Net::HTTP.start(uri.host, uri.port,
+                      use_ssl: uri.scheme == 'https') do |http|
+
+        request['Accept'] = '*/*'
+        request['Connection'] = 'keep-alive'
+        request['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0'
+        unless @headers.nil?
+          @headers.split(';').each do |header|
+            begin
+              c = header.split(': ')
+              request[c[0]] = c[1] unless c.nil?
+            rescue StandardError
+              # pass
+            end
           end
         end
+        response = http.request(request)
+        result = callback.new(uri.to_s, method, pattern, response).run
+        # result = result.run
+        # p request.headers
+        return result, response
       end
-      response = http.request(request)
-      result = callback.new(uri.to_s, method, pattern, response).run
-      # result = result.run
-      # p request.headers
-      return result, response
     end
+  rescue => e
+    puts e
   end
 end

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "XSpear"
-Options = Struct.new(:url, :data, :headers, :level, :thread, :verbose, :output)
+Options = Struct.new(:url, :data, :headers, :params, :thread, :verbose, :output)
 class Parser
   def self.parse(options)
     args = Options.new('xspear')
@@ -29,12 +29,8 @@ class Parser
         args.headers = 'Cookie: ' + n
       end
 
-      opts.on('-l', '--level=1~3', '[optional] Custom scan level',
-              ' + Default value: 3',
-              ' + Level3',
-              ' + Level2',
-              ' + Level1: ') do |n|
-        args.level = n
+      opts.on('-p', '--param=PARAM', '[optional] Test paramters') do |n|
+        args.params = n
       end
 
       opts.on('-t', '--threads=NUMBER', '[optional] thread , default: 10') do |n|
@@ -72,9 +68,8 @@ end
 options = Parser.parse ARGV
 
 exit unless options.url
-options.level = 3 unless options.level
 options.thread = 10 unless options.thread
 options.verbose = 2 unless options.verbose
 banner
-s = XspearScan.new options.url, options.data, options.headers, options.level, options.thread.to_i, options.output, options.verbose
+s = XspearScan.new options.url, options.data, options.headers, options.params, options.thread.to_i, options.output, options.verbose
 s.run
