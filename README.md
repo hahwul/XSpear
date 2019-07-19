@@ -17,6 +17,14 @@ XSpear is XSS Scanner on ruby gems
 
 ## Installation
 
+Install it yourself as:
+
+    $ gem install XSpear
+
+Or install it yourself as (local file):
+
+    $ gem install XSpear-0.1.0.gem
+    
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -26,14 +34,6 @@ gem 'XSpear'
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install XSpear
-
-Or install it yourself as (local file):
-
-    $ gem install XSpear-0.1.0.gem
 
 ### Dependency gems
 `colorize` `selenium-webdriver`<br>
