@@ -248,5 +248,5 @@ The gem is available as open source under the terms of the [MIT License](https:/
 Everyone interacting in the XSpear project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/XSpear/blob/master/CODE_OF_CONDUCT.md).
 
 ## ScreenShot
-<img src="https://user-images.githubusercontent.com/13212227/61550885-a7467000-aa8e-11e9-9677-2a0c5800e1cc.png" width=100%>
+<img src="https://user-images.githubusercontent.com/13212227/61582619-ed233700-ab67-11e9-94f7-33cb6af5997c.png" width=100%>
 <img src="https://user-images.githubusercontent.com/13212227/61311071-8b459300-a830-11e9-8e60-c08e984fdacb.png" width=100%>
