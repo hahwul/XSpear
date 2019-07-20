@@ -54,13 +54,17 @@ class Parser
         puts opts
         exit
       end
-
+      opts.on('--version', 'Show XSpear version') do
+        puts XSpear::VERSION
+        exit
+      end
       opts.on('--update', 'Update with online') do
-        puts opts
+        puts "[RubyGem user]               : $ gem update XSpear"
+        puts "[Soft | Developer & Git clone user] : $ git pull -v "
+        puts "[Hard | Developer & Git clone user] : $ git reset --hard HEAD; git pull -v "
         exit
       end
     end
-
     opt_parser.parse!(options)
     args
   end
