@@ -69,6 +69,12 @@ $ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
         --version                    Show XSpear version
         --update                     Update with online
 ```
+### Result types
+- (I)NFO: Get information ( e.g sql error , filterd rule, reflected params, etc..)
+- (V)UNL: Vulnerable XSS, Checked alert/prompt/confirm with Selenium
+- (L)OW: Low level issue
+- (M)EDIUM: medium level issue
+- (H)IGH: high level issue
 
 ### Case by Case
 **Scanning XSS**
