@@ -36,12 +36,13 @@ And then execute:
     $ bundle
 
 ### Dependency gems
-`colorize` `selenium-webdriver`<br>
+`colorize` `selenium-webdriver` `terminal-table`<br>
 If you configured it to install automatically in the Gem library, but it behaves abnormally, install it with the following command.
 
 ```
 $ gem install colorize
 $ gem install selenium-webdriver
+$ gem install terminal-table
 ```
 
 ## Usage on cli
