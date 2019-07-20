@@ -66,7 +66,8 @@ $ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
                                       + v=2 : show scanning log
                                       + v=3 : show detail log(req/res)
     -h, --help                       Prints this help
-        --update                     Update with online (not supported)
+        --version                    Show XSpear version
+        --update                     Update with online
 ```
 
 ### Case by Case
@@ -211,6 +212,21 @@ class ScanCallbackFunc()
       # override
     end
 end
+```
+
+## Update
+if nomal user
+```
+$ gem update XSpear
+```
+
+if developers (soft)
+```
+$ git pull -v
+```
+if develpers (hard)
+```
+$ git reset --hard HEAD; git pull -v
 ```
 
 ## Development
