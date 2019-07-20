@@ -74,6 +74,9 @@ options = Parser.parse ARGV
 exit unless options.url
 options.thread = 10 unless options.thread
 options.verbose = 2 unless options.verbose
-banner
+
+if options.verbose.to_i != 1
+  banner
+end
 s = XspearScan.new options.url, options.data, options.headers, options.params, options.thread.to_i, options.output, options.verbose
 s.run
