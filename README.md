@@ -23,7 +23,7 @@ Install it yourself as:
 
 Or install it yourself as (local file):
 
-    $ gem install XSpear-0.1.0.gem
+    $ gem install XSpear-{version}.gem
     
 Add this line to your application's Gemfile:
 
