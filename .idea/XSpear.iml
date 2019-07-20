@@ -7,11 +7,13 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="bundler (v2.0.1, ruby-2.3.7-p456) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="childprocess (v0.9.0, ruby-2.3.7-p456) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bundler (v2.0.2, ruby-2.3.7-p456) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="childprocess (v1.0.1, ruby-2.3.7-p456) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="colorize (v0.8.1, ruby-2.3.7-p456) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="ffi (v1.11.1, ruby-2.3.7-p456) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rake (v12.3.2, ruby-2.3.7-p456) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubyzip (v1.2.3, ruby-2.3.7-p456) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="selenium-webdriver (v3.141.0, ruby-2.3.7-p456) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="selenium-webdriver (v3.142.3, ruby-2.3.7-p456) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="terminal-table (v1.8.0, ruby-2.3.7-p456) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="unicode-display_width (v1.6.0, ruby-2.3.7-p456) [gem]" level="application" />
   </component>
 </module>
