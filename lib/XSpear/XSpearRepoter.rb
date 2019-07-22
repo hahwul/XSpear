@@ -19,6 +19,7 @@ class XspearRepoter
     @endtime = nil
     @issue = []
     @query = []
+    @filtered_objects = {}
     # type : i,v,l,m,h
     # param : paramter
     # type :
@@ -29,6 +30,13 @@ class XspearRepoter
     # callback
   end
 
+  def add_issue_first(type, issue, param, payload, pattern, description)
+    rtype = {"i"=>"INFO","v"=>"VULN","l"=>"LOW","m"=>"MIDUM","h"=>"HIGH"}
+    rissue = {"f"=>"FILERD RULE","r"=>"REFLECTED","x"=>"XSS","s"=>"STATIC ANALYSIS","d"=>"DYNAMIC ANALYSIS"}
+    @issue.insert(0,["-", rtype[type], rissue[issue], param, pattern, description])
+    @query.push payload
+  end
+
   def add_issue(type, issue, param, payload, pattern, description)
     rtype = {"i"=>"INFO","v"=>"VULN","l"=>"LOW","m"=>"MIDUM","h"=>"HIGH"}
     rissue = {"f"=>"FILERD RULE","r"=>"REFLECTED","x"=>"XSS","s"=>"STATIC ANALYSIS","d"=>"DYNAMIC ANALYSIS"}
@@ -36,6 +44,9 @@ class XspearRepoter
     @query.push payload
   end
 
+  def set_filtered f
+    @filtered_objects = f
+  end
   def set_endtime
     @endtime = Time.now
   end
@@ -58,13 +69,42 @@ class XspearRepoter
   def to_html; end
 
   def to_cli
+    rurl = ""
+    if @url.length > 66
+      rurl = @url[0..66]+"... (snip)"
+    else
+      rurl = @url
+    end
     table = Terminal::Table.new
-    table.title = "[ XSpear report ]\n#{@url}\n#{@starttime} ~ #{@endtime} Found #{@issue.length} issues."
+    table.title = "[ XSpear report ]".red+"\n#{rurl}\n#{@starttime} ~ #{@endtime} Found #{@issue.length} issues."
     table.headings = ['NO','TYPE','ISSUE','PARAM','PAYLOAD','DESCRIPTION']
     table.rows = @issue
     #table.style = {:width => 80}
     puts table
-    puts "< Raw Query >"
+    puts "< Not Filtered >".yellow
+    @filtered_objects.each do |key, value|
+      eh = []
+      tag = []
+      sc = []
+      puts "[#{key}]".blue+" param"
+      value.each do |n|
+        if n.include? "=64"
+          # eh
+          eh.push n.chomp("=64")
+        elsif n.include? "xsp<"
+          # tag
+          n = n.sub("xsp<","")
+          tag.push n.chomp(">")
+        else
+          # sc
+          sc.push n.sub("XsPeaR","")
+        end
+      end
+      puts " + Special Char: ".green+"#{sc.map(&:inspect).join(',').gsub('"',"")}"
+      puts " + Event Handler: ".green+"#{eh.map(&:inspect).join(',')}"
+      puts " + HTML Tag: ".green+"#{tag.map(&:inspect).join(',')}"
+    end
+    puts "< Raw Query >".yellow
     @query.each_with_index do |q, i|
       puts "[#{i}] "+@url+"?"+q
     end

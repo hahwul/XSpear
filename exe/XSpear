@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "XSpear"
-Options = Struct.new(:url, :data, :headers, :params, :thread, :verbose, :output)
+Options = Struct.new(:url, :data, :headers, :params, :thread, :verbose, :output, :blind)
 class Parser
   def self.parse(options)
     args = Options.new('xspear')
@@ -31,6 +31,10 @@ class Parser
 
       opts.on('-p', '--param=PARAM', '[optional] Test paramters') do |n|
         args.params = n
+      end
+
+      opts.on('-b', '--BLIND=URL', '[optional] Add vector of Blind XSS',' + with XSS Hunter, ezXSS, HBXSS, etc...',' + e.g : -b https://hahwul.xss.ht') do |n|
+        args.blind = n
       end
 
       opts.on('-t', '--threads=NUMBER', '[optional] thread , default: 10') do |n|
@@ -78,5 +82,5 @@ options.verbose = 2 unless options.verbose
 if options.verbose.to_i != 1
   banner
 end
-s = XspearScan.new options.url, options.data, options.headers, options.params, options.thread.to_i, options.output, options.verbose
+s = XspearScan.new options.url, options.data, options.headers, options.params, options.thread.to_i, options.output, options.verbose, options.blind
 s.run
