@@ -297,5 +297,5 @@ The gem is available as open source under the terms of the [MIT License](https:/
 Everyone interacting in the XSpear project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/XSpear/blob/master/CODE_OF_CONDUCT.md).
 
 ## ScreenShot
-<img src="https://user-images.githubusercontent.com/13212227/61726530-bf7aff80-adac-11e9-9ed8-ac8ecd358c0c.png" width=100%>
+<img src="https://user-images.githubusercontent.com/13212227/61727892-1681d400-adaf-11e9-832d-37547006f778.png" width=100%>
 <img src="https://user-images.githubusercontent.com/13212227/61311071-8b459300-a830-11e9-8e60-c08e984fdacb.png" width=100%>
