@@ -328,7 +328,7 @@ class XspearScan
           if result[0]
             log(node[:category], (result[1]).to_s.yellow+"[param: #{node[:param]}][#{node[:desc]}]")
             @report.add_issue(node[:category],node[:type],node[:param],node[:query],node[:pattern],node[:desc])
-          elsif node[:callback] == CallbackNotAdded
+          elsif (node[:callback] == CallbackNotAdded) && (result[1].to_s == "true")
             @filtered_objects[node[:param].to_s].nil? ? (@filtered_objects[node[:param].to_s] = [node[:pattern].to_s]) : (@filtered_objects[node[:param].to_s].push(node[:pattern].to_s))
           else
             log('d', (result[1]).to_s)
