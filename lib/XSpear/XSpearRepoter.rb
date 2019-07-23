@@ -32,14 +32,14 @@ class XspearRepoter
   end
 
   def add_issue_first(type, issue, param, payload, pattern, description)
-    rtype = {"i"=>"INFO","v"=>"VULN","l"=>"LOW","m"=>"MIDUM","h"=>"HIGH"}
+    rtype = {"i"=>"INFO".blue,"v"=>"VULN".red,"l"=>"LOW".green,"m"=>"MIDUM".yellow,"h"=>"HIGH".red}
     rissue = {"f"=>"FILERD RULE","r"=>"REFLECTED","x"=>"XSS","s"=>"STATIC ANALYSIS","d"=>"DYNAMIC ANALYSIS"}
     @issue.insert(0,["-", rtype[type], rissue[issue], @method, param, pattern, description])
     @query.push payload
   end
 
   def add_issue(type, issue, param, payload, pattern, description)
-    rtype = {"i"=>"INFO","v"=>"VULN","l"=>"LOW","m"=>"MIDUM","h"=>"HIGH"}
+    rtype = {"i"=>"INFO".blue,"v"=>"VULN".red,"l"=>"LOW".green,"m"=>"MIDUM".yellow,"h"=>"HIGH".red}
     rissue = {"f"=>"FILERD RULE","r"=>"REFLECTED","x"=>"XSS","s"=>"STATIC ANALYSIS","d"=>"DYNAMIC ANALYSIS"}
     @issue << [@issue.size, rtype[type], rissue[issue], @method, param, pattern, description]
     @query.push payload

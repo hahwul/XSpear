@@ -78,28 +78,28 @@ class XspearScan
     def run
       if !@response['Server'].nil?
         # Server header
-        @report.add_issue("i","s","-","-","original query","Found Server: #{@response['Server']}")
+        @report.add_issue("i","s","-","-","<original query>","Found Server: #{@response['Server']}")
       end
 
       if @response['Strict-Transport-Security'].nil?
         # HSTS
-        @report.add_issue("i","s","-","-","original query","Not set HSTS")
+        @report.add_issue("i","s","-","-","<original query>","Not set HSTS")
       end
 
 
       if !@response['Content-Type'].nil?
-        @report.add_issue("i","s","-","-","original query","Content-Type: #{@response['Content-Type']}")
+        @report.add_issue("i","s","-","-","<original query>","Content-Type: #{@response['Content-Type']}")
       end
 
 
       if !@response['X-XSS-Protection'].nil?
-        @report.add_issue("i","s","-","-","original query","Not set X-XSS-Protection")
+        @report.add_issue("i","s","-","-","<original query>","Not set X-XSS-Protection")
       end
 
       if !@response['X-Frame-Options'].nil?
-        @report.add_issue("i","s","-","-","original query","X-Frame-Options: #{@response['X-Frame-Options']}")
+        @report.add_issue("i","s","-","-","<original query>","X-Frame-Options: #{@response['X-Frame-Options']}")
       else
-        @report.add_issue("l","s","-","-","original query","Not Set X-Frame-Options")
+        @report.add_issue("l","s","-","-","<original query>","Not Set X-Frame-Options")
       end
 
 
@@ -112,12 +112,12 @@ class XspearScan
             d = c.split " "
             r = r+d[0]+" "
           end
-          @report.add_issue("i","s","-","-","original query","Set CSP(#{r})")
+          @report.add_issue("i","s","-","-","<original query>","Set CSP(#{r})")
         rescue
-          @report.add_issue("i","s","-","-","original query","CSP ERROR")
+          @report.add_issue("i","s","-","-","<original query>","CSP ERROR")
         end
       else
-        @report.add_issue("m","s","-","-","original query","Not Set CSP")
+        @report.add_issue("m","s","-","-","<original query>","Not Set CSP")
       end
 
 
@@ -172,17 +172,17 @@ class XspearScan
           alert = driver.switch_to().alert()
           if alert.text.to_s == "45"
             driver.quit
-            return [true, "found alert/prompt/confirm (45) in selenium!! #{@query}\n               => "]
+            return [true, "found alert/prompt/confirm (45) in selenium!! #{@query}"]
           else
             driver.quit
-            return [true, "found alert/prompt/confirm event in selenium #{@query}\n               =>"]
+            return [true, "found alert/prompt/confirm event in selenium #{@query}"]
           end
         rescue Selenium::WebDriver::Error::UnexpectedAlertOpenError => e
           driver.quit
-          return [true, "found alert/prompt/confirm error base in selenium #{@query}\n               =>"]
+          return [true, "found alert/prompt/confirm error base in selenium #{@query}"]
         rescue => e
           driver.quit
-          return [false, "not found alert/prompt/confirm event #{@query}\n               =>"]
+          return [false, "not found alert/prompt/confirm event #{@query}"]
         end
       end
     rescue => e
