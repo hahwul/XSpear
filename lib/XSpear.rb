@@ -74,6 +74,58 @@ class XspearScan
     end
   end
 
+  class CallbackCheckHeaders < ScanCallbackFunc
+    def run
+      if !@response['Server'].nil?
+        # Server header
+        @report.add_issue("i","s","-","-","original query","Found Server: #{@response['Server']}")
+      end
+
+
+      if @response['Strict-Transport-Security'].nil?
+        # HSTS
+        @report.add_issue("i","s","-","-","original query","Not set HSTS")
+      end
+
+
+      if !@response['Content-Type'].nil?
+        @report.add_issue("i","s","-","-","original query","Content-Type: #{@response['Content-Type']}")
+      end
+
+
+      if !@response['X-XSS-Protection'].nil?
+        @report.add_issue("i","s","-","-","original query","Not set X-XSS-Protection")
+      end
+
+      if !@response['X-Frame-Options'].nil?
+        @report.add_issue("i","s","-","-","original query","X-Frame-Options: #{@response['X-Frame-Options']}")
+      else
+        @report.add_issue("l","s","-","-","original query","Not Set X-Frame-Options")
+      end
+
+
+      if !@response['Content-Security-Policy'].nil?
+        begin
+          csp = @response['Content-Security-Policy']
+          csp = csp.split(';')
+          r = " "
+          csp.each do |c|
+            d = c.split " "
+            r = r+d[0]+" "
+          end
+          @report.add_issue("i","s","-","-","original query","Set CSP(#{r})")
+        rescue
+          @report.add_issue("i","s","-","-","original query","CSP ERROR")
+        end
+      else
+        @report.add_issue("m","s","-","-","original query","Not Set CSP")
+      end
+
+
+      [false, "not reflected #{@query}"]
+    end
+  end
+
   class CallbackErrorPatternMatch < ScanCallbackFunc
     def run
       info = "Found"
@@ -276,6 +328,7 @@ class XspearScan
     ]
 
     log('s', 'creating a test query.')
+    r.push makeQueryPattern('s', '', '', 'i', "-", CallbackCheckHeaders)
     r.push makeQueryPattern('d', 'XsPeaR"', 'XsPeaR"', 'i', "Found SQL Error Pattern", CallbackErrorPatternMatch)
     r.push makeQueryPattern('r', 'rEfe6', 'rEfe6', 'i', 'reflected parameter', CallbackStringMatch)
     # Check Special Char
