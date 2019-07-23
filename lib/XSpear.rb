@@ -31,11 +31,12 @@ class XspearScan
   end
 
   class ScanCallbackFunc
-    def initialize(url, method, query, response)
+    def initialize(url, method, query, response, report)
       @url = url
       @method = method
       @query = query
       @response = response
+      @report = report
       # self.run
     end
 
@@ -64,7 +65,8 @@ class XspearScan
   class CallbackNotAdded < ScanCallbackFunc
     def run
       if @response.body.include? @query
-        log("i","reflected #{@query}")
+        time = Time.now
+        puts '[I]'.blue + " [#{time.strftime('%H:%M:%S')}] reflected #{@query}"
         [false, true]
       else
         [false, false]
@@ -433,7 +435,7 @@ class XspearScan
           end
         end
         response = http.request(request)
-        result = callback.new(uri.to_s, method, pattern, response).run
+        result = callback.new(uri.to_s, method, pattern, response, @report).run
         # result = result.run
         # p request.headers
         return result, response
