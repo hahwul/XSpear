@@ -134,7 +134,7 @@ __((_)(_))  /(/(   /((_))(_))(()\
            |_|                   \ /<
 {\\\\\\\\\\\\\BYHAHWUL\\\\\\\\\\\(0):::<======================-
                                  / \<
-                                    \>       [ v1.0.6 ]
+                                    \>       [ v1.0.7 ]
 [*] creating a test query.
 [*] test query generation is complete. [149 query]
 [*] starting test and analysis. [10 threads]
