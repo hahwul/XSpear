@@ -82,7 +82,7 @@ class XspearRepoter
     table.rows = @issue
     #table.style = {:width => 80}
     puts table
-    puts "< Not Filtered >".yellow
+    puts "< Available Objects >".yellow
     @filtered_objects.each do |key, value|
       eh = []
       tag = []
@@ -101,9 +101,9 @@ class XspearRepoter
           sc.push n.sub("XsPeaR","")
         end
       end
-      puts " + Special Char: ".green+"#{sc.map(&:inspect).join(',').gsub('"',"")}"
-      puts " + Event Handler: ".green+"#{eh.map(&:inspect).join(',')}"
-      puts " + HTML Tag: ".green+"#{tag.map(&:inspect).join(',')}"
+      puts " + Available Special Char: ".green+"#{sc.map(&:inspect).join(',').gsub('"',"")}".gsub(',',' ')
+      puts " + Available Event Handler: ".green+"#{eh.map(&:inspect).join(',')}"
+      puts " + Available HTML Tag: ".green+"#{tag.map(&:inspect).join(',')}"
     end
     puts "< Raw Query >".yellow
     @query.each_with_index do |q, i|
