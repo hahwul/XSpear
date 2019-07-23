@@ -358,8 +358,9 @@ class XspearScan
 
     result = []
     if type == 's'
-      result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": @url, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
-      unless @data.nil?
+      if @data.nil?
+        result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": @url, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+      else
         result.push("inject": 'body',"param":"STATIC" ,"type": type, "query": @url, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
       end
       p result
