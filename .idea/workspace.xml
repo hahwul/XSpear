@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="" />
+    <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/XSpear.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="330" column="18" selection-start-line="330" selection-start-column="18" selection-end-line="330" selection-end-column="18" />
+            <state relative-caret-position="-4939">
+              <caret line="28" column="77" selection-start-line="28" selection-start-column="77" selection-end-line="28" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -46,8 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1605">
-              <caret line="107" column="36" selection-start-line="107" selection-start-column="36" selection-end-line="107" selection-end-column="36" />
+            <state relative-caret-position="309">
+              <caret line="71" column="12" lean-forward="true" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -110,10 +114,10 @@
         <option value="$PROJECT_DIR$/XSpear.gemspec" />
         <option value="$PROJECT_DIR$/lib/XSpear/banner.rb" />
         <option value="$PROJECT_DIR$/exe/XSpear" />
-        <option value="$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb" />
         <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/lib/XSpear.rb" />
+        <option value="$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb" />
       </list>
     </option>
   </component>
@@ -228,7 +232,7 @@
       <workItem from="1562942816004" duration="15337000" />
       <workItem from="1563638656518" duration="4985000" />
       <workItem from="1563809961097" duration="4237000" />
-      <workItem from="1563893538891" duration="325000" />
+      <workItem from="1563893538891" duration="854000" />
     </task>
     <task id="LOCAL-00001" summary="init update">
       <created>1562945899597</created>
@@ -440,11 +444,32 @@
       <option name="project" value="LOCAL" />
       <updated>1563893769120</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="(1.0.6)[fixed #7] CallbackNotAdded 쪽 분기문 수정">
+      <created>1563893901111</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1563893901111</updated>
+    </task>
+    <task id="LOCAL-00032" summary="(1.0.6)[fixed #4] Report 객체 수정">
+      <created>1563894048747</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1563894048747</updated>
+    </task>
+    <task id="LOCAL-00033" summary="(1.0.6)[fixed #8] Added response header analysis module">
+      <created>1563894186608</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1563894186608</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24884000" />
+    <option name="totallyTimeSpent" value="25413000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="-620" width="1920" height="1057" extended-state="0" />
@@ -496,7 +521,10 @@
     <MESSAGE value="(1.0.5) Add blind XSS options &amp; edit &quot;filtered Rule testing code&quot;" />
     <MESSAGE value="(1.0.5) Update README.md" />
     <MESSAGE value="(1.0.6)[fixed #6] Edit Static Analysis code" />
-    <option name="LAST_COMMIT_MESSAGE" value="(1.0.6)[fixed #6] Edit Static Analysis code" />
+    <MESSAGE value="(1.0.6)[fixed #7] CallbackNotAdded 쪽 분기문 수정" />
+    <MESSAGE value="(1.0.6)[fixed #4] Report 객체 수정" />
+    <MESSAGE value="(1.0.6)[fixed #8] Added response header analysis module" />
+    <option name="LAST_COMMIT_MESSAGE" value="(1.0.6)[fixed #8] Added response header analysis module" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -516,13 +544,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="35" column="117" selection-start-line="35" selection-start-column="117" selection-end-line="35" selection-end-column="117" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1605">
-          <caret line="107" column="36" selection-start-line="107" selection-start-column="36" selection-end-line="107" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -570,10 +591,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="71" column="12" lean-forward="true" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="330" column="18" selection-start-line="330" selection-start-column="18" selection-end-line="330" selection-end-column="18" />
+        <state relative-caret-position="-4939">
+          <caret line="28" column="77" selection-start-line="28" selection-start-column="77" selection-end-line="28" selection-end-column="77" />
         </state>
       </provider>
     </entry>

@@ -13,13 +13,14 @@ class IssueStruct
 end
 
 class XspearRepoter
-  def initialize(url,starttime)
+  def initialize(url,starttime, method)
     @url = url
     @starttime = starttime
     @endtime = nil
     @issue = []
     @query = []
     @filtered_objects = {}
+    @method = method
     # type : i,v,l,m,h
     # param : paramter
     # type :
@@ -33,14 +34,14 @@ class XspearRepoter
   def add_issue_first(type, issue, param, payload, pattern, description)
     rtype = {"i"=>"INFO","v"=>"VULN","l"=>"LOW","m"=>"MIDUM","h"=>"HIGH"}
     rissue = {"f"=>"FILERD RULE","r"=>"REFLECTED","x"=>"XSS","s"=>"STATIC ANALYSIS","d"=>"DYNAMIC ANALYSIS"}
-    @issue.insert(0,["-", rtype[type], rissue[issue], param, pattern, description])
+    @issue.insert(0,["-", rtype[type], rissue[issue], @method, param, pattern, description])
     @query.push payload
   end
 
   def add_issue(type, issue, param, payload, pattern, description)
     rtype = {"i"=>"INFO","v"=>"VULN","l"=>"LOW","m"=>"MIDUM","h"=>"HIGH"}
     rissue = {"f"=>"FILERD RULE","r"=>"REFLECTED","x"=>"XSS","s"=>"STATIC ANALYSIS","d"=>"DYNAMIC ANALYSIS"}
-    @issue << [@issue.size, rtype[type], rissue[issue], param, pattern, description]
+    @issue << [@issue.size, rtype[type], rissue[issue], @method, param, pattern, description]
     @query.push payload
   end
 
@@ -77,7 +78,7 @@ class XspearRepoter
     end
     table = Terminal::Table.new
     table.title = "[ XSpear report ]".red+"\n#{rurl}\n#{@starttime} ~ #{@endtime} Found #{@issue.length} issues."
-    table.headings = ['NO','TYPE','ISSUE','PARAM','PAYLOAD','DESCRIPTION']
+    table.headings = ['NO','TYPE','ISSUE', 'METHOD', 'PARAM', 'PAYLOAD','DESCRIPTION']
     table.rows = @issue
     #table.style = {:width => 80}
     puts table

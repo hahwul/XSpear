@@ -26,7 +26,7 @@ class XspearScan
     @output = output
     @verbose = verbose
     @blind_url = blind
-    @report = XspearRepoter.new @url, Time.now
+    @report = XspearRepoter.new @url, Time.now, (@data.nil? ? "GET" : "POST")
     @filtered_objects = {}
   end
 
@@ -386,7 +386,7 @@ class XspearScan
           elsif (node[:callback] == CallbackNotAdded) && (result[1].to_s == "true")
             @filtered_objects[node[:param].to_s].nil? ? (@filtered_objects[node[:param].to_s] = [node[:pattern].to_s]) : (@filtered_objects[node[:param].to_s].push(node[:pattern].to_s))
           else
-            log('d', (result[1]).to_s)
+            log('d', "'#{node[:param]}' "+(result[1]).to_s)
           end
           rescue => e
           end
