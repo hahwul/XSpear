@@ -13,19 +13,19 @@ module XSpear
 end
 
 class XspearScan
-  def initialize(url, data, headers, params, thread, output, verbose, blind)
+  def initialize(url, options)
     @url = url
-    @data = data
-    @headers = headers
-    if params.nil?
-      @params = params
+    @data = options['data']
+    @headers = options['headers']
+    if options['params'].nil?
+      @params = options['params']
     else
-      @params = params.split(",")
+      @params = options['params'].split(",")
     end
-    @thread = thread
-    @output = output
-    @verbose = verbose
-    @blind_url = blind
+    @thread = options['thread']
+    @output = options['output']
+    @verbose = options['verbose']
+    @blind_url = options['blind']
     @report = XspearRepoter.new @url, Time.now, (@data.nil? ? "GET" : "POST")
     @filtered_objects = {}
   end
