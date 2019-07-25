@@ -509,7 +509,7 @@ class XspearScan
           end
         end
       rescue StandardError
-        result.push("inject": 'url',"param":"error", "type": type, "query": '', "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+        # bypass
       end
       result
     end
