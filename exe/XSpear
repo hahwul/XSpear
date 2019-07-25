@@ -92,12 +92,64 @@ class Parser
 end
 options = Parser.parse ARGV
 
+if !options.options['raw'].nil?
+  begin
+    method = ""
+    path = ""
+    headers_hash = {}
+    headers = ""
+    data = ""
+    switch = true
+    file = File.open options.options['raw']
+    r = file.read
+    file.close
+    r.each_line do |line|
+      if switch
+        temp = line.split(" ")
+        method = temp[0]
+        path = temp[1]
+        switch = false
+      else
+        if line.include? ": "
+          temp = line.split(": ")
+          hn = temp[0]
+          hd = line.sub(hn+": ", "")
+          headers_hash[hn] = hd
+          headers = headers + "#{hn}: #{hd}\n"
+        elsif line.size > 2
+          # data
+          data = line
+        else
+          # blank
+        end
+      end
+    end
+
+    # Burp or ZAP
+    # http, https로 시작하면 zap 아니면 burp 포맷
+    url = ""
+    if (path.index('http://') == 0 || path.index('https://') == 0)
+      url = path
+    else
+      url = "http://"+headers_hash['Host'].to_s.chomp!+"/"+path
+    end
+    options.url = url
+    if headers.length > 0
+      options.options['headers'] = headers
+    end
+    if method == "POST" && data.size
+      options.options['data'] = data
+    end
+  rescue => e
+    puts "RAW file Error #{e}"
+    exit
+  end
+end
 
 exit unless options.url
 options.options['thread'] = 10 unless options.options['thread']
 options.options['verbose'] = 2 unless options.options['verbose']
 options.options['thread'] = options.options['thread'].to_i
-
 
 if options.options['verbose'].to_i != 1
   banner
