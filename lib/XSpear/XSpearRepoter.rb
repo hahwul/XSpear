@@ -87,6 +87,7 @@ class XspearRepoter
       eh = []
       tag = []
       sc = []
+      uc = []
       puts "[#{key}]".blue+" param"
       value.each do |n|
         if n.include? "=64"
@@ -96,6 +97,9 @@ class XspearRepoter
           # tag
           n = n.sub("xsp<","")
           tag.push n.chomp(">")
+        elsif n.include? ".xspear"
+          # uc
+          uc.push n.sub(".xspear","")
         else
           # sc
           sc.push n.sub("XsPeaR","")
@@ -104,6 +108,7 @@ class XspearRepoter
       puts " + Available Special Char: ".green+"#{sc.map(&:inspect).join(',').gsub('"',"")}".gsub(',',' ')
       puts " + Available Event Handler: ".green+"#{eh.map(&:inspect).join(',')}"
       puts " + Available HTML Tag: ".green+"#{tag.map(&:inspect).join(',')}"
+      puts " + Available Useful Code: ".green+"#{uc.map(&:inspect).join(',')}"
     end
     puts "< Raw Query >".yellow
     @query.each_with_index do |q, i|

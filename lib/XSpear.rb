@@ -379,6 +379,11 @@ class XspearScan
       r.push makeQueryPattern('f', "\">xsp<#{tag}>", "xsp<#{tag}>", 'i', "not filtered "+"<#{tag}>".blue, CallbackNotAdded)
     end
 
+    # Check useful code
+    useful_code.each do |c|
+      r.push makeQueryPattern('f', "#{c}.xspear", "#{c}.xspear", 'i', "not filtered "+"'#{c}' code".blue, CallbackNotAdded)
+    end
+
     # Check Common XSS Payloads
     onfocus_tags = [
         "input",
