@@ -14,6 +14,7 @@ XSpear is XSS Scanner on ruby gems
   + Find SQL Error pattern
   + Analysis Security headers(`CSP` `HSTS` `X-frame-options`, `XSS-protection` etc.. )
   + Analysis Other headers..(Server version, Content-Type, etc...)
+- Scanning from Raw file(Burp suite, ZAP Request)
 - XSpear running on ruby code(with Gem library)
 - Show `table base cli-report` and `filtered rule`, `testing raw query`(url)
 - Testing at selected parameters
@@ -64,6 +65,7 @@ $ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
     -d, --data=POST Body             [optional] POST Method Body data
         --headers=HEADERS            [optional] Add HTTP Headers
         --cookie=COOKIE              [optional] Add Cookie
+        --raw=FILENAME               [optional] Load raw file(e.g raw_sample.txt)
     -p, --param=PARAM                [optional] Test paramters
     -b, --BLIND=URL                  [optional] Add vector of Blind XSS
                                       + with XSS Hunter, ezXSS, HBXSS, etc...
@@ -78,6 +80,7 @@ $ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
     -h, --help                       Prints this help
         --version                    Show XSpear version
         --update                     Update with online
+
 ```
 ### Result types
 - (I)NFO: Get information ( e.g sql error , filterd rule, reflected params, etc..)
@@ -180,9 +183,10 @@ __((_)(_))  /(/(   /((_))(_))(()\
 +----+-------+------------------+--------+-------+-------------------------------------+--------------------------------------------+
 < Available Objects >
 [cat] param
- + Available Special Char: ' \ ` ] . : ) } [ { $
- + Available Event Handler: "onActivate","onBeforeCopy","onAfterPrint","onAfterUpdate","onAbort","onBeforeActivate","onBeforeDeactivate","onBlur","onBeforeCut","onBounce","onBeforeUnload","onBeforeEditFocus","onBeforePaste","onBeforeUpdate","onBegin","onBeforePrint","onClick","onChange","onControlSelect","onDataSetChanged","onCopy","onDataSetComplete","onContextMenu","onDataAvailable","onCellChange","onCut","onDeactivate","onDblClick","onDragEnd","onDragOver","onDragDrop","onDrop","onDragStart","onDrag","onDragEnter","onDragLeave","onFilterChange","onFocusIn","onEnd","onHelp","onError","onErrorUpdate","onFocus","onFinish","onHashChange","onFocusOut","onLoad","onLoseCapture","onInput","onLayoutComplete","onKeyDown","onMessage","onKeyUp","onMediaError","onMediaComplete","onKeyPress","onMouseOver","onMove","onMouseEnter","onMouseWheel","onMouseLeave","onMoveEnd","onMouseDown","onMouseMove","onMouseUp","onMouseOut","onPropertyChange","onMoveStart","onPaste","onPopState","onOutOfSync","onProgress","onOnline","onReadyStateChange","onOffline","onPause","onResize","onReverse","onRepeat","onRedo","onResizeEnd","onRowExit","onReset","onRowsEnter","onResizeStart","onResume","onRowInserted","onScroll","onStorage","onSelectStart","onRowDelete","onSeek","onSelectionChange","onSelect","onStart","onStop","onUndo","onTrackChange","onURLFlip","onTimeError","onSyncRestored","onSubmit","onUnload"
- + Available HTML Tag: "svg","iframe","script","audio","video","meta","frame","img","embeded","frameset","object","style"
+ + Available Special Char: ' \ ` ) [ } : . { ] $
+ + Available Event Handler: "onActivate","onBeforeActivate","onAfterUpdate","onAbort","onAfterPrint","onBeforeCopy","onBeforeCut","onBeforePaste","onBlur","onBeforePrint","onBeforeDeactivate","onBeforeUpdate","onBeforeEditFocus","onBegin","onBeforeUnload","onBounce","onDataSetChanged","onCellChange","onClick","onDataAvailable","onChange","onContextMenu","onCopy","onControlSelect","onDataSetComplete","onCut","onDragStart","onDragEnter","onDragOver","onDblClick","onDragEnd","onDrop","onDeactivate","onDragLeave","onDrag","onDragDrop","onHashChange","onFocusOut","onFilterChange","onEnd","onFocus","onHelp","onErrorUpdate","onFocusIn","onFinish","onError","onLayoutComplete","onKeyDown","onKeyUp","onMediaError","onLoad","onMediaComplete","onInput","onKeyPress","onloadstart","onLoseCapture","onMouseOut","onMouseDown","onMouseWheel","onMove","onMouseLeave","onMessage","onMouseEnter","onMouseMove","onMouseOver","onMouseUp","onPropertyChange","onMoveStart","onProgress","onPopState","onPaste","onOnline","onMoveEnd","onPause","onOutOfSync","onOffline","onReverse","onResize","onRedo","onRowsEnter","onRepeat","onReset","onResizeEnd","onResizeStart","onReadyStateChange","onResume","onRowInserted","onStart","onScroll","onRowExit","onSelectionChange","onSeek","onStop","onRowDelete","onSelectStart","onSelect","ontouchstart","ontouchend","onTrackChange","onSyncRestored","onTimeError","onUndo","onURLFlip","onStorage","onUnload","onSubmit","ontouchmove"
+ + Available HTML Tag: "meta","video","iframe","embed","script","audio","svg","object","img","frameset","applet","style","frame"
+ + Available Useful Code: "document.cookie","document.location","window.location"
 < Raw Query >
 [0] http://testphp.vulnweb.com/listproducts.php?cat=z?cat=zXsPeaR%22
 [1] http://testphp.vulnweb.com/listproducts.php?cat=z?-
@@ -208,9 +212,19 @@ $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
 ```ruby
 require 'XSPear'
 
-s = XspearScan.new "https://www.hahwul.com?target_url", "post_body=thisisbodydata", "CustomHeader: wow", 3, 10, "result.json", "3", "blind-xss-url"
-# s = XspearScan.new options.url, options.data, options.headers, options.level, options.thread.to_i, options.output, options.verbose, options.blind
-s.run
+# Set options
+options = {}
+options['thread'] = 30
+options['cookie'] = "data=123"
+options['blind'] = "https://hahwul.xss.ht"
+options['output'] = json
+
+# Create XSpear object with url, options
+s = XspearScan.new "https://www.hahwul.com?target_url", options
+
+# Scanning
+result = s.run
+r = JSON.parse result
 ```
 
 ## Add Scanning Module

@@ -36,7 +36,7 @@ class Parser
       end
 
 
-      opts.on('--raw=FILENAME', '[optional] Add HTTP Headers') do |n|
+      opts.on('--raw=FILENAME', '[optional] Load raw file(e.g raw_sample.txt)') do |n|
         args.options['raw'] = n
       end
 
