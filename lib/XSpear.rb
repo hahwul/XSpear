@@ -489,22 +489,26 @@ class XspearScan
         params = URI.decode_www_form(uri.query)
         params.each do |p|
           if @params.nil? || (@params.include? p[0] if !@params.nil?)
+            attack = ""
             dparams = params
             dparams.each do |d|
-              d[1] = p[1] + payload if p[0] == d[0]
+              attack = uri.query.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
+              #d[1] = p[1] + payload if p[0] == d[0]
             end
-            result.push("inject": 'url',"param":p[0] ,"type": type, "query": URI.encode_www_form(dparams), "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+            result.push("inject": 'url',"param":p[0] ,"type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
           end
         end
         unless @data.nil?
           params = URI.decode_www_form(@data)
           params.each do |p|
             if @params.nil? || (@params.include? p[0] if !@params.nil?)
+              attack = ""
               dparams = params
               dparams.each do |d|
-                d[1] = p[1] + payload if p[0] == d[0]
+                attack = uri.query.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
+                #d[1] = p[1] + payload if p[0] == d[0]
               end
-              result.push("inject": 'body', "param":p[0], "type": type, "query": URI.encode_www_form(dparams), "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+              result.push("inject": 'body', "param":p[0], "type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
             end
           end
         end
