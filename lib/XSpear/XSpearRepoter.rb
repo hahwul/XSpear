@@ -29,18 +29,20 @@ class XspearRepoter
     # desc
     # category
     # callback
+    @rtype = {"i"=>"INFO".blue,"v"=>"VULN".red,"l"=>"LOW".green,"m"=>"MIDUM".yellow,"h"=>"HIGH".light_red}
+    @rissue = {"f"=>"FILERD RULE","r"=>"REFLECTED","x"=>"XSS","s"=>"STATIC ANALYSIS","d"=>"DYNAMIC ANALYSIS"}
   end
 
   def add_issue_first(type, issue, param, payload, pattern, description)
-    rtype = {"i"=>"INFO".blue,"v"=>"VULN".red,"l"=>"LOW".green,"m"=>"MIDUM".yellow,"h"=>"HIGH".red}
-    rissue = {"f"=>"FILERD RULE","r"=>"REFLECTED","x"=>"XSS","s"=>"STATIC ANALYSIS","d"=>"DYNAMIC ANALYSIS"}
+    rtype = @rtype
+    rissue = @rissue
     @issue.insert(0,["-", rtype[type], rissue[issue], @method, param, pattern, description])
     @query.push payload
   end
 
   def add_issue(type, issue, param, payload, pattern, description)
-    rtype = {"i"=>"INFO".blue,"v"=>"VULN".red,"l"=>"LOW".green,"m"=>"MIDUM".yellow,"h"=>"HIGH".red}
-    rissue = {"f"=>"FILERD RULE","r"=>"REFLECTED","x"=>"XSS","s"=>"STATIC ANALYSIS","d"=>"DYNAMIC ANALYSIS"}
+    rtype = @rtype
+    rissue = @rissue
     @issue << [@issue.size, rtype[type], rissue[issue], @method, param, pattern, description]
     @query.push payload
   end
@@ -84,35 +86,46 @@ class XspearRepoter
     puts table
     puts "< Available Objects >".yellow
     @filtered_objects.each do |key, value|
-      eh = []
-      tag = []
-      sc = []
-      uc = []
-      puts "[#{key}]".blue+" param"
-      value.each do |n|
-        if n.include? "=64"
-          # eh
-          eh.push n.chomp("=64")
-        elsif n.include? "xsp<"
-          # tag
-          n = n.sub("xsp<","")
-          tag.push n.chomp(">")
-        elsif n.include? ".xspear"
-          # uc
-          uc.push n.sub(".xspear","")
-        else
-          # sc
-          sc.push n.sub("XsPeaR","")
+      begin
+        eh = []
+        tag = []
+        sc = []
+        uc = []
+        puts "[#{key}]".blue+" param"
+        value.each do |n|
+          if n.include? "=64"
+            # eh
+            eh.push n.chomp("=64")
+          elsif n.include? "xsp<"
+            # tag
+            n = n.sub("xsp<","")
+            tag.push n.chomp(">")
+          elsif n.include? ".xspear"
+            # uc
+            uc.push n.sub(".xspear","")
+          else
+            # sc
+            sc.push n.sub("XsPeaR","")
+          end
         end
+        puts " + Available Special Char: ".green+"#{sc.map(&:inspect).join(',').gsub('"',"")}".gsub(',',' ')
+        puts " + Available Event Handler: ".green+"#{eh.map(&:inspect).join(',')}"
+        puts " + Available HTML Tag: ".green+"#{tag.map(&:inspect).join(',')}"
+        puts " + Available Useful Code: ".green+"#{uc.map(&:inspect).join(',')}"
+      rescue
+        puts "Not found"
       end
-      puts " + Available Special Char: ".green+"#{sc.map(&:inspect).join(',').gsub('"',"")}".gsub(',',' ')
-      puts " + Available Event Handler: ".green+"#{eh.map(&:inspect).join(',')}"
-      puts " + Available HTML Tag: ".green+"#{tag.map(&:inspect).join(',')}"
-      puts " + Available Useful Code: ".green+"#{uc.map(&:inspect).join(',')}"
     end
-    puts "< Raw Query >".yellow
+    if @filtered_objects.length == 0
+      puts "Not found"
+    end
+    puts "\n< Raw Query >".yellow
+    begin
     @query.each_with_index do |q, i|
       puts "[#{i}] #{@url.sub(URI.parse(@url).query,"")}"+q
+    end
+    rescue
+      puts "Not found"
     end
   end
 end

