@@ -112,7 +112,7 @@ class XspearRepoter
     end
     puts "< Raw Query >".yellow
     @query.each_with_index do |q, i|
-      puts "[#{i}] "+@url+"?"+q
+      puts "[#{i}] #{@url.sub(URI.parse(@url).query,"")}"+q
     end
   end
 end
