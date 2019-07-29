@@ -74,6 +74,54 @@ class XspearScan
     end
   end
 
+  class CallbackCheckWAF < ScanCallbackFunc
+    def run
+      pattern = {}
+      pattern['AWS'] = 'AWS Web Application FW'
+      pattern['ACE XML Gateway'] = 'Cisco ACE XML Gateway'
+      pattern['cloudflare'] = 'CloudFlare'
+      pattern['cf-ray'] = 'CloudFlare'
+      pattern['Error from cloudfront'] = 'Amazone CloudFront'
+      pattern['Protected by COMODO WAF'] = 'Comodo Web Application FW'
+      pattern['X-Backside-Transport.*?(OK|FAIL)'] = 'IBM WebSphere DataPower'
+      pattern['FORTIWAFSID'] = 'FortiWeb Web Application FW'
+      pattern['ODSESSION'] = 'Hyperguard Web Application FW'
+      pattern['AkamaiGHost'] = 'KONA(AKAMAIGHOST)'
+      pattern['Mod_Security|NOYB'] = 'ModSecurity'
+      pattern['naxsi/waf'] = 'NAXSI'
+      pattern['NCI__SessionId='] = 'NetContinuum Web Application FW'
+      pattern['citrix_ns_id'] = 'Citrix NetScaler'
+      pattern['NSC_'] = 'Citrix NetScaler'
+      pattern['NS-CACHE'] = 'Citrix NetScaler'
+      pattern['newdefend'] = 'Newdefend Web Application FW'
+      pattern['NSFocus'] = 'NSFOCUS Web Application FW'
+      pattern['PLBSID'] = 'Profense Web Application Firewall'
+      pattern['X-SL-CompState'] = 'AppWall (Radware)'
+      pattern['safedog'] = 'Safedog Web Application FW'
+      pattern['Sucuri/Cloudproxy|X-Sucuri'] = 'CloudProxy WebSite FW'
+      pattern['X-Sucuri'] = 'CloudProxy WebSite FW'
+      pattern['st8(id)'] = 'Teros/Citrix Application FW'
+      pattern['st8(_wat)'] = 'Teros/Citrix Application FW'
+      pattern['st8(_wlf)'] = 'Teros/Citrix Application FW'
+      pattern['F5-TrafficShield'] = 'TrafficShield'
+      pattern['Rejected-By-UrlScan'] = 'MS UrlScan'
+      pattern['Secure Entry Server'] = 'USP Secure Entry Server'
+      pattern['nginx-wallarm'] = 'Wallarm Web Application FW'
+      pattern['WatchGuard'] = 'WatchGuard '
+      pattern['X-Powered-By-360wzb'] = '360 Web Application'
+      pattern['WebKnight'] = 'WebKnight Application FW'
+
+      pattern.each do |key,value|
+        if !@response[key].nil?
+          @report.add_issue("i","d","-","-","<original query>","Found WAF: #{value}")
+        end
+      end
+
+      [false, "not reflected #{@query}"]
+    end
+  end
+
+
   class CallbackCheckHeaders < ScanCallbackFunc
     def run
       if !@response['Server'].nil?
@@ -95,6 +143,7 @@ class XspearScan
       if !@response['X-XSS-Protection'].nil?
         @report.add_issue("i","s","-","-","<original query>","Not set X-XSS-Protection")
       end
+
 
       if !@response['X-Frame-Options'].nil?
         @report.add_issue("i","s","-","-","<original query>","X-Frame-Options: #{@response['X-Frame-Options']}")
@@ -360,6 +409,7 @@ class XspearScan
 
 
     log('s', 'creating a test query.')
+    r.push makeQueryPattern('x', '<script>alert(45)</script>', '<script>alert(45)</script>', 'i', "Found WAF", CallbackCheckWAF)
     r.push makeQueryPattern('s', '', '', 'i', "-", CallbackCheckHeaders)
     r.push makeQueryPattern('d', 'XsPeaR"', 'XsPeaR"', 'i', "Found SQL Error Pattern", CallbackErrorPatternMatch)
     r.push makeQueryPattern('r', 'rEfe6', 'rEfe6', 'i', 'reflected parameter', CallbackStringMatch)
@@ -467,6 +517,10 @@ class XspearScan
     else
       @report.to_cli
     end
+  end
+
+  def reporter
+    @report
   end
 
   def makeQueryPattern(type, payload, pattern, category, desc, callback)

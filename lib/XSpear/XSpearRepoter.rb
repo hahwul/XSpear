@@ -47,6 +47,14 @@ class XspearRepoter
     @query.push payload
   end
 
+  def filtered_objects
+    @filtered_objects
+  end
+
+  def issues
+    @issue
+  end
+
   def set_filtered f
     @filtered_objects = f
   end
