@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/13212227/62022122-36a00180-b1ba-11e9-9f78-abd0eda9ae8f.png" width=100%>
+<img src="https://user-images.githubusercontent.com/13212227/61967487-63b0b080-b010-11e9-9c3d-15b404c957fe.png" width=100%>
 
 # XSpear
 XSpear is XSS Scanner on ruby gems
