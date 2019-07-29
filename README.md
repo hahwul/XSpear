@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/13212227/61967487-63b0b080-b010-11e9-9c3d-15b404c957fe.png" width=100%>
+<img src="https://user-images.githubusercontent.com/13212227/62058818-ffcef780-b25c-11e9-9a35-36537efbcca7.png" width=100%>
 
 # XSpear
 XSpear is XSS Scanner on ruby gems
@@ -315,8 +315,3 @@ Everyone interacting in the XSpear project’s codebases, issue trackers, chat r
 ## ScreenShot
 <img src="https://user-images.githubusercontent.com/13212227/61727892-1681d400-adaf-11e9-832d-37547006f778.png" width=100%>
 <img src="https://user-images.githubusercontent.com/13212227/61311071-8b459300-a830-11e9-8e60-c08e984fdacb.png" width=100%>
-
-## Logos
-<img src="https://user-images.githubusercontent.com/13212227/62022122-36a00180-b1ba-11e9-9f78-abd0eda9ae8f.png" width=100%>
-<hr>
-<img src="https://user-images.githubusercontent.com/13212227/61967487-63b0b080-b010-11e9-9c3d-15b404c957fe.png" width=100%>
