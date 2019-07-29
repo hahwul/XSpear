@@ -113,6 +113,8 @@ class XspearScan
 
       pattern.each do |key,value|
         if !@response[key].nil?
+          time = Time.now
+          puts '[I]'.blue + " [#{time.strftime('%H:%M:%S')}] Found WAF: #{value}"
           @report.add_issue("i","d","-","-","<original query>","Found WAF: #{value}")
         end
       end
