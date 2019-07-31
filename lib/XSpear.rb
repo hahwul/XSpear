@@ -352,7 +352,16 @@ class XspearScan
         'onURLFlip',
         'ontouchstart',
         'ontouchend',
-        'ontouchmove'
+        'ontouchmove',
+        'onafterscriptexecute',
+        'onbeforescriptexecute',
+        'onpointerover',
+        'onpointerdown',
+        'onpointerenter',
+        'onpointerleave',
+        'onpointermove',
+        'onpointerout',
+        'onpointerup'
     ]
     tags = [
         "script",
