@@ -361,7 +361,9 @@ class XspearScan
         'onpointerleave',
         'onpointermove',
         'onpointerout',
-        'onpointerup'
+        'onpointerup',
+        'onloadstart',
+        'onloadend'
     ]
     tags = [
         "script",
