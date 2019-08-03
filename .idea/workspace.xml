@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="(1.1.1) Add reporter method">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/lib/XSpear.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/XSpear/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear/version.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,8 +23,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="516">
-              <caret line="363" column="21" selection-start-line="363" selection-start-column="21" selection-end-line="363" selection-end-column="21" />
+            <state relative-caret-position="546">
+              <caret line="365" column="19" selection-start-line="365" selection-start-column="19" selection-end-line="365" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -225,14 +223,7 @@
       <workItem from="1563809961097" duration="4237000" />
       <workItem from="1563893538891" duration="11917000" />
       <workItem from="1564151699165" duration="2494000" />
-      <workItem from="1564413097342" duration="3803000" />
-    </task>
-    <task id="LOCAL-00003" summary="build gem and edit dependency">
-      <created>1562946236000</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1562946236000</updated>
+      <workItem from="1564413097342" duration="4491000" />
     </task>
     <task id="LOCAL-00004" summary="build gem and edit dependency">
       <created>1562946430273</created>
@@ -570,14 +561,22 @@
       <option name="project" value="LOCAL" />
       <updated>1564418071600</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="(1.1.2) Releases &amp; Fixed #17 (Add some event handlers..)">
+      <created>1564582096828</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1564582096828</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42773000" />
+    <option name="totallyTimeSpent" value="43461000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16788767" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -605,7 +604,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="verbose가 1일 떄 배너 출력되지 않도록 수정" />
     <MESSAGE value="(1.0.5) Add blind XSS options &amp; edit &quot;filtered Rule testing code&quot;" />
     <MESSAGE value="(1.0.5) Update README.md" />
     <MESSAGE value="(1.0.6)[fixed #6] Edit Static Analysis code" />
@@ -630,7 +628,8 @@
     <MESSAGE value="(1.1.0) Releases 1.1.0 / Fixed bug, modify report format, etc.." />
     <MESSAGE value="(1.1.1) Add WAF Found module frame..(TO_DO)" />
     <MESSAGE value="(1.1.1) Add code level function &amp; Check WAF code frame" />
-    <option name="LAST_COMMIT_MESSAGE" value="(1.1.1) Add code level function &amp; Check WAF code frame" />
+    <MESSAGE value="(1.1.2) Releases &amp; Fixed #17 (Add some event handlers..)" />
+    <option name="LAST_COMMIT_MESSAGE" value="(1.1.2) Releases &amp; Fixed #17 (Add some event handlers..)" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -716,8 +715,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
-          <caret line="363" column="21" selection-start-line="363" selection-start-column="21" selection-end-line="363" selection-end-column="21" />
+        <state relative-caret-position="546">
+          <caret line="365" column="19" selection-start-line="365" selection-start-column="19" selection-end-line="365" selection-end-column="19" />
         </state>
       </provider>
     </entry>
