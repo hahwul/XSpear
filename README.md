@@ -225,7 +225,8 @@ options['output'] = json
 s = XspearScan.new "https://www.hahwul.com?target_url", options
 
 # Scanning
-result = s.run
+s.run
+result = s.report.to_json
 r = JSON.parse result
 ```
 
