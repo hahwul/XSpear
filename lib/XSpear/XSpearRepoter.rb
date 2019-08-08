@@ -1,14 +1,14 @@
 require 'terminal-table'
 
-IssueStruct = Struct.new(:id, :type, :issue, :payload, :description)
+IssueStruct = Struct.new(:id, :type, :issue, :method, :param, :payload, :description)
 class IssueStruct
   def to_json(*a)
-    {:id => self.id, :type => self.type, :issue => self.issue, :payload => self.payload, :description => self.description}.to_json(*a)
+    # NO TYPE ISSUE METHOD PARAM PAYLOAD DESCRIPTION
+    {:id => self.id, :type => self.type, :issue => self.issue, :method => self.method, :param => self.param, :payload => self.payload, :description => self.description}.to_json(*a)
   end
 
-
   def self.json_create(o)
-    new(o['id'], o['type'], o['issue'], o['payload'], o['description'])
+    new(o['id'], o['type'], o['issue'], o['method'], o['param'], o['payload'], o['description'])
   end
 end
 
@@ -65,7 +65,10 @@ class XspearRepoter
   def to_json
     buffer = []
     @issue.each do |i|
-      tmp = IssueStruct.new(i[0],i[1],i[2],i[3],i[4])
+      i[1] = i[1].uncolorize
+      i[6] = i[6].uncolorize
+      # NO TYPE ISSUE METHOD PARAM PAYLOAD DESCRIPTION
+      tmp = IssueStruct.new(i[0],i[1],i[2],i[3],i[4],i[5],i[6])
       buffer.push(tmp)
     end
 
