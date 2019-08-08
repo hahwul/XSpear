@@ -66,7 +66,7 @@ class XspearScan
     def run
       if @response.body.include? @query
         time = Time.now
-        puts '[I]'.blue + " [#{time.strftime('%H:%M:%S')}] reflected #{@query}"
+        puts '[I]'.blue + " [#{time.strftime('%H:%M:%S')}] [#{@response.code}/#{@response.message}] reflected #{@query}"
         [false, true]
       else
         [false, "Not reflected #{@query}"]
@@ -503,18 +503,18 @@ class XspearScan
       jobs.map do |node|
         Thread.new do
           begin
-          result, res = task(node[:query], node[:inject], node[:pattern], node[:callback])
+          result, req, res = task(node[:query], node[:inject], node[:pattern], node[:callback])
           # p result.body
           if @verbose.to_i > 2
-            log('d', "[#{res.code}] #{node[:query]} in #{node[:inject]} => #{result[1]}")
+            log('d', "[#{res.code}/#{res.message}] #{node[:query]} in #{node[:inject]}\n[ Request ]\n#{req.to_hash.inspect}\n[ Response ]\n#{res.to_hash.inspect}")
           end
           if result[0]
-            log(node[:category], (result[1]).to_s.yellow+"[param: #{node[:param]}][#{node[:desc]}]")
+            log(node[:category], "[#{res.code}/#{res.message}] "+(result[1]).to_s.yellow+"[param: #{node[:param]}][#{node[:desc]}]")
             @report.add_issue(node[:category],node[:type],node[:param],node[:query],node[:pattern],node[:desc])
           elsif (node[:callback] == CallbackNotAdded) && (result[1].to_s == "true")
             @filtered_objects[node[:param].to_s].nil? ? (@filtered_objects[node[:param].to_s] = [node[:pattern].to_s]) : (@filtered_objects[node[:param].to_s].push(node[:pattern].to_s))
           else
-            log('d', "'#{node[:param]}' "+(result[1]).to_s)
+            log('d', "[#{res.code}/#{res.message}] '#{node[:param]}' "+(result[1]).to_s)
           end
           rescue => e
           end
@@ -626,7 +626,7 @@ class XspearScan
         result = callback.new(uri.to_s, method, pattern, response, @report).run
         # result = result.run
         # p request.headers
-        return result, response
+        return result, request, response
       end
     end
   rescue => e
