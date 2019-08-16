@@ -60,7 +60,7 @@ $ gem install terminal-table
 ```
 Usage: xspear -u [target] -[options] [value]
 [ e.g ]
-$ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
+$ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
 
 [ Options ]
     -u, --url=target_URL             [required] Target Url
@@ -81,7 +81,7 @@ $ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
                                       + v=3 : show detail log(req/res)
     -h, --help                       Prints this help
         --version                    Show XSpear version
-        --update                     Update with online
+        --update                     Show how to update
 
 ```
 ### Result types
