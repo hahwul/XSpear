@@ -13,7 +13,7 @@ class Parser
       exit
     end
     opt_parser = OptionParser.new do |opts|
-      opts.banner = "Usage: xspear -u [target] -[options] [value]\n[ e.g ]\n$ ruby a.rb -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'\n\n[ Options ]"
+      opts.banner = "Usage: xspear -u [target] -[options] [value]\n[ e.g ]\n$ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'\n\n[ Options ]"
 
 
       opts.on('-u', '--url=target_URL', '[required] Target Url') do |n|
@@ -79,7 +79,7 @@ class Parser
         puts XSpear::VERSION
         exit
       end
-      opts.on('--update', 'Update with online') do
+      opts.on('--update', 'Show how to update') do
         puts "[RubyGem user]               : $ gem update XSpear"
         puts "[Soft | Developer & Git clone user] : $ git pull -v "
         puts "[Hard | Developer & Git clone user] : $ git reset --hard HEAD; git pull -v "
