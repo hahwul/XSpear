@@ -65,6 +65,7 @@ $ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
 [ Options ]
     -u, --url=target_URL             [required] Target Url
     -d, --data=POST Body             [optional] POST Method Body data
+    -a, --test-all-params            [optional] test to all params(include not reflected)
         --headers=HEADERS            [optional] Add HTTP Headers
         --cookie=COOKIE              [optional] Add Cookie
         --raw=FILENAME               [optional] Load raw file(e.g raw_sample.txt)
@@ -81,7 +82,7 @@ $ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
                                       + v=3 : show detail log(req/res)
     -h, --help                       Prints this help
         --version                    Show XSpear version
-        --update                     Show how to update
+        --update                     Show how to update -
 
 ```
 ### Result types
@@ -117,10 +118,10 @@ $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -t 30
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query&cat=123&ppl=1fhhahwul" -p cat,test
 ```
 
-**testing blind xss**<br>
+**testing blind xss(all params)**<br>
 (Should be used as much as possible because Blind XSS is everywhere)<br>
 ```
-$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -b "https://hahwul.xss.ht"
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -b "https://hahwul.xss.ht" -a
 
 # Set your blind xss host. <-b options>
 ```
