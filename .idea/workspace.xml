@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="(1.1.6) Add Event handler pattern (whatthe=&quot;&quot;onload)">
+      <change beforePath="$PROJECT_DIR$/.idea/XSpear.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/XSpear.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exe/XSpear" beforeDir="false" afterPath="$PROJECT_DIR$/exe/XSpear" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/XSpear.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/XSpear/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear/version.rb" afterDir="false" />
     </list>
@@ -20,31 +22,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/exe/XSpear">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1185">
-              <caret line="79" column="12" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="12" />
+            <state relative-caret-position="-1138">
+              <caret line="28" column="34" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="180">
-                <caret line="12" column="72" selection-start-line="12" selection-start-column="72" selection-end-line="12" selection-end-column="72" />
-              </first_editor>
-              <second_editor />
+        <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="477">
+              <caret line="657" column="35" lean-forward="true" selection-start-line="657" selection-start-column="35" selection-end-line="657" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="247" column="2" selection-start-line="247" selection-start-column="2" selection-end-line="247" selection-end-column="2" />
-            </state>
-          </provider>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/console">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -74,7 +69,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/XSpear/version.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
@@ -104,6 +99,13 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>BLINDNOTDETECTED</find>
+      <find>@all</find>
+      <find>@reflected_params</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -116,12 +118,12 @@
         <option value="$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/exe/XSpear" />
-        <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
         <option value="$PROJECT_DIR$/lib/XSpear.rb" />
+        <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="x" value="-1920" />
     <option name="y" value="-643" />
     <option name="width" value="1920" />
@@ -235,14 +237,8 @@
       <workItem from="1563893538891" duration="11917000" />
       <workItem from="1564151699165" duration="2494000" />
       <workItem from="1564413097342" duration="11274000" />
-      <workItem from="1574090247432" duration="1239000" />
-    </task>
-    <task id="LOCAL-00014" summary="Add dependency gems descriptions">
-      <created>1563294142811</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1563294142811</updated>
+      <workItem from="1574090247432" duration="1799000" />
+      <workItem from="1577115206395" duration="2893000" />
     </task>
     <task id="LOCAL-00015" summary="Add cli banner">
       <created>1563462840440</created>
@@ -580,11 +576,18 @@
       <option name="project" value="LOCAL" />
       <updated>1565965941986</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="(1.1.6) Add Event handler pattern (whatthe=&quot;&quot;onload)">
+      <created>1574091995789</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1574091995789</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51483000" />
+    <option name="totallyTimeSpent" value="54936000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -596,10 +599,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="-643" width="1920" height="1080" extended-state="0" />
+    <frame x="-1920" y="-643" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14802982" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13045794" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -612,7 +615,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.34059405" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32970297" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32953367" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -647,10 +650,10 @@
     <MESSAGE value="(1.1.4) Released 1.1.4" />
     <MESSAGE value="(1.1.5)(Fixed #21) not reflected params , no testing. but alway blind xss, other bug fix" />
     <MESSAGE value="(1.1.5) Released 1.1.5" />
-    <MESSAGE value="(1.1.6) Add Event handler pattern (whatthe=&quot;&quot;onload)" />
     <MESSAGE value="(1.1.6) (Fixed #24) Edit Usage" />
     <MESSAGE value="(1.1.6) released 1.1.6 (+ fixed #23)" />
-    <option name="LAST_COMMIT_MESSAGE" value="(1.1.6) released 1.1.6 (+ fixed #23)" />
+    <MESSAGE value="(1.1.6) Add Event handler pattern (whatthe=&quot;&quot;onload)" />
+    <option name="LAST_COMMIT_MESSAGE" value="(1.1.6) Add Event handler pattern (whatthe=&quot;&quot;onload)" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -659,9 +662,6 @@
           <caret line="64" selection-start-line="64" selection-end-line="64" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/console">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bin/setup">
       <provider selected="true" editor-type-id="text-editor" />
@@ -673,13 +673,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/exe/XSpear">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1185">
-          <caret line="79" column="12" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -707,10 +700,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/XSpear/log.rb">
+    <entry file="file://$PROJECT_DIR$/XSpear.gemspec">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        <state relative-caret-position="105">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -720,10 +713,27 @@
     <entry file="file:///usr/local/bin/rake">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/XSpear.gemspec">
+    <entry file="file://$PROJECT_DIR$/lib/XSpear/log.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="38" />
+        <state relative-caret-position="225">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/console">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exe/XSpear">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1138">
+          <caret line="28" column="34" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="477">
+          <caret line="657" column="35" lean-forward="true" selection-start-line="657" selection-start-column="35" selection-end-line="657" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -731,13 +741,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="247" column="2" selection-start-line="247" selection-start-column="2" selection-end-line="247" selection-end-column="2" />
         </state>
       </provider>
     </entry>

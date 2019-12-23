@@ -22,6 +22,11 @@ class XspearScan
     else
       @params = options['params'].split(",")
     end
+    if options['all'] == true
+      @all = true
+    else
+      @all = false
+    end
     @thread = options['thread']
     @output = options['output']
     @verbose = options['verbose']
@@ -478,7 +483,13 @@ class XspearScan
         end
       end.each(&:join)
     end
-    log('s',"creating a test query [for reflected #{@reflected_params.length} param + blind xss ]")
+    if @all == true
+      log('s',"used test-all-params mode(-a)")
+      log('s',"creating a test query all param")
+    else
+      log('s',"used test-reflected-params mode(default)")
+      log('s',"creating a test query [for reflected #{@reflected_params.length} param + blind XSS ]")
+    end
     @param_check_switch = false
     ## [ XSS Scanning ]
     r = []
@@ -622,24 +633,10 @@ class XspearScan
     else
       uri = URI.parse(@url)
       begin
-        params = URI.decode_www_form(uri.query)
-        params.each do |p|
-          if  (@param_check_switch) || (@reflected_params.include? p[0]) || pattern == "BLINDNOTDETECTED"
-            if @params.nil? || (@params.include? p[0] if !@params.nil?)
-              attack = ""
-              dparams = params
-              dparams.each do |d|
-                attack = uri.query.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
-                #d[1] = p[1] + payload if p[0] == d[0]
-              end
-              result.push("inject": 'url',"param":p[0] ,"type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
-            end
-          end
-        end
-        unless @data.nil?
-          params = URI.decode_www_form(@data)
+        if @data.nil?
+          params = URI.decode_www_form(uri.query)
           params.each do |p|
-            if !@param_check_switch || (@reflected_params.include? p)
+            if  (@param_check_switch) || (@reflected_params.include? p[0]) || pattern == "BLINDNOTDETECTED" || @all
               if @params.nil? || (@params.include? p[0] if !@params.nil?)
                 attack = ""
                 dparams = params
@@ -647,13 +644,30 @@ class XspearScan
                   attack = uri.query.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
                   #d[1] = p[1] + payload if p[0] == d[0]
                 end
+                result.push("inject": 'url',"param":p[0] ,"type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
+              end
+            end
+          end
+        else
+          params = URI.decode_www_form(@data)
+          params.each do |p|
+            if (@param_check_switch) || (@reflected_params.include? p[0]) || pattern == "BLINDNOTDETECTED" || @all
+              if @params.nil? || (@params.include? p[0] if !@params.nil?)
+                attack = ""
+                dparams = params
+                dparams.each do |d|
+                  attack = @data.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
+                  #d[1] = p[1] + payload if p[0] == d[0]
+                end
                 result.push("inject": 'body', "param":p[0], "type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
               end
             end
           end
         end
-      rescue StandardError
+      rescue => e #StandardError
         # bypass
+        puts @data
+        puts e
       end
       result
     end

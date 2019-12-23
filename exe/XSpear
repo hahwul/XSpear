@@ -25,6 +25,9 @@ class Parser
         args.options['data'] = n
       end
 
+      opts.on('-a','--test-all-params', '[optional] test to all params(include not reflected)') do
+        args.options['all'] = true
+      end
 
       opts.on('--headers=HEADERS', '[optional] Add HTTP Headers') do |n|
         args.options['headers'] = n
