@@ -664,10 +664,10 @@ class XspearScan
             end
           end
         end
-      rescue => e #StandardError
+      rescue => StandardError
         # bypass
-        puts @data
-        puts e
+        # puts @data
+        # puts e
       end
       result
     end
