@@ -344,3 +344,6 @@ Everyone interacting in the XSpear project’s codebases, issue trackers, chat r
 <img src="https://user-images.githubusercontent.com/13212227/63032409-b8996580-bef0-11e9-93cd-dbabbd5f4ea1.png" width=100%>
 < JSON Report >
 <img src="https://user-images.githubusercontent.com/13212227/63032411-b8996580-bef0-11e9-8aee-0b80fe87f50d.png" width=100%>
+
+## Video
+[![asciicast](https://asciinema.org/a/290126.svg)](https://asciinema.org/a/290126)
