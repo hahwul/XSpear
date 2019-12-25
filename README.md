@@ -8,8 +8,9 @@ XSpear is XSS Scanner on ruby gems
 ## Key features
 - Pattern matching based XSS scanning
 - Detect `alert` `confirm` `prompt` event on headless browser (with Selenium)
-- Testing request/response for XSS protection bypass and reflected params<br>
+- Testing request/response for XSS protection bypass and reflected(or all) params<br>
   + Reflected Params
+  + All params(for blind xss, anytings)
   + Filtered test `event handler` `HTML tag` `Special Char` `Useful code`
 - Testing Blind XSS (with XSS Hunter , ezXSS, HBXSS, Etc all url base blind test...)
 - Dynamic/Static Analysis
