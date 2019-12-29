@@ -74,7 +74,7 @@ And then execute:
     $ bundle
 
 ### Dependency gems
-`colorize` `selenium-webdriver` `terminal-table`<br>
+`colorize` `selenium-webdriver` `terminal-table` `progress_bar`<br>
 If you configured it to install automatically in the Gem library, but it behaves abnormally, install it with the following command.
 
 ```
