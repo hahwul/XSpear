@@ -501,10 +501,12 @@ The gem is available as open source under the terms of the [MIT License](https:/
 Everyone interacting in the XSpear project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/XSpear/blob/master/CODE_OF_CONDUCT.md).
 
 ## ScreenShot
+< Scanning Image>
+<img src="https://user-images.githubusercontent.com/13212227/71557939-c8c17400-2a90-11ea-9307-6cd9b9736afc.png" width=100%>
 < CLI-Report 1 >
-<img src="https://user-images.githubusercontent.com/13212227/63032408-b800cf00-bef0-11e9-8a7a-4325eecae486.png" width=100%>
+<img src="https://user-images.githubusercontent.com/13212227/71557940-c8c17400-2a90-11ea-90f4-589366f8fba8.png" width=100%>
 < CLI-Report 2 >
-<img src="https://user-images.githubusercontent.com/13212227/63032409-b8996580-bef0-11e9-93cd-dbabbd5f4ea1.png" width=100%>
+<img src="https://user-images.githubusercontent.com/13212227/71557941-c8c17400-2a90-11ea-9cfe-90e9b5d51c34.png" width=100%>
 < JSON Report >
 <img src="https://user-images.githubusercontent.com/13212227/63032411-b8996580-bef0-11e9-8aee-0b80fe87f50d.png" width=100%>
 
