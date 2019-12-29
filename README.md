@@ -314,6 +314,9 @@ result json data
 ```
 (Items marked as `triggered` are actually payloads that work in the browser.)
 
+**XSpear on Burpsuite**<br>
+https://github.com/hahwul/XSpear/tree/master/forBurp
+
 etc...
 
 ### Sample log
