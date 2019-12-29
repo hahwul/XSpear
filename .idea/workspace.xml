@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="693" column="11" lean-forward="true" selection-start-line="693" selection-start-column="11" selection-end-line="693" selection-end-column="11" />
+            <state relative-caret-position="412">
+              <caret line="558" column="50" selection-start-line="558" selection-start-column="50" selection-end-line="558" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -238,14 +238,7 @@
       <workItem from="1564151699165" duration="2494000" />
       <workItem from="1564413097342" duration="11274000" />
       <workItem from="1574090247432" duration="1799000" />
-      <workItem from="1577115206395" duration="7435000" />
-    </task>
-    <task id="LOCAL-00018" summary="Edit readme">
-      <created>1563554102958</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1563554102958</updated>
+      <workItem from="1577115206395" duration="7880000" />
     </task>
     <task id="LOCAL-00019" summary="modify dependency rspec">
       <created>1563555157935</created>
@@ -583,11 +576,18 @@
       <option name="project" value="LOCAL" />
       <updated>1577118594609</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="(1.3) fixed #38 (Added path scan)">
+      <created>1577596645830</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1577596645830</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59478000" />
+    <option name="totallyTimeSpent" value="59923000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -628,7 +628,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="(1.0.8) Add event handler &amp; html5 XSS code, new pattern" />
     <MESSAGE value="(1.0.8) Releases 1.0.8" />
     <MESSAGE value="(1.0.9)[Fixed #11] Add check 'useful code'" />
     <MESSAGE value="(1.0.9)[Fixed #12] Modify XSpear Struct(option.* =&gt; options [hash])" />
@@ -653,7 +652,8 @@
     <MESSAGE value="(1.2.1) Added ''-a(--test-all-params)' mode(#27) and bug fix(#34)" />
     <MESSAGE value="(1.2.2) Remove Debug Code" />
     <MESSAGE value="(1.2.3) Bug fix #35" />
-    <option name="LAST_COMMIT_MESSAGE" value="(1.2.3) Bug fix #35" />
+    <MESSAGE value="(1.3) fixed #38 (Added path scan)" />
+    <option name="LAST_COMMIT_MESSAGE" value="(1.3) fixed #38 (Added path scan)" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -739,8 +739,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="693" column="11" lean-forward="true" selection-start-line="693" selection-start-column="11" selection-end-line="693" selection-end-column="11" />
+        <state relative-caret-position="412">
+          <caret line="558" column="50" selection-start-line="558" selection-start-column="50" selection-end-line="558" selection-end-column="50" />
         </state>
       </provider>
     </entry>

