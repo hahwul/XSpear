@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/forBurp/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forBurp/otwa.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XSpear.gemspec" beforeDir="false" afterPath="$PROJECT_DIR$/XSpear.gemspec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/XSpear/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear/version.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,15 +34,6 @@
                 <caret line="432" column="38" selection-start-line="432" selection-start-column="38" selection-end-line="432" selection-end-column="38" />
               </first_editor>
               <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="13" selection-end-line="8" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -80,19 +71,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_HOME_DIR$/rubystubs23/string.rb">
+        <entry file="file://$PROJECT_DIR$/lib/XSpear/version.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="302" column="6" selection-start-line="302" selection-start-column="6" selection-end-line="302" selection-end-column="6" />
+            <state relative-caret-position="15">
+              <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/forBurp/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="150">
+                <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/XSpear/version.rb">
+        <entry file="file://$PROJECT_DIR$/forBurp/otwa.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+            <state relative-caret-position="375">
+              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -140,6 +143,8 @@
         <option value="$PROJECT_DIR$/lib/XSpear.rb" />
         <option value="$PROJECT_DIR$/XSpear.gemspec" />
         <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
+        <option value="$PROJECT_DIR$/forBurp/README.md" />
+        <option value="$PROJECT_DIR$/forBurp/otwa.sh" />
       </list>
     </option>
   </component>
@@ -173,6 +178,11 @@
               <item name="XSpear" type="b2602c69:ProjectViewProjectNode" />
               <item name="XSpear" type="462c0819:PsiDirectoryNode" />
               <item name="exe" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="XSpear" type="b2602c69:ProjectViewProjectNode" />
+              <item name="XSpear" type="462c0819:PsiDirectoryNode" />
+              <item name="forBurp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="XSpear" type="b2602c69:ProjectViewProjectNode" />
@@ -258,21 +268,7 @@
       <workItem from="1564151699165" duration="2494000" />
       <workItem from="1564413097342" duration="11274000" />
       <workItem from="1574090247432" duration="1799000" />
-      <workItem from="1577115206395" duration="20845000" />
-    </task>
-    <task id="LOCAL-00023" summary="Add show version &amp; edit help, version in banner">
-      <created>1563646762017</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1563646762017</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Edit version , release 1.0.2">
-      <created>1563646850278</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1563646850278</updated>
+      <workItem from="1577115206395" duration="21592000" />
     </task>
     <task id="LOCAL-00025" summary="Add EventHandler Test logic (1.0.3), edit description on report">
       <created>1563648949262</created>
@@ -603,11 +599,25 @@
       <option name="project" value="LOCAL" />
       <updated>1577628652705</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="(1.3) Fixed dependency bug">
+      <created>1577629109580</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1577629109580</updated>
+    </task>
+    <task id="LOCAL-00073" summary="(1.3) Fixed dependency bug">
+      <created>1577629178860</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1577629178860</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72888000" />
+    <option name="totallyTimeSpent" value="73635000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -648,7 +658,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="(1.0.9)[Fixed #13] Remove add pattern from StandardError in 'makeQueryPattern'" />
     <MESSAGE value="(1.0.9) Releases 1.0.9 / Add --raw options, code refactoring, fixed bugs" />
     <MESSAGE value="(1.1.0) [Fixed #14] Edit raw query print code" />
     <MESSAGE value="(1.1.0) [Fixed #15] makeQueryPattern 내 페이로드 생성 코드 수정" />
@@ -673,7 +682,8 @@
     <MESSAGE value="(1.3) fixed #37 (Added -c --config options)" />
     <MESSAGE value="(1.3) fixed #40 (Reformating Logs / Verbose 0~4)" />
     <MESSAGE value="(1.3) Released 1.3.0 +_+" />
-    <option name="LAST_COMMIT_MESSAGE" value="(1.3) Released 1.3.0 +_+" />
+    <MESSAGE value="(1.3) Fixed dependency bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="(1.3) Fixed dependency bug" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -785,6 +795,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forBurp/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="150">
+            <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forBurp/otwa.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
         </state>
       </provider>
     </entry>
