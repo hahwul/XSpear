@@ -37,10 +37,12 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "colorize", "~> 0.8.1"
   spec.add_runtime_dependency "selenium-webdriver", "~> 3.142.3"
   spec.add_runtime_dependency "terminal-table", "~> 1.8.0"
+  spec.add_runtime_dependency "progress_bar", "~> 2.3.2"
 
   spec.add_development_dependency "colorize", "~> 0.8.1"
   spec.add_development_dependency "selenium-webdriver", "~> 3.142.3"
   spec.add_development_dependency "terminal-table" , "~> 1.8.0"
+  spec.add_development_dependency "progress_bar", "~> 2.3.2"
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"

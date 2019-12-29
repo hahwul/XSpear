@@ -10,7 +10,16 @@ def log(t, message)
 
   # system message
   # [+] start parameter analysis..
-  if @verbose.to_i > 1
+  # verbose 0 : only result
+  # verbose 1(default) : show progress
+  # verbose 2 : show normal log(info, payload)
+  # verbose 3 : show details log(info, payload, packets, etc..)
+
+  if @verbose.to_i == 1
+    if t == 's' # system message
+      puts '[*]'.green + " #{message}"
+    end
+  elsif @verbose.to_i > 1
     time = Time.now
     if t == 'd'
       puts '[-]'.white + " [#{time.strftime('%H:%M:%S')}] #{message}"

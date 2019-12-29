@@ -7,6 +7,7 @@ require 'uri'
 require 'optparse'
 require 'colorize'
 require "selenium-webdriver"
+require "progress_bar"
 
 module XSpear
   class Error < StandardError; end
@@ -35,6 +36,7 @@ class XspearScan
     @filtered_objects = {}
     @reflected_params = []
     @param_check_switch = 0
+    @progress_bar = nil
   end
 
   class ScanCallbackFunc
@@ -500,9 +502,9 @@ class XspearScan
 
 
     # Check Event Handler
-    r.push makeQueryPattern('f', '\"><xspear onhwul=64>', 'onhwul=64', 'i', "not filtered event handler "+"on{any} pattern".blue, CallbackStringMatch)
+    r.push makeQueryPattern('f', '\"><xspear onhwul=64>', 'onhwul=64', 'i', "reflected EH"+"on{any} pattern".blue, CallbackStringMatch)
     event_handler.each do |ev|
-      r.push makeQueryPattern('f', "\"<xspear #{ev}=64>", "#{ev}=64", 'i', "not filtered event handler "+"#{ev}=64".blue, CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"<xspear #{ev}=64>", "#{ev}=64", 'i', "reflected EH"+"#{ev}=64".blue, CallbackNotAdded)
     end
 
 
@@ -577,7 +579,9 @@ class XspearScan
     r = r.flatten
     log('s', "test query generation is complete. [#{r.length} query]")
     log('s', "starting XSS Scanning. [#{@thread} threads]")
-
+    if @verbose.to_i == 1
+      @progress_bar = ProgressBar.new(r.length)
+    end
     threads = []
     r.each_slice(@thread) do |jobs|
       jobs.map do |node|
@@ -701,6 +705,11 @@ class XspearScan
 
   def task(query, injected, pattern, callback)
     begin
+      if (!@progress_bar.nil?) && @verbose.to_i == 1
+        print "\r\r"
+        print "\r\r"
+        @progress_bar.increment!
+      end
       uri = nil
       if pattern == "[PATH]"
         uri = URI.parse(query)
@@ -747,6 +756,6 @@ class XspearScan
       end
     end
   rescue => e
-    puts e
+    #puts e
   end
 end

@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
-
-
 require "XSpear"
-Options = Struct.new(:url, :data, :headers, :params, :options )
+
+XOptions = Struct.new(:url, :data, :headers, :params, :options)
+
 class Parser
   def self.parse(options)
-    args = Options.new('xspear')
+    args = XOptions.new('xspear')
     args.options = {}
     if options.empty?
       banner
@@ -66,10 +66,10 @@ class Parser
         args.options['config'] = n
       end
 
-      opts.on('-v', '--verbose=1~3', '[optional] Show log depth',
-              ' + Default value: 2',
-              ' + v=1 : quite mode',
-              ' + v=2 : show scanning log',
+      opts.on('-v', '--verbose=0~3', '[optional] Show log depth',
+              ' + v=0 : quite mode(only result)',
+              ' + v=1 : show scanning status(default)',
+              ' + v=2 : show scanning logs',
               ' + v=3 : show detail log(req/res)') do |n|
         args.options['verbose'] = n
       end
@@ -153,7 +153,7 @@ end
 
 exit unless options.url
 options.options['thread'] = 10 unless options.options['thread']
-options.options['verbose'] = 2 unless options.options['verbose']
+options.options['verbose'] = 1 unless options.options['verbose']
 options.options['thread'] = options.options['thread'].to_i
 
 if !options.options['config'].nil?
@@ -167,7 +167,7 @@ if !options.options['config'].nil?
   end
 end
 
-if options.options['verbose'].to_i != 1
+if options.options['verbose'].to_i != 0
   banner
 end
 s = XspearScan.new options.url, options.options
