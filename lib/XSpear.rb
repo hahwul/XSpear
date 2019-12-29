@@ -622,7 +622,6 @@ class XspearScan
     #       [x]ss
     #       [s]tatic
     #       [d]ynamic
-
     result = []
     if type == 's'
       if @data.nil?
@@ -664,10 +663,36 @@ class XspearScan
             end
           end
         end
+        if callback == CallbackXSSSelenium
+          begin
+            puri = URI.parse(@url)
+            puri.path = puri.path+URI.encode("/"+pattern)
+            result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": puri.to_s, "pattern": "[PATH]", "desc": "[Path]"+desc, "category": category, "callback": callback)
+            puri = URI.parse(@url)
+            puri.path = puri.path+URI.encode(pattern)
+            result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": puri.to_s, "pattern": "[PATH]", "desc": "[Path]"+desc, "category": category, "callback": callback)
+          rescue
+            # bypass
+            # if no slash end
+          end
+        end
       rescue StandardError
         # bypass
-        # puts @data
-        # puts e
+        # if no params
+
+        if callback == CallbackXSSSelenium
+          begin
+            puri = URI.parse(@url)
+            puri.path = puri.path+URI.encode("/"+pattern)
+            result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": puri.to_s, "pattern": "[PATH]", "desc": "[Path]"+desc, "category": category, "callback": callback)
+            puri = URI.parse(@url)
+            puri.path = puri.path+URI.encode(pattern)
+            result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": puri.to_s, "pattern": "[PATH]", "desc": "[Path]"+desc, "category": category, "callback": callback)
+          rescue
+            # bypass
+            # if no slash end
+          end
+        end
       end
       result
     end
@@ -675,7 +700,12 @@ class XspearScan
 
   def task(query, injected, pattern, callback)
     begin
-      uri = URI.parse(@url)
+      uri = nil
+      if pattern == "[PATH]"
+        uri = URI.parse(query)
+      else
+        uri = URI.parse(@url)
+      end
       request = nil
       method = "GET"
       uri.query = query if injected == 'url'

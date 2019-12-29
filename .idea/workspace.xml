@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/XSpear-1.2.2.gem" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/XSpear.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/XSpear/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear/version.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,17 +19,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/exe/XSpear">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1138">
-              <caret line="28" column="34" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="34" />
+            <state relative-caret-position="377">
+              <caret line="152" column="29" selection-start-line="152" selection-start-column="29" selection-end-line="152" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="666" column="13" lean-forward="true" selection-start-line="666" selection-start-column="13" selection-end-line="666" selection-end-column="13" />
+            <state relative-caret-position="426">
+              <caret line="693" column="11" lean-forward="true" selection-start-line="693" selection-start-column="11" selection-end-line="693" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -68,7 +66,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/XSpear/version.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
@@ -103,6 +101,9 @@
       <find>BLINDNOTDETECTED</find>
       <find>@all</find>
       <find>@reflected_params</find>
+      <find>@thread</find>
+      <find>thread</find>
+      <find>STATIC</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -116,9 +117,9 @@
         <option value="$PROJECT_DIR$/lib/XSpear/banner.rb" />
         <option value="$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
         <option value="$PROJECT_DIR$/exe/XSpear" />
         <option value="$PROJECT_DIR$/lib/XSpear.rb" />
-        <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
       </list>
     </option>
   </component>
@@ -237,14 +238,7 @@
       <workItem from="1564151699165" duration="2494000" />
       <workItem from="1564413097342" duration="11274000" />
       <workItem from="1574090247432" duration="1799000" />
-      <workItem from="1577115206395" duration="3266000" />
-    </task>
-    <task id="LOCAL-00017" summary="1.0.0 Final commit">
-      <created>1563553596470</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1563553596470</updated>
+      <workItem from="1577115206395" duration="7435000" />
     </task>
     <task id="LOCAL-00018" summary="Edit readme">
       <created>1563554102958</created>
@@ -582,11 +576,18 @@
       <option name="project" value="LOCAL" />
       <updated>1577118338926</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="(1.2.3) Bug fix #35">
+      <created>1577118594609</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1577118594609</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55309000" />
+    <option name="totallyTimeSpent" value="59478000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -601,7 +602,7 @@
     <frame x="-1920" y="-643" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13045794" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13045794" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -614,7 +615,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32970297" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32970297" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32953367" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -627,7 +628,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="(1.0.7) Releases 1.0.7 (Modify Format, etc..)" />
     <MESSAGE value="(1.0.8) Add event handler &amp; html5 XSS code, new pattern" />
     <MESSAGE value="(1.0.8) Releases 1.0.8" />
     <MESSAGE value="(1.0.9)[Fixed #11] Add check 'useful code'" />
@@ -652,7 +652,8 @@
     <MESSAGE value="(1.1.6) Add Event handler pattern (whatthe=&quot;&quot;onload)" />
     <MESSAGE value="(1.2.1) Added ''-a(--test-all-params)' mode(#27) and bug fix(#34)" />
     <MESSAGE value="(1.2.2) Remove Debug Code" />
-    <option name="LAST_COMMIT_MESSAGE" value="(1.2.2) Remove Debug Code" />
+    <MESSAGE value="(1.2.3) Bug fix #35" />
+    <option name="LAST_COMMIT_MESSAGE" value="(1.2.3) Bug fix #35" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -722,24 +723,24 @@
     <entry file="file://$PROJECT_DIR$/bin/console">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/XSpear/version.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/exe/XSpear">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1138">
-          <caret line="28" column="34" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="34" />
+        <state relative-caret-position="377">
+          <caret line="152" column="29" selection-start-line="152" selection-start-column="29" selection-end-line="152" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="666" column="13" lean-forward="true" selection-start-line="666" selection-start-column="13" selection-end-line="666" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/XSpear/version.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        <state relative-caret-position="426">
+          <caret line="693" column="11" lean-forward="true" selection-start-line="693" selection-start-column="11" selection-end-line="693" selection-end-column="11" />
         </state>
       </provider>
     </entry>
