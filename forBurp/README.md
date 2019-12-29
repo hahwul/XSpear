@@ -21,3 +21,5 @@ Command: xspear --raw %F -a -b {your-blind-xss-url}
 # Linux
 (default) xterm %C
 ```
+
+<img src="https://1.bp.blogspot.com/-WDmUI8QzX-4/XgjAx3TX3sI/AAAAAAAAEyw/YKKC23hLVYQtkBvPl_T7UybSL5RYKi-UwCLcBGAsYHQ/s640/1415.png" width=100%>
