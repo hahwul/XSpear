@@ -17,14 +17,20 @@ XSpear is XSS Scanner on ruby gems
   + Find SQL Error pattern
   + Analysis Security headers(`CSP` `HSTS` `X-frame-options`, `XSS-protection` etc.. )
   + Analysis Other headers..(Server version, Content-Type, etc...)
+  + XSS Testing to URI Path
 - Scanning from Raw file(Burp suite, ZAP Request)
 - XSpear running on ruby code(with Gem library)
 - Show `table base cli-report` and `filtered rule`, `testing raw query`(url)
 - Testing at selected parameters
 - Support output format `cli` `json`
   + cli: summary, filtered rule(params), Raw Query
-- Support Verbose level (quit / nomal / raw data)
+- Support Verbose level (0~3)
+  + 0: quite mode(only result)
+  + 1: show scanning status(default)
+  + 2: show scanning logs
+  + 3: show detail log(req/res)
 - Support custom callback code to any test various attack vectors
+- Support Config file
 
 ## Installation
 
@@ -54,6 +60,7 @@ If you configured it to install automatically in the Gem library, but it behaves
 $ gem install colorize
 $ gem install selenium-webdriver
 $ gem install terminal-table
+$ gem install progress_bar
 ```
 
 ## Usage on cli
@@ -61,7 +68,8 @@ $ gem install terminal-table
 ```
 Usage: xspear -u [target] -[options] [value]
 [ e.g ]
-$ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
+$ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin' -v 1 -a 
+$ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=123" -v 2
 
 [ Options ]
     -u, --url=target_URL             [required] Target Url
@@ -75,15 +83,16 @@ $ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
                                       + with XSS Hunter, ezXSS, HBXSS, etc...
                                       + e.g : -b https://hahwul.xss.ht
     -t, --threads=NUMBER             [optional] thread , default: 10
-    -o, --output=FILENAME            [optional] Save JSON Result
-    -v, --verbose=1~3                [optional] Show log depth
-                                      + Default value: 2
-                                      + v=1 : quite mode
-                                      + v=2 : show scanning log
+    -o, --output=FORMAT              [optional] Output format (cli , json)
+    -c, --config=FILENAME            [optional] Using config.json
+    -v, --verbose=0~3                [optional] Show log depth
+                                      + v=0 : quite mode(only result)
+                                      + v=1 : show scanning status(default)
+                                      + v=2 : show scanning logs
                                       + v=3 : show detail log(req/res)
     -h, --help                       Prints this help
         --version                    Show XSpear version
-        --update                     Show how to update -
+        --update                     Show how to update
 
 ```
 ### Result types
@@ -93,33 +102,99 @@ $ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin'
 - (M)EDIUM: medium level issue
 - (H)IGH: high level issue
 
+### Verbose Mode
+**[0] quite mode(show only result)**
+```
+$ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=123" -v 0
+you see report
+```
+**[1] show progress bar (default)**
+```
+$ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=123" -v 1
+[*] analysis request..
+[*] used test-reflected-params mode(default)
+[*] creating a test query [for reflected 2 param + blind XSS ]
+[*] test query generation is complete. [249 query]
+[*] starting XSS Scanning. [10 threads]
+
+[#######################################] [249/249] [100.00%] [01:05] [00:00] [  3.83/s]
+...
+you see report
+```
+**[2] show scanning logs**
+```
+$ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=123" -v 2
+[*] analysis request..
+[I] [22:42:41] [200/OK] [param: cat][Found SQL Error Pattern]
+[-] [22:42:41] [200/OK] 'STATIC' not reflected
+[-] [22:42:41] [200/OK] 'cat' not reflected <script>alert(45)</script>
+[I] [22:42:41] [200/OK] reflected rEfe6[param: cat][reflected parameter]
+[*] used test-reflected-params mode(default)
+[*] creating a test query [for reflected 2 param + blind XSS ]
+[*] test query generation is complete. [249 query]
+[*] starting XSS Scanning. [10 threads]
+[I] [22:42:43] [200/OK] reflected onhwul=64[param: cat][reflected EHon{any} pattern]
+[-] [22:42:54] [200/OK] 'cat' not reflected <img/src onerror=alert(45)>
+[-] [22:42:54] [200/OK] 'cat' not reflected <svg/onload=alert(45)>
+[H] [22:42:54] [200/OK] reflected <script>alert(45)</script>[param: cat][reflected XSS Code]
+[V] [22:42:59] [200/OK] found alert/prompt/confirm (45) in selenium!! '"><svg/onload=alert(45)>[param: cat][triggered <svg/onload=alert(45)>]
+...
+you see report
+```
+**[3] show scanning detail logs**
+```
+$ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=123" -v 3
+[*] analysis request..
+[-] [22:56:21] [200/OK] http://testphp.vulnweb.com/listproducts.php?cat=123 in url
+[ Request ]
+{"accept-encoding"=>["gzip;q=1.0,deflate;q=0.6,identity;q=0.3"], "accept"=>["*/*"], "user-agent"=>["Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0"], "connection"=>["keep-alive"], "host"=>["testphp.vulnweb.com"]}
+[ Response ]
+{"server"=>["nginx/1.4.1"], "date"=>["Sun, 29 Dec 2019 13:53:23 GMT"], "content-type"=>["text/html"], "transfer-encoding"=>["chunked"], "connection"=>["keep-alive"], "x-powered-by"=>["PHP/5.3.10-1~lucid+2uwsgi2"]}
+[-] [22:56:21] [200/OK] 'STATIC' not reflected
+[-] [22:56:21] [200/OK] cat=123rEfe6 in url
+...
+[*] used test-reflected-params mode(default)
+[*] creating a test query [for reflected 2 param + blind XSS ]
+[*] test query generation is complete. [249 query]
+[*] starting XSS Scanning. [10 threads]
+...
+[ Request ]
+{"accept-encoding"=>["gzip;q=1.0,deflate;q=0.6,identity;q=0.3"], "accept"=>["*/*"], "user-agent"=>["Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0"], "connection"=>["keep-alive"], "host"=>["testphp.vulnweb.com"]}
+[ Response ]
+{"server"=>["nginx/1.4.1"], "date"=>["Sun, 29 Dec 2019 13:54:36 GMT"], "content-type"=>["text/html"], "transfer-encoding"=>["chunked"], "connection"=>["keep-alive"], "x-powered-by"=>["PHP/5.3.10-1~lucid+2uwsgi2"]}
+[H] [22:57:33] [200/OK] reflected <keygen autofocus onfocus=alert(45)>[param: cat][reflected onfocus XSS Code]
+...
+you see report
+```
 ### Case by Case
 **Scanning XSS**
 ```
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
 ```
 
-**json output(with silence mode)**
+**Only JSON output**
 ```
-$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy" -o json -v 1
-```
-
-**detail log**
-```
-$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy" -v 3
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy" -o json -v 0
 ```
 
-**set thread**
+
+**Set scanning thread**
 ```
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -t 30
 ```
 
-**testing at selected parameters**
+**Testing at selected parameters**
 ```
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query&cat=123&ppl=1fhhahwul" -p cat,test
 ```
 
-**testing blind xss(all params)**<br>
+**Testing at all parameters**<br>
+(This option is tested with or without reflection.)
+```
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query&cat=123&ppl=1fhhahwul" -a
+```
+
+**Testing blind xss(all params)**<br>
 (Should be used as much as possible because Blind XSS is everywhere)<br>
 ```
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -b "https://hahwul.xss.ht" -a
@@ -129,7 +204,7 @@ $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -b "https://hahwu
 
 **for Pipeline**<br>
 ```
-$ xspear -u {target} -b "your-blind-xss-host" -a -v 1 -o json
+$ xspear -u {target} -b "your-blind-xss-host" -a -v 0 -o json
 
 # -u : target 
 # -b : testing blind xss
@@ -257,32 +332,7 @@ __((_)(_))  /(/(   /((_))(_))(()\
 {\\\\\\\\\\\\\BYHAHWUL\\\\\\\\\\\(0):::<======================-
                                  / \<
                                     \>       [ v1.1.5 ]
-[*] analysis request..
-[-] [23:50:35] [200/OK] 'zfdfasdf' not reflected rEfe6
-[-] [23:50:35] [200/OK] 'cat' not reflected <script>alert(45)</script>
-[I] [23:50:35] [200/OK] [param: cat][Found SQL Error Pattern]
-[-] [23:50:35] [200/OK] 'zfdfasdf' not reflected <script>alert(45)</script>
-[-] [23:50:35] [200/OK] 'STATIC' not reflected 
-[I] [23:50:35] [200/OK] reflected rEfe6[param: cat][reflected parameter]
-[*] creating a test query [for reflected 2 param + blind xss ]
-[*] test query generation is complete. [192 query]
-[*] starting XSS Scanning. [10 threads]
-..snip..
-[I] [23:50:47] [200/OK] reflected xsp<frameset>
-[I] [23:50:47] [200/OK] reflected xsp<applet>
-[I] [23:50:48] [200/OK] reflected document.cookie.xspear
-[I] [23:50:48] [200/OK] reflected document.location.xspear
-[-] [23:50:48] [200/OK] 'cat' not reflected <svg/onload=alert(45)>
-[H] [23:50:50] [200/OK] reflected <keygen autofocus onfocus=alert(45)>[param: cat][reflected onfocus XSS Code]
-[-] [23:50:55] [200/OK] 'cat' not found alert/prompt/confirm event <xmp><p title="</xmp><svg/onload=alert(45)>">
-[V] [23:50:56] [200/OK] found alert/prompt/confirm (45) in selenium!! <script>alert(45)</script>[param: cat][triggered <script>alert(45)</script>]
-[H] [23:50:56] [200/OK] found alert/prompt/confirm (45) in selenium!! <marquee onstart=alert(45)>[param: cat][triggered <marquee onstart=alert(45)>]
-[H] [23:50:57] [200/OK] found alert/prompt/confirm (45) in selenium!! <details/open/ontoggle="alert(45)">[param: cat][triggered <details/open/ontoggle="alert(45)">]
-[H] [23:50:58] [200/OK] found alert/prompt/confirm (45) in selenium!! <audio src onloadstart=alert(45)>[param: cat][triggered <audio src onloadstart=alert(45)>]
-[-] [23:50:59] [200/OK] 'cat' not found alert/prompt/confirm event '"><svg/onload=alert(45)>
-[-] [23:50:59] [200/OK] 'cat' not found alert/prompt/confirm event <svg(0x0c)onload=alert(1)>
-[V] [23:51:00] [200/OK] found alert/prompt/confirm (45) in selenium!! '"><svg/onload=alert(45)>[param: cat][triggered <svg/onload=alert(45)>]
-...snip..
+...snip...
 [*] finish scan. the report is being generated..
 +----+-------+------------------+--------+-------+----------------------------------------+-----------------------------------------------+
 |                                                            [ XSpear report ]                                                            |
