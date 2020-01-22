@@ -3,7 +3,7 @@
 # XSpear
 XSpear is XSS Scanner on ruby gems
 
-<img src="https://img.shields.io/static/v1.svg?label=lang&message=ruby&color=RED"> <img src="https://img.shields.io/gem/v/XSpear.svg"> <img src="https://img.shields.io/gem/dt/XSpear.svg"> <img src="https://img.shields.io/github/license/hahwul/XSpear.svg"> <a href="https://twitter.com/intent/follow?screen_name=hahwul"><img src="https://img.shields.io/static/v1.svg?label=follow&message=hahwul&color=black"></a>
+<img src="https://img.shields.io/static/v1.svg?label=lang&message=ruby&color=RED"> <img src="https://img.shields.io/gem/v/XSpear.svg"> <img src="https://img.shields.io/gem/dt/XSpear.svg"> <img src="https://img.shields.io/github/license/hahwul/XSpear.svg"> <a href="https://twitter.com/intent/follow?screen_name=hahwul"><img src="https://img.shields.io/twitter/follow/hahwul?style=flat-square"></a>
 
 ## TOC
 - [XSpear](#xspear)
