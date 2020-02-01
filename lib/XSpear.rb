@@ -643,7 +643,7 @@ class XspearScan
                 attack = ""
                 dparams = params
                 dparams.each do |d|
-                  attack = uri.query.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
+                  attack = uri.query.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI.encode_www_form_component(payload)}" if p[0] == d[0]
                   #d[1] = p[1] + payload if p[0] == d[0]
                 end
                 result.push("inject": 'url',"param":p[0] ,"type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
@@ -658,7 +658,8 @@ class XspearScan
                 attack = ""
                 dparams = params
                 dparams.each do |d|
-                  attack = @data.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI::encode(payload)}" if p[0] == d[0]
+                  attack = @data.sub "#{d[0]}=#{d[1]}","#{d[0]}=#{d[1]}#{URI.encode_www_form_component(payload)}" if p[0] == d[0]
+                  # #45 Issue, URI::encode to URI.encode_www_form_component
                   #d[1] = p[1] + payload if p[0] == d[0]
                 end
                 result.push("inject": 'body', "param":p[0], "type": type, "query": attack, "pattern": pattern, "desc": desc, "category": category, "callback": callback)
@@ -669,10 +670,10 @@ class XspearScan
         if callback == CallbackXSSSelenium
           begin
             puri = URI.parse(@url)
-            puri.path = puri.path+URI.encode("/"+pattern)
+            puri.path = puri.path+URI.encode_www_form_component("/"+pattern)
             result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": puri.to_s, "pattern": "[PATH]", "desc": "[Path]"+desc, "category": category, "callback": callback)
             puri = URI.parse(@url)
-            puri.path = puri.path+URI.encode(pattern)
+            puri.path = puri.path+URI.encode_www_form_component(pattern)
             result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": puri.to_s, "pattern": "[PATH]", "desc": "[Path]"+desc, "category": category, "callback": callback)
           rescue
             # bypass
@@ -686,10 +687,10 @@ class XspearScan
         if callback == CallbackXSSSelenium
           begin
             puri = URI.parse(@url)
-            puri.path = puri.path+URI.encode("/"+pattern)
+            puri.path = puri.path+URI.encode_www_form_component("/"+pattern)
             result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": puri.to_s, "pattern": "[PATH]", "desc": "[Path]"+desc, "category": category, "callback": callback)
             puri = URI.parse(@url)
-            puri.path = puri.path+URI.encode(pattern)
+            puri.path = puri.path+URI.encode_www_form_component(pattern)
             result.push("inject": 'url',"param":"STATIC" ,"type": type, "query": puri.to_s, "pattern": "[PATH]", "desc": "[Path]"+desc, "category": category, "callback": callback)
           rescue
             # bypass

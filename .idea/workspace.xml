@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/forBurp/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/forBurp/otwa.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/XSpear.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/XSpear/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear/version.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +20,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/exe/XSpear">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
+            <state relative-caret-position="900">
               <caret line="60" column="77" selection-start-line="60" selection-start-column="77" selection-end-line="60" selection-end-column="77" />
             </state>
           </provider>
@@ -30,8 +30,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="6480">
-                <caret line="432" column="38" selection-start-line="432" selection-start-column="38" selection-end-line="432" selection-end-column="38" />
+              <first_editor relative-caret-position="6525">
+                <caret line="435" column="38" selection-start-line="435" selection-start-column="38" selection-end-line="435" selection-end-column="38" />
               </first_editor>
               <second_editor />
             </state>
@@ -41,17 +41,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="28">
+            <state relative-caret-position="1095">
               <caret line="73" selection-start-line="73" selection-end-line="73" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2511">
-              <caret line="183" selection-start-line="183" selection-end-line="183" />
+            <state relative-caret-position="230">
+              <caret line="651" column="13" lean-forward="true" selection-start-line="651" selection-start-column="13" selection-end-line="651" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -83,15 +83,15 @@
         <entry file="file://$PROJECT_DIR$/forBurp/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="150">
-                <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+              <first_editor relative-caret-position="105">
+                <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
               </first_editor>
               <second_editor />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forBurp/otwa.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="375">
@@ -103,7 +103,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/XSpear.gemspec">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="539">
+            <state relative-caret-position="660">
               <caret line="44" column="59" selection-start-line="44" selection-start-column="59" selection-end-line="44" selection-end-column="59" />
             </state>
           </provider>
@@ -126,6 +126,7 @@
       <find>not fil</find>
       <find>EH</find>
       <find>CSP</find>
+      <find>URI::encode</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -140,18 +141,18 @@
         <option value="$PROJECT_DIR$/lib/XSpear/log.rb" />
         <option value="$PROJECT_DIR$/exe/XSpear" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/lib/XSpear.rb" />
         <option value="$PROJECT_DIR$/XSpear.gemspec" />
-        <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
-        <option value="$PROJECT_DIR$/forBurp/README.md" />
         <option value="$PROJECT_DIR$/forBurp/otwa.sh" />
+        <option value="$PROJECT_DIR$/forBurp/README.md" />
+        <option value="$PROJECT_DIR$/lib/XSpear.rb" />
+        <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1879" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-1920" />
     <option name="y" value="-620" />
-    <option name="width" value="1036" />
+    <option name="width" value="1920" />
     <option name="height" value="1057" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -162,6 +163,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -178,11 +180,6 @@
               <item name="XSpear" type="b2602c69:ProjectViewProjectNode" />
               <item name="XSpear" type="462c0819:PsiDirectoryNode" />
               <item name="exe" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="XSpear" type="b2602c69:ProjectViewProjectNode" />
-              <item name="XSpear" type="462c0819:PsiDirectoryNode" />
-              <item name="forBurp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="XSpear" type="b2602c69:ProjectViewProjectNode" />
@@ -204,7 +201,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -268,14 +264,9 @@
       <workItem from="1564151699165" duration="2494000" />
       <workItem from="1564413097342" duration="11274000" />
       <workItem from="1574090247432" duration="1799000" />
-      <workItem from="1577115206395" duration="21592000" />
-    </task>
-    <task id="LOCAL-00025" summary="Add EventHandler Test logic (1.0.3), edit description on report">
-      <created>1563648949262</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1563648949262</updated>
+      <workItem from="1577115206395" duration="21990000" />
+      <workItem from="1580314696983" duration="286000" />
+      <workItem from="1580583824837" duration="966000" />
     </task>
     <task id="LOCAL-00026" summary="verbose가 1일 떄 배너 출력되지 않도록 수정">
       <created>1563649920055</created>
@@ -613,11 +604,18 @@
       <option name="project" value="LOCAL" />
       <updated>1577629178860</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="XSpear on Burpsuite">
+      <created>1577632578176</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1577632578176</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73635000" />
+    <option name="totallyTimeSpent" value="75285000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -629,10 +627,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1879" y="-620" width="1879" height="1057" extended-state="6" />
+    <frame x="-1920" y="-620" width="1920" height="1057" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13336962" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13578275" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -658,7 +656,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="(1.0.9) Releases 1.0.9 / Add --raw options, code refactoring, fixed bugs" />
     <MESSAGE value="(1.1.0) [Fixed #14] Edit raw query print code" />
     <MESSAGE value="(1.1.0) [Fixed #15] makeQueryPattern 내 페이로드 생성 코드 수정" />
     <MESSAGE value="(1.1.0) Releases 1.1.0 / Fixed bug, modify report format, etc.." />
@@ -683,7 +680,8 @@
     <MESSAGE value="(1.3) fixed #40 (Reformating Logs / Verbose 0~4)" />
     <MESSAGE value="(1.3) Released 1.3.0 +_+" />
     <MESSAGE value="(1.3) Fixed dependency bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="(1.3) Fixed dependency bug" />
+    <MESSAGE value="XSpear on Burpsuite" />
+    <option name="LAST_COMMIT_MESSAGE" value="XSpear on Burpsuite" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -743,19 +741,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/XSpear/log.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/console">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/exe/XSpear">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
+        <state relative-caret-position="900">
           <caret line="60" column="77" selection-start-line="60" selection-start-column="77" selection-end-line="60" selection-end-column="77" />
         </state>
       </provider>
@@ -763,8 +751,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="6480">
-            <caret line="432" column="38" selection-start-line="432" selection-start-column="38" selection-end-line="432" selection-end-column="38" />
+          <first_editor relative-caret-position="6525">
+            <caret line="435" column="38" selection-start-line="435" selection-start-column="38" selection-end-line="435" selection-end-column="38" />
           </first_editor>
           <second_editor />
         </state>
@@ -772,21 +760,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
+        <state relative-caret-position="1095">
           <caret line="73" selection-start-line="73" selection-end-line="73" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
+    <entry file="file://$PROJECT_DIR$/bin/console">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/XSpear/log.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2511">
-          <caret line="183" selection-start-line="183" selection-end-line="183" />
+        <state relative-caret-position="195">
+          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forBurp/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="105">
+            <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forBurp/otwa.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/XSpear.gemspec">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
+        <state relative-caret-position="660">
           <caret line="44" column="59" selection-start-line="44" selection-start-column="59" selection-end-line="44" selection-end-column="59" />
         </state>
       </provider>
@@ -798,20 +806,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/forBurp/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="150">
-            <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forBurp/otwa.sh">
+    <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+        <state relative-caret-position="230">
+          <caret line="651" column="13" lean-forward="true" selection-start-line="651" selection-start-column="13" selection-end-line="651" selection-end-column="13" />
         </state>
       </provider>
     </entry>
