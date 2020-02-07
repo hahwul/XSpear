@@ -392,7 +392,8 @@ class XspearScan
         'onvolumechange',
         'onwaiting',
         'onwheel',
-        'whatthe=""onload'
+        'whatthe=""onload',
+        'onpointerrawupdate'
     ]
     tags = [
         "script",
