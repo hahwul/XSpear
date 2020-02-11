@@ -33,12 +33,14 @@ XSpear is XSS Scanner on ruby gems
   + Reflected Params
   + All params(for blind xss, anytings)
   + Filtered test `event handler` `HTML tag` `Special Char` `Useful code`
+  + Testing custom payload for only you!
 - Testing Blind XSS (with XSS Hunter , ezXSS, HBXSS, Etc all url base blind test...)
 - Dynamic/Static Analysis
   + Find SQL Error pattern
   + Analysis Security headers(`CSP` `HSTS` `X-frame-options`, `XSS-protection` etc.. )
   + Analysis Other headers..(Server version, Content-Type, etc...)
   + XSS Testing to URI Path
+  + Testing Only Parameter Analysis (aka no-XSS mode)
 - Scanning from Raw file(Burp suite, ZAP Request)
 - XSpear running on ruby code(with Gem library)
 - Show `table base cli-report` and `filtered rule`, `testing raw query`(url)
@@ -90,14 +92,17 @@ $ gem install progress_bar
 Usage: xspear -u [target] -[options] [value]
 [ e.g ]
 $ xspear -u 'https://www.hahwul.com/?q=123' --cookie='role=admin' -v 1 -a 
-$ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=123" -v 2
+$ xspear -u 'http://testphp.vulnweb.com/listproducts.php?cat=123' -v 2
+$ xspear -u 'http://testphp.vulnweb.com/listproducts.php?cat=123' -v 0 -o json
 
 [ Options ]
     -u, --url=target_URL             [required] Target Url
     -d, --data=POST Body             [optional] POST Method Body data
     -a, --test-all-params            [optional] test to all params(include not reflected)
+        --no-xss                     [optional] no testing xss, only parameters analysis
         --headers=HEADERS            [optional] Add HTTP Headers
         --cookie=COOKIE              [optional] Add Cookie
+        --custom-payload=FILENAME    [optional] Load custom payload json file
         --raw=FILENAME               [optional] Load raw file(e.g raw_sample.txt)
     -p, --param=PARAM                [optional] Test paramters
     -b, --BLIND=URL                  [optional] Add vector of Blind XSS
@@ -114,6 +119,7 @@ $ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=123" -v 2
     -h, --help                       Prints this help
         --version                    Show XSpear version
         --update                     Show how to update
+
 
 ```
 ### Result types
@@ -198,7 +204,6 @@ $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy"
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -d "searchFor=yy" -o json -v 0
 ```
 
-
 **Set scanning thread**
 ```
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -t 30
@@ -215,12 +220,42 @@ $ xspear -u "http://testphp.vulnweb.com/search.php?test=query&cat=123&ppl=1fhhah
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query&cat=123&ppl=1fhhahwul" -a
 ```
 
+**Testing Only parameter analysis (aka no-xss mode)**<br>
+```
+$ xspear -u "http://testphp.vulnweb.com/search.php?test=query&cat=123&ppl=1fhhahwul" --no-xss
+```
+
 **Testing blind xss(all params)**<br>
 (Should be used as much as possible because Blind XSS is everywhere)<br>
 ```
 $ xspear -u "http://testphp.vulnweb.com/search.php?test=query" -b "https://hahwul.xss.ht" -a
 
 # Set your blind xss host. <-b options>
+```
+
+**Testing custom payload**<br>
+```
+$ xspear -u "http://testphp.vulnweb.com/listproducts.php?cat=123" --custom-payload=custom_payload.json 
+```
+in custom_payload.json file
+```json
+[
+  {
+    "payload":"<svg/onload=alert(1)>",
+    "callback":"P1",
+    "descript":"blahblah~"
+  },
+  {
+    "payload":"<svg/onload=alert(1)>",
+    "callback":"P2",
+    "descript":"blahblah~"
+  },
+  {
+    "payload":"<>",
+    "callback":"P1",
+    "descript":"blahblah~"
+  }
+]
 ```
 
 **for Pipeline**<br>
