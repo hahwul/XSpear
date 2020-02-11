@@ -20,20 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/exe/XSpear">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="32" column="24" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="6840">
-                <caret line="456" column="38" selection-start-line="456" selection-start-column="38" selection-end-line="456" selection-end-column="38" />
-              </first_editor>
-              <second_editor />
+            <state relative-caret-position="382">
+              <caret line="157" column="3" selection-start-line="157" selection-start-column="3" selection-end-line="157" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -50,8 +38,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="581" column="4" selection-start-line="581" selection-start-column="4" selection-end-line="581" selection-end-column="4" />
+            <state relative-caret-position="201">
+              <caret line="607" column="26" selection-start-line="607" selection-start-column="26" selection-end-line="607" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/custom_payload.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -145,6 +142,7 @@
         <option value="$PROJECT_DIR$/forBurp/README.md" />
         <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
         <option value="$PROJECT_DIR$/exe/XSpear" />
+        <option value="$PROJECT_DIR$/custom_payload.json" />
         <option value="$PROJECT_DIR$/lib/XSpear.rb" />
       </list>
     </option>
@@ -268,21 +266,7 @@
       <workItem from="1580314696983" duration="286000" />
       <workItem from="1580583824837" duration="1470000" />
       <workItem from="1581089876742" duration="615000" />
-      <workItem from="1581425741728" duration="287000" />
-    </task>
-    <task id="LOCAL-00031" summary="(1.0.6)[fixed #7] CallbackNotAdded 쪽 분기문 수정">
-      <created>1563893901111</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1563893901111</updated>
-    </task>
-    <task id="LOCAL-00032" summary="(1.0.6)[fixed #4] Report 객체 수정">
-      <created>1563894048747</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1563894048747</updated>
+      <workItem from="1581425741728" duration="1882000" />
     </task>
     <task id="LOCAL-00033" summary="(1.0.6)[fixed #8] Added response header analysis module">
       <created>1563894186608</created>
@@ -613,11 +597,25 @@
       <option name="project" value="LOCAL" />
       <updated>1581090457081</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="(1.4 / Closed #51) Added only param analysis options">
+      <created>1581426071038</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1581426071038</updated>
+    </task>
+    <task id="LOCAL-00081" summary="(1.4 / Closed #51) Added only param analysis options">
+      <created>1581427060990</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1581427060990</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76691000" />
+    <option name="totallyTimeSpent" value="78286000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -632,7 +630,7 @@
     <frame x="-1920" y="-620" width="1920" height="1057" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13791268" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13791268" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -645,7 +643,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.2373057" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.2373057" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32857144" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -658,7 +656,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="(1.1.2) Releases &amp; Fixed #17 (Add some event handlers..)" />
     <MESSAGE value="(1.1.3) Releases &amp; Fixed #18 (Add onload* event handler)" />
     <MESSAGE value="(1.1.4) [Fixed #20 #22] Modified JSON Format&amp;Remove Color in XSpearReporter" />
     <MESSAGE value="(1.1.4) [Fixed #19] Add http.code, message log, edit log format on verbose=3" />
@@ -683,7 +680,8 @@
     <MESSAGE value="(Fixed #49) Add onpointerrawupdate event handler for xss" />
     <MESSAGE value="(Fixed #50) Add SVG Animate XSS Payload" />
     <MESSAGE value="Release 1.3.3 (Added New XSS Payloads)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Release 1.3.3 (Added New XSS Payloads)" />
+    <MESSAGE value="(1.4 / Closed #51) Added only param analysis options" />
+    <option name="LAST_COMMIT_MESSAGE" value="(1.4 / Closed #51) Added only param analysis options" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -803,15 +801,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/exe/XSpear">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="32" column="24" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
+        <state relative-caret-position="382">
+          <caret line="157" column="3" selection-start-line="157" selection-start-column="3" selection-end-line="157" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/custom_payload.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="581" column="4" selection-start-line="581" selection-start-column="4" selection-end-line="581" selection-end-column="4" />
+        <state relative-caret-position="201">
+          <caret line="607" column="26" selection-start-line="607" selection-start-column="26" selection-end-line="607" selection-end-column="26" />
         </state>
       </provider>
     </entry>

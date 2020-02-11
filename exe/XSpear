@@ -50,7 +50,6 @@ class Parser
         args.options['raw'] = n
       end
 
-
       opts.on('-p', '--param=PARAM', '[optional] Test paramters') do |n|
         args.options['params'] = n
       end
