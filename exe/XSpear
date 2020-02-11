@@ -29,6 +29,10 @@ class Parser
         args.options['all'] = true
       end
 
+      opts.on('--no-xss', '[optional] no testing xss, only parameters analysis') do
+        args.options['nx'] = true
+      end
+
       opts.on('--headers=HEADERS', '[optional] Add HTTP Headers') do |n|
         args.options['headers'] = n
       end

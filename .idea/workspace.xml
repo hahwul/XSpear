@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/XSpear/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear/version.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exe/XSpear" beforeDir="false" afterPath="$PROJECT_DIR$/exe/XSpear" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/XSpear.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/exe/XSpear">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="60" column="77" selection-start-line="60" selection-start-column="77" selection-end-line="60" selection-end-column="77" />
+            <state relative-caret-position="365">
+              <caret line="32" column="24" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -46,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="539" column="443" selection-start-line="539" selection-start-column="443" selection-end-line="539" selection-end-column="443" />
+            <state relative-caret-position="413">
+              <caret line="581" column="4" selection-start-line="581" selection-start-column="4" selection-end-line="581" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -69,7 +70,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/XSpear/version.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
@@ -113,7 +114,6 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>BLINDNOTDETECTED</find>
-      <find>@all</find>
       <find>@reflected_params</find>
       <find>@thread</find>
       <find>thread</find>
@@ -126,6 +126,7 @@
       <find>EH</find>
       <find>CSP</find>
       <find>URI::encode</find>
+      <find>@all</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -138,13 +139,13 @@
         <option value="$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb" />
         <option value="$PROJECT_DIR$/config.json" />
         <option value="$PROJECT_DIR$/lib/XSpear/log.rb" />
-        <option value="$PROJECT_DIR$/exe/XSpear" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/XSpear.gemspec" />
         <option value="$PROJECT_DIR$/forBurp/otwa.sh" />
         <option value="$PROJECT_DIR$/forBurp/README.md" />
-        <option value="$PROJECT_DIR$/lib/XSpear.rb" />
         <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
+        <option value="$PROJECT_DIR$/exe/XSpear" />
+        <option value="$PROJECT_DIR$/lib/XSpear.rb" />
       </list>
     </option>
   </component>
@@ -162,6 +163,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -199,7 +201,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -266,14 +267,8 @@
       <workItem from="1577115206395" duration="21990000" />
       <workItem from="1580314696983" duration="286000" />
       <workItem from="1580583824837" duration="1470000" />
-      <workItem from="1581089876742" duration="424000" />
-    </task>
-    <task id="LOCAL-00030" summary="(1.0.6)[fixed #6] Edit Static Analysis code">
-      <created>1563893769120</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1563893769120</updated>
+      <workItem from="1581089876742" duration="615000" />
+      <workItem from="1581425741728" duration="287000" />
     </task>
     <task id="LOCAL-00031" summary="(1.0.6)[fixed #7] CallbackNotAdded 쪽 분기문 수정">
       <created>1563893901111</created>
@@ -611,11 +606,18 @@
       <option name="project" value="LOCAL" />
       <updated>1581090128596</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="Release 1.3.3 (Added New XSS Payloads)">
+      <created>1581090457081</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1581090457081</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76213000" />
+    <option name="totallyTimeSpent" value="76691000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -628,8 +630,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="-620" width="1920" height="1057" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1368477" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13791268" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -642,7 +645,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.2373057" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.2373057" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32857144" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -655,7 +658,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="(1.1.1) Add code level function &amp; Check WAF code frame" />
     <MESSAGE value="(1.1.2) Releases &amp; Fixed #17 (Add some event handlers..)" />
     <MESSAGE value="(1.1.3) Releases &amp; Fixed #18 (Add onload* event handler)" />
     <MESSAGE value="(1.1.4) [Fixed #20 #22] Modified JSON Format&amp;Remove Color in XSpearReporter" />
@@ -680,7 +682,8 @@
     <MESSAGE value="Released 1.3.2" />
     <MESSAGE value="(Fixed #49) Add onpointerrawupdate event handler for xss" />
     <MESSAGE value="(Fixed #50) Add SVG Animate XSS Payload" />
-    <option name="LAST_COMMIT_MESSAGE" value="(Fixed #50) Add SVG Animate XSS Payload" />
+    <MESSAGE value="Release 1.3.3 (Added New XSS Payloads)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Release 1.3.3 (Added New XSS Payloads)" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -740,13 +743,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/exe/XSpear">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="60" column="77" selection-start-line="60" selection-start-column="77" selection-end-line="60" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -798,17 +794,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="539" column="443" selection-start-line="539" selection-start-column="443" selection-end-line="539" selection-end-column="443" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/XSpear/version.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exe/XSpear">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="32" column="24" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="581" column="4" selection-start-line="581" selection-start-column="4" selection-end-line="581" selection-end-column="4" />
         </state>
       </provider>
     </entry>
