@@ -3,6 +3,10 @@ require "XSpear"
 
 XOptions = Struct.new(:url, :data, :headers, :params, :options)
 
+def true?(obj)
+  obj.to_s.downcase == "true"
+end
+
 class Parser
   def self.parse(options)
     args = XOptions.new('xspear')
@@ -48,6 +52,10 @@ class Parser
 
       opts.on('--raw=FILENAME', '[optional] Load raw file(e.g raw_sample.txt)') do |n|
         args.options['raw'] = n
+      end
+
+      opts.on('--raw-ssl=BOOLEAN', '[optional] http/https switch for burp raw file e.g: true/false') do |n|
+        args.options['raw-ssl'] = n
       end
 
       opts.on('-p', '--param=PARAM', '[optional] Test paramters') do |n|
@@ -135,15 +143,23 @@ if !options.options['raw'].nil?
         end
       end
     end
-
     # Burp or ZAP
     # http, https로 시작하면 zap 아니면 burp 포맷
     url = ""
     if (path.index('http://') == 0 || path.index('https://') == 0)
       url = path
     else
-      url = "http://"+headers_hash['Host'].to_s.chomp!+"/"+path
+      if options.options['raw-ssl'].nil?
+        url = "https://"+headers_hash['Host'].to_s.chomp!+"/"+path
+      else
+        if true? options.options['raw-ssl']
+          url = "https://"+headers_hash['Host'].to_s.chomp!+"/"+path
+        else
+          url = "http://"+headers_hash['Host'].to_s.chomp!+"/"+path
+        end
+      end
     end
+    puts url
     options.url = url
     if headers.length > 0
       options.options['headers'] = headers

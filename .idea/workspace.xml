@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="">
+    <list default="true" id="4ee2e581-45d7-4c90-b6a1-e92e4b5829dd" name="Default Changelist" comment="(1.4 / Closed #41) Added custom payload option">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exe/XSpear" beforeDir="false" afterPath="$PROJECT_DIR$/exe/XSpear" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/XSpear.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/XSpear.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,29 +16,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/exe/XSpear">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="157" column="3" selection-start-line="157" selection-start-column="3" selection-end-line="157" selection-end-column="3" />
+            <state relative-caret-position="341">
+              <caret line="169" column="13" lean-forward="true" selection-start-line="169" selection-start-column="13" selection-end-line="169" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/XSpear/XSpearRepoter.rb">
+        <entry file="file://$PROJECT_DIR$/raw_sample.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1095">
-              <caret line="73" selection-start-line="73" selection-end-line="73" />
+            <state relative-caret-position="30">
+              <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="607" column="26" selection-start-line="607" selection-start-column="26" selection-end-line="607" selection-end-column="26" />
+            <state relative-caret-position="3399">
+              <caret line="610" column="17" lean-forward="true" selection-start-line="610" selection-start-column="17" selection-end-line="610" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -47,8 +46,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/custom_payload.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="13" />
+            <state relative-caret-position="150">
+              <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -141,17 +140,18 @@
         <option value="$PROJECT_DIR$/forBurp/otwa.sh" />
         <option value="$PROJECT_DIR$/forBurp/README.md" />
         <option value="$PROJECT_DIR$/lib/XSpear/version.rb" />
-        <option value="$PROJECT_DIR$/exe/XSpear" />
-        <option value="$PROJECT_DIR$/custom_payload.json" />
         <option value="$PROJECT_DIR$/lib/XSpear.rb" />
+        <option value="$PROJECT_DIR$/custom_payload.json" />
+        <option value="$PROJECT_DIR$/exe/XSpear" />
+        <option value="$PROJECT_DIR$/raw_sample.txt" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-1920" />
-    <option name="y" value="-620" />
+    <option name="y" value="-643" />
     <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -266,21 +266,7 @@
       <workItem from="1580314696983" duration="286000" />
       <workItem from="1580583824837" duration="1470000" />
       <workItem from="1581089876742" duration="615000" />
-      <workItem from="1581425741728" duration="1882000" />
-    </task>
-    <task id="LOCAL-00033" summary="(1.0.6)[fixed #8] Added response header analysis module">
-      <created>1563894186608</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1563894186608</updated>
-    </task>
-    <task id="LOCAL-00034" summary="(1.0.6)[fixed #9] Added method in report-cli">
-      <created>1563894430592</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1563894430592</updated>
+      <workItem from="1581425741728" duration="3550000" />
     </task>
     <task id="LOCAL-00035" summary="(1.0.6) Edit report &amp; scanning format">
       <created>1563895638242</created>
@@ -611,11 +597,25 @@
       <option name="project" value="LOCAL" />
       <updated>1581427060990</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="(1.4 / Closed #41) Added custom payload option">
+      <created>1581428107580</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1581428107580</updated>
+    </task>
+    <task id="LOCAL-00083" summary="(1.4 / Closed #41) Added custom payload option">
+      <created>1581428482520</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1581428482520</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78286000" />
+    <option name="totallyTimeSpent" value="79954000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -627,7 +627,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="-620" width="1920" height="1057" extended-state="0" />
+    <frame x="-1920" y="-620" width="1920" height="1057" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13791268" />
@@ -656,7 +656,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="(1.1.3) Releases &amp; Fixed #18 (Add onload* event handler)" />
     <MESSAGE value="(1.1.4) [Fixed #20 #22] Modified JSON Format&amp;Remove Color in XSpearReporter" />
     <MESSAGE value="(1.1.4) [Fixed #19] Add http.code, message log, edit log format on verbose=3" />
     <MESSAGE value="(1.1.4) Released 1.1.4" />
@@ -681,7 +680,8 @@
     <MESSAGE value="(Fixed #50) Add SVG Animate XSS Payload" />
     <MESSAGE value="Release 1.3.3 (Added New XSS Payloads)" />
     <MESSAGE value="(1.4 / Closed #51) Added only param analysis options" />
-    <option name="LAST_COMMIT_MESSAGE" value="(1.4 / Closed #51) Added only param analysis options" />
+    <MESSAGE value="(1.4 / Closed #41) Added custom payload option" />
+    <option name="LAST_COMMIT_MESSAGE" value="(1.4 / Closed #41) Added custom payload option" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.4.6/gems/bundler-2.0.1/lib/bundler/rubygems_integration.rb">
@@ -799,24 +799,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/exe/XSpear">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="157" column="3" selection-start-line="157" selection-start-column="3" selection-end-line="157" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/custom_payload.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="13" />
+        <state relative-caret-position="150">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/XSpear.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="607" column="26" selection-start-line="607" selection-start-column="26" selection-end-line="607" selection-end-column="26" />
+        <state relative-caret-position="3399">
+          <caret line="610" column="17" lean-forward="true" selection-start-line="610" selection-start-column="17" selection-end-line="610" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/raw_sample.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="9" lean-forward="true" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exe/XSpear">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="169" column="13" lean-forward="true" selection-start-line="169" selection-start-column="13" selection-end-line="169" selection-end-column="13" />
         </state>
       </provider>
     </entry>
