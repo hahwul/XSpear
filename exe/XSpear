@@ -42,6 +42,9 @@ class Parser
         args.options['cookie'] = 'Cookie: ' + n
       end
 
+      opts.on('--custom-payload=FILENAME', '[optional] Load custom payload json file') do |n|
+        args.options['cp'] = n
+      end
 
       opts.on('--raw=FILENAME', '[optional] Load raw file(e.g raw_sample.txt)') do |n|
         args.options['raw'] = n

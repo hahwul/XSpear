@@ -28,7 +28,7 @@ class XspearScan
     else
       @all = false
     end
-    if options['nxs'] == true
+    if options['nx'] == true
       @nx = true
     else
       @nx = false
@@ -525,7 +525,7 @@ class XspearScan
     end
 
 
-    if @nx=true
+    if @nx != true
       # Check Common XSS Payloads
       onfocus_tags = [
           "input",
