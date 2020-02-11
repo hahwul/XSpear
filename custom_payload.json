@@ -1,0 +1,17 @@
+[
+  {
+    "payload":"<svg/onload=alert(1)>",
+    "callback":"P1",
+    "descript":"blahblah~"
+  },
+  {
+    "payload":"<svg/onload=alert(1)>",
+    "callback":"P2",
+    "descript":"blahblah~"
+  },
+  {
+    "payload":"<>",
+    "callback":"P1",
+    "descript":"blahblah~"
+  }
+]
