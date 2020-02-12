@@ -45,8 +45,10 @@ XSpear is XSS Scanner on ruby gems
 - XSpear running on ruby code(with Gem library)
 - Show `table base cli-report` and `filtered rule`, `testing raw query`(url)
 - Testing at selected parameters
-- Support output format `cli` `json`
-  + cli: summary, filtered rule(params), Raw Query
+- Support output format `cli` `json` `html`
+  + cli
+  + json
+  + html
 - Support Verbose level (0~3)
   + 0: quite mode(only result)
   + 1: show scanning status(default)
@@ -61,7 +63,7 @@ Install it yourself as:
 
     $ gem install XSpear
 
-Or install it yourself as (local file):
+Or install it yourself as (local file / download [latest](https://github.com/hahwul/XSpear/releases/latest) ):
 
     $ gem install XSpear-{version}.gem
     
@@ -390,7 +392,12 @@ __((_)(_))  /(/(   /((_))(_))(()\
            |_|                   \ /<
 {\\\\\\\\\\\\\BYHAHWUL\\\\\\\\\\\(0):::<======================-
                                  / \<
-                                    \>       [ v1.1.5 ]
+                                    \>       [ v1.4.0 ]
+[*] analysis request..
+[*] used test-reflected-params mode(default)
+[*] creating a test query [for reflected 1 param ]
+[*] test query generation is complete. [251 query]
+[*] starting XSS Scanning. [10 threads]
 ...snip...
 [*] finish scan. the report is being generated..
 +----+-------+------------------+--------+-------+----------------------------------------+-----------------------------------------------+
@@ -571,6 +578,8 @@ Everyone interacting in the XSpear project’s codebases, issue trackers, chat r
 <img src="https://user-images.githubusercontent.com/13212227/71557941-c8c17400-2a90-11ea-9cfe-90e9b5d51c34.png" width=100%>
 < JSON Report >
 <img src="https://user-images.githubusercontent.com/13212227/63032411-b8996580-bef0-11e9-8aee-0b80fe87f50d.png" width=100%>
+< HTML Report >
+<img src="https://user-images.githubusercontent.com/13212227/74363820-b1570400-4e0e-11ea-9ce5-c78319a9d81c.png" width=100%>
 
 ## Video
 [![asciicast](https://asciinema.org/a/290126.svg)](https://asciinema.org/a/290126)
