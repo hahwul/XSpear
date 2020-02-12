@@ -495,6 +495,7 @@ class XspearScan
         end
       end.each(&:join)
     end
+
     if @all == true
       log('s',"used test-all-params mode(-a)")
       if @blind_url.nil?
@@ -615,7 +616,8 @@ class XspearScan
     if @verbose.to_i == 1
       @progress_bar = ProgressBar.new(r.length)
     end
-    threads = []
+
+
     r.each_slice(@thread) do |jobs|
       jobs.map do |node|
         Thread.new do
@@ -638,7 +640,6 @@ class XspearScan
         end
       end.each(&:join)
     end
-
 
     @report.set_filtered @filtered_objects
     @report.set_endtime
