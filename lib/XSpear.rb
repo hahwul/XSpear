@@ -649,6 +649,7 @@ class XspearScan
     elsif @output == 'html'
       f = File.open 'report.html', 'w+'
       f.write @report.to_html
+      log('s', "generate html report file. please open ./report.html file")
     else
       @report.to_cli
     end

@@ -359,7 +359,7 @@ class XspearRepoter
             background-color: sienna;
           }
           .HIGH {
-            background-color: darkred;
+            background-color: firebrick;
           }
           .VULN {
             background-color: maroon;
