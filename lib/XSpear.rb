@@ -645,6 +645,9 @@ class XspearScan
     log('s', "finish scan. the report is being generated..")
     if @output == 'json'
       puts @report.to_json
+    elsif @output == 'html'
+      f = File.open 'report.html', 'w+'
+      f.write @report.to_html
     else
       @report.to_cli
     end
